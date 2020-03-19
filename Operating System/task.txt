@@ -1,0 +1,12 @@
+-Append two files
+
+-compare two files
+(print similar data)
+
+-finding duplicate value and removing it
+
+-grep and cut switches
+
+-pipe vs redirection
+
+-short
