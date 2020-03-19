@@ -1,0 +1,1275 @@
+SQL> select * from tab;
+
+TNAME                          TABTYPE CLUSTERID                                                    
+------------------------------ ------- ---------                                                    
+BIN$7n4jpdFjQ9+ovRAL5HQ3kA==$0 TABLE                                                                
+BOOKS                          TABLE                                                                
+CLIENT                         TABLE                                                                
+EMP                            TABLE                                                                
+ISSUE                          TABLE                                                                
+MEMBER                         TABLE                                                                
+STUDENT                        TABLE                                                                
+STUDENTINFORMATION             TABLE                                                                
+
+8 rows selected.
+
+SQL> select * from issue;
+
+no rows selected
+
+SQL> @insertinto
+SP2-0310: unable to open file "insertinto.sql"
+SQL> @insert
+Enter value for roll: xfgh
+Enter value for name: dfgh
+Enter value for dob: dfgh
+Enter value for hsc: fgh
+Enter value for members: dfgh
+Enter value for jee: dfgh
+old   1: INSERT INTO student_info VALUES ('&Roll','&Name','&dob','&hsc','&members','&jee')
+new   1: INSERT INTO student_info VALUES ('xfgh','dfgh','dfgh','fgh','dfgh','dfgh')
+INSERT INTO student_info VALUES ('xfgh','dfgh','dfgh','fgh','dfgh','dfgh')
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> @insertinto
+SP2-0310: unable to open file "insertinto.sql"
+SQL> @selectall
+SELECT * FROM student_info
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> @select
+SP2-0310: unable to open file "select.sql"
+SQL> @input
+Enter value for rollno: hgj
+Enter value for name: ghj
+Enter value for dob: ghj
+Enter value for club_member: ghj
+Enter value for jee_marks: ghj
+Enter value for hsc_marks: ghjg
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('hgj','ghj','ghj','ghj','ghj','ghjg')
+insert into student values('hgj','ghj','ghj','ghj','ghj','ghjg')
+                                       *
+ERROR at line 1:
+ORA-01858: a non-numeric character was found where a numeric was expected 
+
+
+SQL> select avg(jee) from student;
+select avg(jee) from student
+           *
+ERROR at line 1:
+ORA-00904: "JEE": invalid identifier 
+
+
+SQL> desc student;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ROLLNO                                                         VARCHAR2(8)
+ NAME                                                           VARCHAR2(30)
+ DOB                                                            DATE
+ MEMBERS                                                        VARCHAR2(30)
+ JEE_SCORE                                                      VARCHAR2(3)
+ HSC_MARKS                                                      NUMBER(5,2)
+
+SQL> select avg(jee_score) from student;
+
+AVG(JEE_SCORE)                                                                                      
+--------------                                                                                      
+         134.2                                                                                      
+
+SQL> select min(jee_score) from student;
+
+MIN                                                                                                 
+---                                                                                                 
+110                                                                                                 
+
+SQL> select count(*);
+select count(*)
+              *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select count(*) from student
+SQL> /
+
+ COUNT(*)                                                                                           
+---------                                                                                           
+       20                                                                                           
+
+SQL> select 2+3 from dual;
+
+      2+3                                                                                           
+---------                                                                                           
+        5                                                                                           
+
+SQL> select 2+3 from student;
+
+      2+3                                                                                           
+---------                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+        5                                                                                           
+
+20 rows selected.
+
+SQL> select * from dual;
+
+D                                                                                                   
+-                                                                                                   
+X                                                                                                   
+
+SQL> desc dual;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ DUMMY                                                          VARCHAR2(1)
+
+SQL> select sysdate from dual;
+
+SYSDATE                                                                                             
+---------                                                                                           
+22-AUG-19                                                                                           
+
+SQL> select max(jee_score
+  2  ) from student;
+
+MAX                                                                                                 
+---                                                                                                 
+90                                                                                                  
+
+SQL> /
+
+MAX                                                                                                 
+---                                                                                                 
+90                                                                                                  
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE HSC_MARKS      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE007 Vinit Desai                    23-MAR-99                                86      87.67      
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                           90      90.33      
+17BCE090 Chitrang Patel                 13-MAY-99                                74      78.88      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE087 Gaurav Ladhha                  02-SEP-00                                143     87.55      
+17BCE054 Harsh Naik                     23-APR-00 RCNI                           110     87.33      
+17BCE056 Kunal Chhatwani                27-MAR-99                                160     97.22      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+20 rows selected.
+
+SQL> select max(jee_score) from student;
+
+MAX                                                                                                 
+---                                                                                                 
+90                                                                                                  
+
+SQL> desc student;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ROLLNO                                                         VARCHAR2(8)
+ NAME                                                           VARCHAR2(30)
+ DOB                                                            DATE
+ MEMBERS                                                        VARCHAR2(30)
+ JEE_SCORE                                                      VARCHAR2(3)
+ HSC_MARKS                                                      NUMBER(5,2)
+
+SQL> select max(hsc_marks) from student;
+
+MAX(HSC_MARKS)                                                                                      
+--------------                                                                                      
+         97.22                                                                                      
+
+SQL> select sum(hsc_marks) from student;
+
+SUM(HSC_MARKS)                                                                                      
+--------------                                                                                      
+       1782.77                                                                                      
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select sum(hsc_marks)/20 from student
+SQL> /
+
+SUM(HSC_MARKS)/20                                                                                   
+-----------------                                                                                   
+          89.1385                                                                                   
+
+SQL> select avg(hsc_marks) from student;
+
+AVG(HSC_MARKS)                                                                                      
+--------------                                                                                      
+       89.1385                                                                                      
+
+SQL> select abs(-90) from dual;
+
+ ABS(-90)                                                                                           
+---------                                                                                           
+       90                                                                                           
+
+SQL> select power(9,2) from dual;
+
+POWER(9,2)                                                                                          
+----------                                                                                          
+        81                                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select power(9,2) from dual
+SQL>  select power(4,0.5) from dual;
+
+POWER(4,0.5)                                                                                        
+------------                                                                                        
+           2                                                                                        
+
+SQL> select power(-1,0.5) from dual;
+select power(-1,0.5) from dual
+             *
+ERROR at line 1:
+ORA-01428: argument '-1' is out of range 
+
+
+SQL> select round(19.91919) from dual;
+
+ROUND(19.91919)                                                                                     
+---------------                                                                                     
+             20                                                                                     
+
+SQL>  select round(19.91919,3) from dual;
+
+ROUND(19.91919,3)                                                                                   
+-----------------                                                                                   
+           19.919                                                                                   
+
+SQL> select round(exp(1)) from dual;
+
+ROUND(EXP(1))                                                                                       
+-------------                                                                                       
+            3                                                                                       
+
+SQL> select sqrt(16) from dual;
+
+ SQRT(16)                                                                                           
+---------                                                                                           
+        4                                                                                           
+
+SQL> select sqrt(19) from dual;
+
+ SQRT(19)                                                                                           
+---------                                                                                           
+4.3588989                                                                                           
+
+SQL> select exp(9) from dual;
+
+   EXP(9)                                                                                           
+---------                                                                                           
+8103.0839                                                                                           
+
+SQL> select extract(year from date '2004-08-04') from dual;
+
+EXTRACT(YEARFROMDATE'2004-08-04')                                                                   
+---------------------------------                                                                   
+                             2004                                                                   
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select extract(day from date '2004-08-04') from dual
+SQL> /
+
+EXTRACT(DAYFROMDATE'2004-08-04')                                                                    
+--------------------------------                                                                    
+                               4                                                                    
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select extract(dy from date '2004-08-04') from dual
+SQL> /
+select extract(dy from date '2004-08-04') from dual
+                  *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select extract(month from date '2004-08-04') from dual
+SQL> /
+
+EXTRACT(MONTHFROMDATE'2004-08-04')                                                                  
+----------------------------------                                                                  
+                                 8                                                                  
+
+SQL> select greatest(a,b,c) from dual;
+select greatest(a,b,c) from dual
+                    *
+ERROR at line 1:
+ORA-00904: "C": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select greatest('a','b','c') from dual
+SQL> /
+
+G                                                                                                   
+-                                                                                                   
+c                                                                                                   
+
+SQL> select greatest(100,90000,1000000) from dual;
+
+GREATEST(100,90000,1000000)                                                                         
+---------------------------                                                                         
+                    1000000                                                                         
+
+SQL> select greatest("hello","hellk","hellp") from dual;
+select greatest("hello","hellk","hellp") from dual
+                                *
+ERROR at line 1:
+ORA-00904: "hellp": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select greatest('hello','hellk','hellp') from dual
+SQL> /
+
+GREAT                                                                                               
+-----                                                                                               
+hellp                                                                                               
+
+SQL> select least(4,60,100) from dual;
+
+LEAST(4,60,100)                                                                                     
+---------------                                                                                     
+              4                                                                                     
+
+SQL> select least('a','b','c','A') from dual;
+
+L                                                                                                   
+-                                                                                                   
+A                                                                                                   
+
+SQL> select greatest('A','a') from dual;
+
+G                                                                                                   
+-                                                                                                   
+a                                                                                                   
+
+SQL> select greatest(100,'a') from dual;
+select greatest(100,'a') from dual
+                    *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select greatest('a',100) from dual
+SQL> /
+
+G                                                                                                   
+-                                                                                                   
+a                                                                                                   
+
+SQL> select mod(15,7),mod(15.7,7) from dual;
+
+MOD(15,7) MOD(15.7,7)                                                                               
+--------- -----------                                                                               
+        1         1.7                                                                               
+
+SQL> select round(17.9) from dual;
+
+ROUND(17.9)                                                                                         
+-----------                                                                                         
+         18                                                                                         
+
+SQL> select trunc(17.9) from dual;
+
+TRUNC(17.9)                                                                                         
+-----------                                                                                         
+         17                                                                                         
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trunc(17.98989,2) from dual
+SQL> /
+
+TRUNC(17.98989,2)                                                                                   
+-----------------                                                                                   
+            17.98                                                                                   
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select round(17.98989,2) from dual
+SQL> /
+
+ROUND(17.98989,2)                                                                                   
+-----------------                                                                                   
+            17.99                                                                                   
+
+SQL> select floor(14.5) from dual;
+
+FLOOR(14.5)                                                                                         
+-----------                                                                                         
+         14                                                                                         
+
+SQL> select ceil(14.5) from dual;
+
+CEIL(14.5)                                                                                          
+----------                                                                                          
+        15                                                                                          
+
+SQL> select lower("HGDKJSF") from dual;
+select lower("HGDKJSF") from dual
+             *
+ERROR at line 1:
+ORA-00904: "HGDKJSF": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select lower('HGDKJSF') from dual
+SQL> /
+
+LOWER('                                                                                             
+-------                                                                                             
+hgdkjsf                                                                                             
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select upper('HGDhghF') from dual
+SQL> /
+
+UPPER('                                                                                             
+-------                                                                                             
+HGDHGHF                                                                                             
+
+SQL> select initcap(hello world) from dual;
+select initcap(hello world) from dual
+                     *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select initcap('hello world') from dual
+SQL> /
+
+INITCAP('HE                                                                                         
+-----------                                                                                         
+Hello World                                                                                         
+
+SQL> select trunc(199.99,-1) from dual;
+
+TRUNC(199.99,-1)                                                                                    
+----------------                                                                                    
+             190                                                                                    
+
+SQL> select substr('hello world',1,4) from dual;
+
+SUBS                                                                                                
+----                                                                                                
+hell                                                                                                
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr('hello world',5,-4) from dual
+SQL> /
+
+S                                                                                                   
+-                                                                                                   
+                                                                                                    
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr('hello world',5,-1) from dual
+SQL> /
+
+S                                                                                                   
+-                                                                                                   
+                                                                                                    
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr('hello world',-1,5) from dual
+SQL> /
+
+S                                                                                                   
+-                                                                                                   
+d                                                                                                   
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr('hello world',-5,5) from dual
+SQL> /
+
+SUBST                                                                                               
+-----                                                                                               
+world                                                                                               
+
+SQL> select ascii('a') from dual;
+
+ASCII('A')                                                                                          
+----------                                                                                          
+        97                                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select ascii('a') from dual
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select ascii('A') from dual
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select ascii('A') from dual
+SQL> /
+
+ASCII('A')                                                                                          
+----------                                                                                          
+        65                                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select ascii('A') "ghjgH" from dual
+SQL> /
+
+    ghjgH                                                                                           
+---------                                                                                           
+       65                                                                                           
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select ascii('A') as ghjgH from dual
+SQL> /
+
+    GHJGH                                                                                           
+---------                                                                                           
+       65                                                                                           
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select ascii('A') as "ghjgH" from dual
+SQL> /
+
+    ghjgH                                                                                           
+---------                                                                                           
+       65                                                                                           
+
+SQL> select ascii(a) from dual;
+select ascii(a) from dual
+             *
+ERROR at line 1:
+ORA-00904: "A": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select ascii(1) from dual
+SQL> /
+
+ ASCII(1)                                                                                           
+---------                                                                                           
+       49                                                                                           
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select ascii('1') from dual
+SQL> /
+
+ASCII('1')                                                                                          
+----------                                                                                          
+        49                                                                                          
+
+SQL> select compose('a'||unistr('\301')) from dual;
+select compose('a'||unistr('\301')) from dual
+                           *
+ERROR at line 1:
+ORA-30186: '\' must be followed by four hexdecimal characters or another '\' 
+
+
+SQL> erd
+SP2-0042: unknown command "erd" - rest of line ignored.
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select compose('a'||unistr('\0301')) from dual
+SQL> /
+
+CO                                                                                                  
+--                                                                                                  
+ á                                                                                                  
+
+SQL> select decompose(compose('a',unistr('\0301'))) from dual;
+select decompose(compose('a',unistr('\0301'))) from dual
+                 *
+ERROR at line 1:
+ORA-00909: invalid number of arguments 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select decompose(compose('a'||unistr('\0301'))) from dual
+SQL> /
+
+DECO                                                                                                
+----                                                                                                
+ a                                                                                                
+
+SQL> select instr('sdfsdfhello','s',1) from dual;
+
+INSTR('SDFSDFHELLO','S',1)                                                                          
+--------------------------                                                                          
+                         1                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select instr('sdfsdfhello','s',1,2) from dual
+SQL> /
+
+INSTR('SDFSDFHELLO','S',1,2)                                                                        
+----------------------------                                                                        
+                           4                                                                        
+
+SQL> select instr(name,'g',1,2) from student;
+
+INSTR(NAME,'G',1,2)                                                                                 
+-------------------                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+                  0                                                                                 
+
+20 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select instr(name,'a',1,2) from student
+SQL> /
+
+INSTR(NAME,'A',1,2)                                                                                 
+-------------------                                                                                 
+                  5                                                                                 
+                  9                                                                                 
+                  5                                                                                 
+                  6                                                                                 
+                  4                                                                                 
+                  0                                                                                 
+                 10                                                                                 
+                 12                                                                                 
+                  4                                                                                 
+                  0                                                                                 
+                  9                                                                                 
+                 11                                                                                 
+                  0                                                                                 
+                  4                                                                                 
+                  5                                                                                 
+                  8                                                                                 
+                 10                                                                                 
+                  9                                                                                 
+                  9                                                                                 
+                  0                                                                                 
+
+20 rows selected.
+
+SQL> select translate(name,'eao','340') from student;
+
+TRANSLATE(NAME,'EAO','340')                                                                         
+------------------------------                                                                      
+A4ry4n Gupt4                                                                                        
+Anj4li G4m4                                                                                         
+Bh4r4t Adh4ryu                                                                                      
+Bh4vy4 Sh4h                                                                                         
+M4y4nk B4rnw4l                                                                                      
+Aum N4ik                                                                                            
+Ridh4m Av4iy4                                                                                       
+Kh0did4s Ch4uh4n                                                                                    
+M4n4d D3s4i                                                                                         
+Vinit D3s4i                                                                                         
+S4nk3t P4t3l                                                                                        
+Chitr4ng P4t3l                                                                                      
+L3vin Dh4bi                                                                                         
+S4m4rth S0l4nki                                                                                     
+G4ur4v L4dhh4                                                                                       
+H4rsh N4ik                                                                                          
+Kun4l Chh4tw4ni                                                                                     
+Vr4j D3s4i                                                                                          
+D3v G4gr4ni                                                                                         
+D3v J0shi                                                                                           
+
+20 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select translate(name,'340','eao') from student
+SQL> /
+
+TRANSLATE(NAME,'340','EAO')                                                                         
+------------------------------                                                                      
+Aaryan Gupta                                                                                        
+Anjali Gama                                                                                         
+Bharat Adharyu                                                                                      
+Bhavya Shah                                                                                         
+Mayank Barnwal                                                                                      
+Aum Naik                                                                                            
+Ridham Avaiya                                                                                       
+Khodidas Chauhan                                                                                    
+Manad Desai                                                                                         
+Vinit Desai                                                                                         
+Sanket Patel                                                                                        
+Chitrang Patel                                                                                      
+Levin Dhabi                                                                                         
+Samarth Solanki                                                                                     
+Gaurav Ladhha                                                                                       
+Harsh Naik                                                                                          
+Kunal Chhatwani                                                                                     
+Vraj Desai                                                                                          
+Dev Gagrani                                                                                         
+Dev Joshi                                                                                           
+
+20 rows selected.
+
+SQL> select length(name) from student;
+
+LENGTH(NAME)                                                                                        
+------------                                                                                        
+          12                                                                                        
+          11                                                                                        
+          14                                                                                        
+          11                                                                                        
+          14                                                                                        
+           8                                                                                        
+          13                                                                                        
+          16                                                                                        
+          11                                                                                        
+          11                                                                                        
+          12                                                                                        
+          14                                                                                        
+          11                                                                                        
+          15                                                                                        
+          13                                                                                        
+          10                                                                                        
+          15                                                                                        
+          10                                                                                        
+          11                                                                                        
+           9                                                                                        
+
+20 rows selected.
+
+SQL> select ltrim('abca','a') from dual;
+
+LTR                                                                                                 
+---                                                                                                 
+bca                                                                                                 
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select rtrim('abca','a') from dual
+SQL> /
+
+RTR                                                                                                 
+---                                                                                                 
+abc                                                                                                 
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim('abca','a') from dual
+SQL> /
+select trim('abca','a') from dual
+                  *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim(both 'a' from 'abca') from dual
+SQL> /
+
+TR                                                                                                  
+--                                                                                                  
+bc                                                                                                  
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim(both 'a' from 'aaaaabcaaaaaaaaa') from dual
+SQL> /
+
+TR                                                                                                  
+--                                                                                                  
+bc                                                                                                  
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim(both 'ab' from 'aaaaabcaaaaaaaaa') from dual
+SQL> /
+select trim(both 'ab' from 'aaaaabcaaaaaaaaa') from dual
+       *
+ERROR at line 1:
+ORA-30001: trim set should have only one character 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim(both 'a','b' from 'aaaaabcaaaaaaaaa') from dual
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim(both 'a','b' from 'aaaaabcaaaaaaaaa') from dual
+SQL> /
+select trim(both 'a','b' from 'aaaaabcaaaaaaaaa') from dual
+       *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim(leading 'a' from 'aaaaabcaaaaaaaaa') from dual
+SQL> /
+
+TRIM(LEADIN                                                                                         
+-----------                                                                                         
+bcaaaaaaaaa                                                                                         
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim(trailing 'a' from 'aaaaabcaaaaaaaaa') from dual
+SQL> /
+
+TRIM(TR                                                                                             
+-------                                                                                             
+aaaaabc                                                                                             
+
+SQL> select ltrim('aaaaaaaaaabc','a') from dual;
+
+LT                                                                                                  
+--                                                                                                  
+bc                                                                                                  
+
+SQL> select trim(both 'a' and both 'b' from 'aaaaaaacbaaaaaaaa') from dual;
+select trim(both 'a' and both 'b' from 'aaaaaaacbaaaaaaaa') from dual
+       *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim((both 'a' and both 'b') from 'aaaaaaacbaaaaaaaa') from dual
+SQL> /
+select trim((both 'a' and both 'b') from 'aaaaaaacbaaaaaaaa') from dual
+                  *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim(both ('a' and 'b') from 'aaaaaaacbaaaaaaaa') from dual
+SQL> /
+select trim(both ('a' and 'b') from 'aaaaaaacbaaaaaaaa') from dual
+                      *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trim(both 'ab' from 'aaaaaaacbaaaaaaaa') from dual
+SQL> /
+select trim(both 'ab' from 'aaaaaaacbaaaaaaaa') from dual
+       *
+ERROR at line 1:
+ORA-30001: trim set should have only one character 
+
+
+SQL> select lpad('asdasd','as') from dual;
+select lpad('asdasd','as') from dual
+                     *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select lpad('asdasd',10,'as') from dual
+SQL> /
+
+LPAD('ASDA                                                                                          
+----------                                                                                          
+asasasdasd                                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select lpad('asd asd',10,'as') from dual
+SQL> /
+
+LPAD('ASDA                                                                                          
+----------                                                                                          
+asaasd asd                                                                                          
+
+SQL> select rpad('asasdasdasd',3,'asd') from dual;
+
+RPA                                                                                                 
+---                                                                                                 
+asa                                                                                                 
+
+SQL> select vsize(compose('a'||unistr('\0301'))) from dual;
+
+VSIZE(COMPOSE('A'||UNISTR('\0301')))                                                                
+------------------------------------                                                                
+                                   2                                                                
+
+SQL> select vsize(1+2) from dual;
+
+VSIZE(1+2)                                                                                          
+----------                                                                                          
+         2                                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select vsize('1+2') from dual
+SQL> /
+
+VSIZE('1+2')                                                                                        
+------------                                                                                        
+           3                                                                                        
+
+SQL> select vsize(45345.345345) from dual;
+
+VSIZE(45345.345345)                                                                                 
+-------------------                                                                                 
+                  7                                                                                 
+
+SQL> select to_char(100) from dual;
+
+TO_                                                                                                 
+---                                                                                                 
+100                                                                                                 
+
+SQL> select vsize(to_char(100)) from dual;
+
+VSIZE(TO_CHAR(100))                                                                                 
+-------------------                                                                                 
+                  3                                                                                 
+
+SQL> select to_number('100') from dual;
+
+TO_NUMBER('100')                                                                                    
+----------------                                                                                    
+             100                                                                                    
+
+SQL> select vsize(to_number('100')) from daul;
+select vsize(to_number('100')) from daul
+                                    *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select vsize(to_number('100')) from dual
+SQL> /
+
+VSIZE(TO_NUMBER('100'))                                                                             
+-----------------------                                                                             
+                      2                                                                             
+
+SQL> select to_char(100,'$09,99,999') from dual;
+
+TO_CHAR(100                                                                                         
+-----------                                                                                         
+ $00,00,100                                                                                         
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(4658745867456100,'$09,99,999') from dual
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(4658745867456100,'$09,99,999') from dual
+SQL> /
+
+TO_CHAR(465                                                                                         
+-----------                                                                                         
+###########                                                                                         
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(4658745,'$09,99,999') from dual
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(4658745,'$09,99,999') from dual
+SQL> /
+
+TO_CHAR(465                                                                                         
+-----------                                                                                         
+ $46,58,745                                                                                         
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(46587452,'$09,99,999') from dual
+SQL> /
+
+TO_CHAR(465                                                                                         
+-----------                                                                                         
+###########                                                                                         
+
+SQL> select to_char(sysdate) from dual;
+
+TO_CHAR(S                                                                                           
+---------                                                                                           
+22-AUG-19                                                                                           
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(sysdate,'mon dd yyyy') from dual
+SQL> /
+
+TO_CHAR(SYS                                                                                         
+-----------                                                                                         
+aug 22 2019                                                                                         
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(sysdate,'mn dd yy') from dual
+SQL> /
+select to_char(sysdate,'mn dd yy') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(sysdate,'mm dd yy') from dual
+SQL> /
+
+TO_CHAR(                                                                                            
+--------                                                                                            
+08 22 19                                                                                            
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(sysdate,'mm yy dddd') from dual
+SQL> /
+
+TO_CHAR(SY                                                                                          
+----------                                                                                          
+08 19 2345                                                                                          
+
+SQL> select to_date('24 6 99','dd mon yyyy) from dual;
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_date('24 6 99','dd mon yyyy') from dual
+SQL> /
+select to_date('24 6 99','dd mon yyyy') from dual
+               *
+ERROR at line 1:
+ORA-01843: not a valid month 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_date('24 6 99','dd-mon-yyyy') from dual
+SQL> /
+select to_date('24 6 99','dd-mon-yyyy') from dual
+               *
+ERROR at line 1:
+ORA-01843: not a valid month 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_date('1 6 99','dd-mon-yyyy') from dual
+SQL> /
+select to_date('1 6 99','dd-mon-yyyy') from dual
+               *
+ERROR at line 1:
+ORA-01843: not a valid month 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_date('1 aug 99','dd-mon-yyyy') from dual
+SQL> /
+
+TO_DATE('                                                                                           
+---------                                                                                           
+01-AUG-99                                                                                           
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_date('1 aug 99','dd-mm-yyyy') from dual
+SQL> /
+
+TO_DATE('                                                                                           
+---------                                                                                           
+01-AUG-99                                                                                           
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_date('1 aug 99') from dual
+SQL> /
+
+TO_DATE('                                                                                           
+---------                                                                                           
+01-AUG-99                                                                                           
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> select add_month(sysdate,6) from dual;
+select add_month(sysdate,6) from dual
+       *
+ERROR at line 1:
+ORA-00904: "ADD_MONTH": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select add_months(sysdate,6) from dual
+SQL> /
+
+ADD_MONTH                                                                                           
+---------                                                                                           
+22-FEB-20                                                                                           
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select add_months(sysdate,10) from dual
+SQL> /
+
+ADD_MONTH                                                                                           
+---------                                                                                           
+22-JUN-20                                                                                           
+
+SQL> commit
+  2  spool off
+  3  .
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;

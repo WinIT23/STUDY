@@ -1,0 +1,562 @@
+SQL> SET SERVEROUTPUT ON;
+SQL> DECLARE
+  2  A NUMBER := &A;
+  3  B NUMBER := &B;
+  4  BEGIN
+  5  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A INTEGER := &A;
+  3  B INTEGER := &B;
+  4  C INTEGER;
+  5  BEGIN
+  6  C := A + B;
+  7* DBMS_OUTPUT.PUT_LINE("SUM OF "||A||"AND "||B||"IS "||C||);
+SQL> /
+Enter value for a: 10
+old   2: A INTEGER := &A;
+new   2: A INTEGER := 10;
+Enter value for b: 20
+old   3: B INTEGER := &B;
+new   3: B INTEGER := 20;
+DECLARE
+*
+ERROR at line 1:
+ORA-06550: line 7, column 57: 
+PLS-00103: Encountered the symbol ")" when expecting one of the following: 
+( - + case mod new null <an identifier> 
+<a double-quoted delimited-identifier> <a bind variable> avg 
+count current max min prior sql stddev sum variance execute 
+forall merge time timestamp interval date 
+<a string literal with character set specification> 
+<a number> <a single-quoted SQL string> pipe 
+<an alternatively-quoted string literal with character set specification> 
+<an alternatively-quoted SQL string> 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A INTEGER := &A;
+  3  B INTEGER := &B;
+  4  C INTEGER;
+  5  BEGIN
+  6  C := A + B;
+  7  DBMS_OUTPUT.PUT_LINE("SUM OF "||A||"AND "||B||"IS "||C||);
+  8* END;
+SQL> /
+Enter value for a: 10
+old   2: A INTEGER := &A;
+new   2: A INTEGER := 10;
+Enter value for b: 20
+old   3: B INTEGER := &B;
+new   3: B INTEGER := 20;
+DECLARE
+*
+ERROR at line 1:
+ORA-06550: line 7, column 57: 
+PLS-00103: Encountered the symbol ")" when expecting one of the following: 
+( - + case mod new null <an identifier> 
+<a double-quoted delimited-identifier> <a bind variable> avg 
+count current max min prior sql stddev sum variance execute 
+forall merge time timestamp interval date 
+<a string literal with character set specification> 
+<a number> <a single-quoted SQL string> pipe 
+<an alternatively-quoted string literal with character set specification> 
+<an alternatively-quoted SQL string> 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A INTEGER := &A;
+  3  B INTEGER := &B;
+  4  C INTEGER;
+  5  BEGIN
+  6  C := A + B;
+  7  DBMS_OUTPUT.PUT_LINE("SUM OF "||A||"AND "||B||"IS "||C);
+  8* END;
+SQL> /
+Enter value for a: 2
+old   2: A INTEGER := &A;
+new   2: A INTEGER := 2;
+Enter value for b: 3
+old   3: B INTEGER := &B;
+new   3: B INTEGER := 3;
+DECLARE
+*
+ERROR at line 1:
+ORA-06550: line 7, column 22: 
+PLS-00201: identifier 'SUM OF ' must be declared 
+ORA-06550: line 7, column 1: 
+PL/SQL: Statement ignored 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A INTEGER := &A;
+  3  B INTEGER := &B;
+  4  C INTEGER;
+  5  BEGIN
+  6  C := A + B;
+  7  DBMS_OUTPUT.PUT_LINE('SUM OF '||A||'AND '||B||'IS '||C);
+  8* END;
+SQL> /
+Enter value for a: 2
+old   2: A INTEGER := &A;
+new   2: A INTEGER := 2;
+Enter value for b: 3
+old   3: B INTEGER := &B;
+new   3: B INTEGER := 3;
+SUM OF 2AND 3IS 5                                                                                   
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A INTEGER := &A;
+  3  B INTEGER := &B;
+  4  C INTEGER;
+  5  BEGIN
+  6  C := A + B;
+  7  DBMS_OUTPUT.PUT_LINE('SUM OF '||A||' AND '||B||' IS '||C);
+  8* END;
+SQL> /
+Enter value for a: 2
+old   2: A INTEGER := &A;
+new   2: A INTEGER := 2;
+Enter value for b: 3
+old   3: B INTEGER := &B;
+new   3: B INTEGER := 3;
+SUM OF 2 AND 3 IS 5                                                                                 
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A INTEGER := &A;
+  3  B INTEGER := &B;
+  4  C INTEGER;
+  5  BEGIN
+  6  C := A + B;
+  7  DBMS_OUTPUT.PUT_LINE('SUM OF '||A||' AND '||B||' IS '||C);
+  8* END;
+  9  /
+Enter value for a: 3
+old   2: A INTEGER := &A;
+new   2: A INTEGER := 3;
+Enter value for b: 4
+old   3: B INTEGER := &B;
+new   3: B INTEGER := 4;
+SUM OF 3 AND 4 IS 7                                                                                 
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A INTEGER := &A;
+  3  B INTEGER := &B;
+  4  C INTEGER;
+  5  BEGIN
+  6  C := A + B;
+  7  DBMS_OUTPUT.PUT_LINE('SUM OF '||A||' AND '||B||' IS '||C);
+  8* END;
+SQL> /
+Enter value for a: 5
+old   2: A INTEGER := &A;
+new   2: A INTEGER := 5;
+Enter value for b: 56
+old   3: B INTEGER := &B;
+new   3: B INTEGER := 56;
+SUM OF 5 AND 56 IS 61                                                                               
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> /
+Enter value for a: 
+old   2: A INTEGER := &A;
+new   2: A INTEGER := ;
+Enter value for b: 
+old   3: B INTEGER := &B;
+new   3: B INTEGER := ;
+DECLARE
+*
+ERROR at line 1:
+ORA-06550: line 2, column 14: 
+PLS-00103: Encountered the symbol ";" when expecting one of the following: 
+( - + case mod new not null <an identifier> 
+<a double-quoted delimited-identifier> <a bind variable> avg 
+count current exists max min prior sql stddev sum variance 
+execute forall merge time timestamp interval date 
+<a string literal with character set specification> 
+<a number> <a single-quoted SQL string> pipe 
+<an alternatively-quoted string literal with character set specification> 
+<an alternatively-quoted S 
+ORA-06550: line 3, column 14: 
+PLS-00103: Encountered the symbol ";" when expecting one of the following: 
+( - + case mod new not null <an identifier> 
+<a double-quoted delimited-identifier> <a bind variable> avg 
+count current exists max min prior sql stddev su 
+
+
+SQL> /
+Enter value for a: 56
+old   2: A INTEGER := &A;
+new   2: A INTEGER := 56;
+Enter value for b: 44
+old   3: B INTEGER := &B;
+new   3: B INTEGER := 44;
+SUM OF 56 AND 44 IS 100                                                                             
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  A INTEGER := &A;
+  3  BEGIN
+  4  IF MOD(A,2) = 0
+  5  THEN
+  6  	DBMS_OUTPUT.PUT_LINE(A||' IS EVEN');
+  7  ELSE
+  8  	DBMS_OUTPUT.PUT_LINE(A||' IS ODD');
+  9  END IF;
+ 10* END;
+SQL> /
+Enter value for a: 2
+old   2: A INTEGER := &A;
+new   2: A INTEGER := 2;
+2 IS EVEN                                                                                           
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> /
+Enter value for a: 3
+old   2: A INTEGER := &A;
+new   2: A INTEGER := 3;
+3 IS ODD                                                                                            
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+line 6 truncated.
+  1  delimiter //
+  2  create procedure update_price (IN temp_ISBN varchar(10), IN new_price integer)
+  3                 -> begin
+  4                 -> update book set price=new_price where ISBN=temp_ISBN;
+  5                 -> end; //
+  6* call update_price(001, 600); /
+SQL> /
+delimiter //
+*
+ERROR at line 1:
+ORA-00900: invalid SQL statement 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  delimiter
+  2  create procedure update_price (IN temp_ISBN varchar(10), IN new_price integer)
+  3                 -> begin
+  4                 -> update book set price=new_price where ISBN=temp_ISBN;
+  5                 -> end; //
+  6* call update_price(001, 600); /
+SQL> /
+delimiter
+*
+ERROR at line 1:
+ORA-00900: invalid SQL statement 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  create procedure update_price (IN temp_ISBN varchar(10), IN new_price integer)
+  2                 -> begin
+  3                 -> update book set price=new_price where ISBN=temp_ISBN;
+  4                 -> end;
+  5* call update_price(001, 600);
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  create procedure update_price (IN temp_ISBN varchar(10), IN new_price integer)
+  2  begin
+  3  update book set price=new_price where ISBN=temp_ISBN;
+  4  end;
+  5* call update_price(001, 600);
+SQL> /
+create procedure update_price (IN temp_ISBN varchar(10), IN new_price integer)
+                 *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  create procedure update_price1 (IN temp_ISBN varchar(10), IN new_price integer)
+  2  begin
+  3  update book set price=new_price where ISBN=temp_ISBN;
+  4  end;
+  5* call update_price(001, 600);
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  create procedure update_price2 (IN MEMBER_ID varchar(10), IN new_price integer)
+  2  begin
+  3  update books set price=new_price where ISBN=temp_ISBN;
+  4  end;
+  5* call update_price(001, 600);
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE UPDATE_PRICE2:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+1/26     PLS-00103: Encountered the symbol "IN" when expecting one of the                           
+         following:                                                                                 
+         <an identifier> <a double-quoted delimited-identifier>                                     
+         current                                                                                    
+                                                                                                    
+SQL> ED
+Wrote file afiedt.buf
+
+  1  create procedure update_price2 (MEMBER_ID IN varchar(10),new_price IN integer)
+  2  begin
+  3  update books set price=new_price where ISBN=temp_ISBN;
+  4  end;
+  5* call update_price(001, 600);
+SQL> /
+create procedure update_price2 (MEMBER_ID IN varchar(10),new_price IN integer)
+                 *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  create procedure update_price3 (MEMBER_ID IN varchar(10),new_price IN integer)
+  2  begin
+  3  update books set price=new_price where ISBN=temp_ISBN;
+  4  end;
+  5* call update_price(001, 600);
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS;
+Errors for PROCEDURE UPDATE_PRICE3:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+1/46     PLS-00103: Encountered the symbol "(" when expecting one of the                            
+         following:                                                                                 
+         := . ) , @ % default character                                                             
+         The symbol ":=" was substituted for "(" to continue.                                       
+                                                                                                    
+2/1      PLS-00103: Encountered the symbol "BEGIN" when expecting one of                            
+         the following:                                                                             
+         ; is with authid as cluster order using external                                           
+         deterministic parallel_enable pipelined                                                    
+         The symbol "is" was substituted for "BEGIN" to continue.                                   
+                                                                                                    
+5/1      PLS-00103: Encountered the symbol "CALL"                                                   
+6/0      PLS-00103: Encountered the symbol "end-of-file" when expecting                             
+         one of the following:                                                                      
+         begin function package pragma procedure subtype type use                                   
+         <an identifier> <a double-quoted delimited-identifier> form                                
+         current cursor                                                                             
+                                                                                                    
+SQL> ED
+Wrote file afiedt.buf
+
+  1  create procedure update_price3 (MEMBER_ID IN varchar,new_price IN integer)
+  2  begin
+  3  update books set price=new_price where ISBN=temp_ISBN;
+  4  end;
+  5* call update_price(001, 600);
+SQL> /
+create procedure update_price3 (MEMBER_ID IN varchar,new_price IN integer)
+                 *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE procedure update_price3 (MEMBER_ID IN varchar,new_price IN integer)
+  2  begin
+  3  update books set price=new_price where ISBN=temp_ISBN;
+  4  end;
+  5* call update_price(001, 600);
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE procedure update_price3 (MEMBER_ID IN varchar,new_price IN integer) IS
+  2  begin
+  3  update books set price=new_price where ISBN=temp_ISBN;
+  4  end;
+  5* call update_price(001, 600);
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE UPDATE_PRICE3:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+5/1      PLS-00103: Encountered the symbol "CALL"                                                   
+6/0      PLS-00103: Encountered the symbol "end-of-file" when expecting                             
+         one of the following:                                                                      
+         begin function package pragma procedure subtype type use                                   
+         <an identifier> <a double-quoted delimited-identifier> form                                
+         current cursor                                                                             
+                                                                                                    
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE procedure update_price3 (MEMBER_ID IN varchar,new_price IN integer) IS
+  2  begin
+  3  update books set price=new_price where ISBN=temp_ISBN;
+  4* end;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE UPDATE_PRICE3:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+3/1      PL/SQL: SQL Statement ignored                                                              
+3/45     PL/SQL: ORA-00904: "TEMP_ISBN": invalid identifier                                         
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE procedure update_price3 (MEMID IN varchar,new_price IN integer) IS
+  2  begin
+  3  update books set price=new_price where MEMBER_ID=MEMID;
+  4* end;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS
+Errors for PROCEDURE UPDATE_PRICE3:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+3/1      PL/SQL: SQL Statement ignored                                                              
+3/40     PL/SQL: ORA-00904: "MEMBER_ID": invalid identifier                                         
+SQL> DESC MEMEBER
+ERROR:
+ORA-04043: object MEMEBER does not exist 
+
+
+SQL> DESC MEMBER
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ MEMBER_ID                                             NOT NULL NUMBER(5)
+ MEMBER_NAME                                                    VARCHAR2(30)
+ MEMBER_ADDRESS                                                 VARCHAR2(50)
+ ACC_OPEN_DATE                                                  DATE
+ MEMBERSHIP_TYPE                                                VARCHAR2(20)
+ FEES_PAID                                                      NUMBER(4)
+ MAX_BOOKS_ALLOWED                                              NUMBER(2)
+ PENALTY_AMOUNT                                                 NUMBER(7,2)
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE procedure update_price3 (MEMID IN varchar,new_price IN integer) IS
+  2  begin
+  3  update MEMBER set PENALTY_AMOUNT=new_price where MEMBER_ID=MEMID;
+  4* end;
+SQL> /
+
+Procedure created.
+
+SQL> CALL UPDATE_PRICE3(101,200);
+
+Call completed.
+
+SQL> SELECT * FROM MEMBER;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            300                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            800                           
+                                                                                                    
+        4 LONI                           SURAT                                                      
+12-FEB-99 Lifetime                  2000                50            700                           
+                                                                                                    
+
+SQL> CALL UPDATE_PRICE3(1,200);
+
+Call completed.
+
+SQL> SELECT * FROM MEMBER;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            200                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            800                           
+                                                                                                    
+        4 LONI                           SURAT                                                      
+12-FEB-99 Lifetime                  2000                50            700                           
+                                                                                                    
+
+SQL> SPOOL OFF;

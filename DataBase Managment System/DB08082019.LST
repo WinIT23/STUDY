@@ -1,0 +1,598 @@
+SQL> set autocommit on
+SQL> CREATE TABLE Member(
+  2  Member_Id number(5),
+  3  Member_Name varchar2(30),
+  4  Member_Address varchar2(50),
+  5  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Member(
+  2  Member_Id number(5) primary key,
+  3  Member_Name varchar2(30),
+  4  Member_Address varchar2(50),
+  5* Acc_Open_Date
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE HSC_MARKS      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE007 Vinit Desai                    23-MAR-99                                86      87.67      
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                           90      90.33      
+17BCE090 Chitrang Patel                 13-MAY-99                                74      78.88      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE087 Gaurav Ladhha                  02-SEP-00                                143     87.55      
+17BCE054 Harsh Naik                     23-APR-00 RCNI                           110     87.33      
+17BCE056 Kunal Chhatwani                27-MAR-99                                160     97.22      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+20 rows selected.
+
+SQL> select * from student
+  2  where membership like '%RCNI%' or membership like '%ISTE%';
+where membership like '%RCNI%' or membership like '%ISTE%'
+                                  *
+ERROR at line 2:
+ORA-00904: "MEMBERSHIP": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where members like '%RCNI%' or membership like '%ISTE%'
+SQL> /
+where members like '%RCNI%' or membership like '%ISTE%'
+                               *
+ERROR at line 2:
+ORA-00904: "MEMBERSHIP": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where members like '%RCNI%' or members like '%ISTE%'
+SQL> /
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE HSC_MARKS      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                           90      90.33      
+17BCE054 Harsh Naik                     23-APR-00 RCNI                           110     87.33      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+8 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where members in ('%RCNI%','%ISTE%')
+SQL> /
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where members in ['%RCNI%','%ISTE%']
+SQL> /
+where members in ['%RCNI%','%ISTE%']
+                 *
+ERROR at line 2:
+ORA-00936: missing expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where members in ('%RCNI%','%ISTE%')
+SQL> /
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where members like ('%RCNI%','%ISTE%')
+SQL> /
+where members like ('%RCNI%','%ISTE%')
+                            *
+ERROR at line 2:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where members like in ('%RCNI%','%ISTE%')
+SQL> /
+where members like in ('%RCNI%','%ISTE%')
+                   *
+ERROR at line 2:
+ORA-00936: missing expression 
+
+
+SQL> CREATE TABLE
+  2  Member_Id num
+  3  Member_Name v
+  4  Member_Addres
+  5  Acc_Open_Date
+  6  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE
+  2  Member_Id num
+  3  Member_Name v
+  4  Member_Addres
+  5* Acc_Open_Date
+SQL> CREATE TABLE Member(
+  2  Member_Id number(5) primary key,
+  3  Member_Name varchar2(30),
+  4  Member_Address varchar2(50),
+  5  Acc_Open_Date
+  6  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Member(
+  2  Member_Id number(5) primary key,
+  3  Member_Name varchar2(30),
+  4  Member_Address varchar2(50),
+  5  Acc_Open_Date date,
+  6  Membership_type varchar2(20) check(value in('Lifetime','Annual','Half Yearly','Quarterly')),
+  7  Fees_paid number(4),
+  8  Max_Books_Allowed number(2),
+  9  Penalty_Amount number(7,2),
+ 10  constraint maxbooks check(Max_Books_Allowed<100),
+ 11  constraint penalty check(Penalty_Allowed<=1000)
+ 12* )
+SQL> /
+Membership_type varchar2(20) check(value in('Lifetime','Annual','Half Yearly','Quarterly')),
+                                                                                           *
+ERROR at line 6:
+ORA-02438: Column check constraint cannot reference other columns 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Member(
+  2  Member_Id number(5) primary key,
+  3  Member_Name varchar2(30),
+  4  Member_Address varchar2(50),
+  5  Acc_Open_Date date,
+  6  Membership_type varchar2(20) check(value in('Lifetime','Annual','Half_Yearly','Quarterly')),
+  7  Fees_paid number(4),
+  8  Max_Books_Allowed number(2),
+  9  Penalty_Amount number(7,2),
+ 10  constraint maxbooks check(Max_Books_Allowed<100),
+ 11  constraint penalty check(Penalty_Allowed<=1000)
+ 12* )
+SQL> /
+Membership_type varchar2(20) check(value in('Lifetime','Annual','Half_Yearly','Quarterly')),
+                                                                                           *
+ERROR at line 6:
+ORA-02438: Column check constraint cannot reference other columns 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Member(
+  2  Member_Id number(5) primary key,
+  3  Member_Name varchar2(30),
+  4  Member_Address varchar2(50),
+  5  Acc_Open_Date date,
+  6  Membership_type varchar2(20) check(value in ('Lifetime','Annual','Half_Yearly','Quarterly')),
+  7  Fees_paid number(4),
+  8  Max_Books_Allowed number(2),
+  9  Penalty_Amount number(7,2),
+ 10  constraint maxbooks check(Max_Books_Allowed<100),
+ 11  constraint penalty check(Penalty_Allowed<=1000)
+ 12* )
+SQL> /
+Membership_type varchar2(20) check(value in ('Lifetime','Annual','Half_Yearly','Quarterly')),
+                                                                                            *
+ERROR at line 6:
+ORA-02438: Column check constraint cannot reference other columns 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Member(
+  2  Member_Id number(5) primary key,
+  3  Member_Name varchar2(30),
+  4  Member_Address varchar2(50),
+  5  Acc_Open_Date date,
+  6  Membership_type varchar2(20) check(Membership_type in ('Lifetime','Annual','Half_Yearly','Quarterly')),
+  7  Fees_paid number(4),
+  8  Max_Books_Allowed number(2),
+  9  Penalty_Amount number(7,2),
+ 10  constraint maxbooks check(Max_Books_Allowed<100),
+ 11  constraint penalty check(Penalty_Allowed<=1000)
+ 12* )
+SQL> /
+constraint penalty check(Penalty_Allowed<=1000)
+                         *
+ERROR at line 11:
+ORA-00904: "PENALTY_ALLOWED": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Member(
+  2  Member_Id number(5) primary key,
+  3  Member_Name varchar2(30),
+  4  Member_Address varchar2(50),
+  5  Acc_Open_Date date,
+  6  Membership_type varchar2(20) check(Membership_type in ('Lifetime','Annual','Half_Yearly','Quarterly')),
+  7  Fees_paid number(4),
+  8  Max_Books_Allowed number(2),
+  9  Penalty_Amount number(7,2),
+ 10  constraint maxbooks check(Max_Books_Allowed<100),
+ 11  constraint penalty check(Penalty_Amount<=1000)
+ 12* )
+SQL> /
+
+Table created.
+
+SQL> CREATE TABLE Books(
+  2  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Books(
+  2  BOOK_NO NUMBER(6) PRIMARY KEY,
+  3  BOOK_NAME VARCHAR2(30) NOT NULL,
+  4  AUTHOR_NAME VARCHAR2(30),
+  5  COST NUMBER(7,2),
+  6  CATEGORY CHAR(10) CHECK (CATEGORY IN ('SCIENCE','FICTION','DATABASE','RDBMS','OTHERS'))
+  7* )
+SQL> /
+
+Table created.
+
+SQL> CREAT
+SP2-0042: unknown command "CREAT" - rest of line ignored.
+SQL> .
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE Books(
+  2  BOOK_NO NUMBER(6) PRIMARY KEY,
+  3  BOOK_NAME VARCHAR2(30) NOT NULL,
+  4  AUTHOR_NAME VARCHAR2(30),
+  5  COST NUMBER(7,2),
+  6  CATEGORY CHAR(10) CHECK (CATEGORY IN ('SCIENCE','FICTION','DATABASE','RDBMS','OTHERS'))
+  7* )
+SQL> CREATE TABLE ISSUE(
+  2  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE ISSUE(
+  2  LIB_ISSUE_ID NUMBER(10),
+  3  BOOK_NO NUMBER(6) REFERENCES BOOKS(BOOK_NO),
+  4  MEMBER_ID NUMBER(5) REFERENCES MEMBER(MEMBER_ID),
+  5  ISSUE_DATE DATE,
+  6  RETURN_DATE DATE
+  7* )
+SQL> /
+
+Table created.
+
+SQL> INSERT INTO BOOKS VALUES('&BOOK_NO','&BOOK_NAME','&AUTHOR','&COST','&CATEGORY');
+Enter value for book_no: 101
+Enter value for book_name: LET US C
+Enter value for author: DENIS RITCHIE
+Enter value for cost: 450
+Enter value for category: SCIENCE
+old   1: INSERT INTO BOOKS VALUES('&BOOK_NO','&BOOK_NAME','&AUTHOR','&COST','&CATEGORY')
+new   1: INSERT INTO BOOKS VALUES('101','LET US C','DENIS RITCHIE','450','SCIENCE')
+
+1 row created.
+
+Commit complete.
+SQL> SAVE INSERTINBOOKS
+Created file INSERTINBOOKS
+SQL> @INSERTINBOOKS
+Enter value for book_no: 102
+Enter value for book_name: ORACLE COMPLETE REFERENCE
+Enter value for author: LONI
+Enter value for cost: 550
+Enter value for category: DATABASE
+old   1: INSERT INTO BOOKS VALUES('&BOOK_NO','&BOOK_NAME','&AUTHOR','&COST','&CATEGORY')
+new   1: INSERT INTO BOOKS VALUES('102','ORACLE COMPLETE REFERENCE','LONI','550','DATABASE')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for book_no: 103
+Enter value for book_name: MASTERING SQL
+Enter value for author: LONI
+Enter value for cost: 250
+Enter value for category: DATABASE
+old   1: INSERT INTO BOOKS VALUES('&BOOK_NO','&BOOK_NAME','&AUTHOR','&COST','&CATEGORY')
+new   1: INSERT INTO BOOKS VALUES('103','MASTERING SQL','LONI','250','DATABASE')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for book_no: 104
+Enter value for book_name: PL SQL-REF
+Enter value for author: SCOTT URMAN
+Enter value for cost: 750
+Enter value for category: DATABASE
+old   1: INSERT INTO BOOKS VALUES('&BOOK_NO','&BOOK_NAME','&AUTHOR','&COST','&CATEGORY')
+new   1: INSERT INTO BOOKS VALUES('104','PL SQL-REF','SCOTT URMAN','750','DATABASE')
+
+1 row created.
+
+Commit complete.
+SQL> UPDATE BOOKS
+  2  SET
+  3  .
+SQL> UPDATE BOOKS
+  2  SET COST = 300,
+  3  SET CATEGORY = 'RDBMS'
+  4  WHERE BOOK_NO = 103;
+SET CATEGORY = 'RDBMS'
+*
+ERROR at line 3:
+ORA-01747: invalid user.table.column, table.column, or column specification 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  UPDATE BOOKS
+  2  SET COST = 300
+  3* WHERE BOOK_NO = 103
+SQL> /
+
+1 row updated.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  UPDATE BOOKS
+  2  SET CATEGORY = 'RDBMS'
+  3* WHERE BOOK_NO = 103
+SQL> /
+
+1 row updated.
+
+Commit complete.
+SQL> SELECT * FROM BOOKS;
+
+  BOOK_NO BOOK_NAME                      AUTHOR_NAME                         COST CATEGORY          
+--------- ------------------------------ ------------------------------ --------- ----------        
+      101 LET US C                       DENIS RITCHIE                        450 SCIENCE           
+      102 ORACLE COMPLETE REFERENCE      LONI                                 550 DATABASE          
+      103 MASTERING SQL                  LONI                                 300 RDBMS             
+      104 PL SQL-REF                     SCOTT URMAN                          750 DATABASE          
+
+SQL> ALTER TABLE ISSUE
+  2  MODIFY LIB_ISSUE_ID NUMBER(10) PRIMARY KEY;
+
+Table altered.
+
+SQL> ALTER TABLE ISSUE
+  2  MODIFY ISSUE_DATE DATE CHECK (ISSUE_DATE <= SYSDATE);
+MODIFY ISSUE_DATE DATE CHECK (ISSUE_DATE <= SYSDATE)
+                                            *
+ERROR at line 2:
+ORA-02436: date or system variable wrongly specified in CHECK constraint 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE ISSUE
+  2* MODIFY ISSUE_DATE DATE CHECK (ISSUE_DATE < RETURN_DATE)
+SQL> /
+MODIFY ISSUE_DATE DATE CHECK (ISSUE_DATE < RETURN_DATE)
+                                                      *
+ERROR at line 2:
+ORA-02438: Column check constraint cannot reference other columns 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE ISSUE
+  2* ADD CONSTRAINT ISSUEDATE CHECK (ISSUE_DATE < RETURN_DATE)
+SQL> /
+
+Table altered.
+
+SQL> ALTER TABLE ISSUE
+  2  ADD COLUMN REFERENCE CHAR(30);
+ADD COLUMN REFERENCE CHAR(30)
+    *
+ERROR at line 2:
+ORA-00904: : invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE ISSUE
+  2* ADD REFERENCE CHAR(30)
+SQL> /
+
+Table altered.
+
+SQL> DESC ISSUE;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ LIB_ISSUE_ID                                          NOT NULL NUMBER(10)
+ BOOK_NO                                                        NUMBER(6)
+ MEMBER_ID                                                      NUMBER(5)
+ ISSUE_DATE                                                     DATE
+ RETURN_DATE                                                    DATE
+ REFERENCE                                                      CHAR(30)
+
+SQL> ALTER TABLE ISSUE
+  2  DELETE COLUMN REFERENCE;
+DELETE COLUMN REFERENCE
+*
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE ISSUE
+  2* DROP COLUMN REFERENCE
+SQL> /
+
+Table altered.
+
+SQL> DESC ISSUE;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ LIB_ISSUE_ID                                          NOT NULL NUMBER(10)
+ BOOK_NO                                                        NUMBER(6)
+ MEMBER_ID                                                      NUMBER(5)
+ ISSUE_DATE                                                     DATE
+ RETURN_DATE                                                    DATE
+
+SQL>  INSERT INTO BOOKS VALUES('&BOOK_NO','&BOOK_NAME','&AUTHOR','&COST','&CATEGORY')
+  2  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1*  INSERT INTO ISSUE VALUES('&ISSUEID','&BOOK_NO','&MEMBERID','&ISSUEDATE','&RETURNDATE')
+SQL> /
+Enter value for issueid: 7001
+Enter value for book_no: 101
+Enter value for memberid: 1
+Enter value for issuedate: 10-DEC-06
+Enter value for returndate: 
+old   1:  INSERT INTO ISSUE VALUES('&ISSUEID','&BOOK_NO','&MEMBERID','&ISSUEDATE','&RETURNDATE')
+new   1:  INSERT INTO ISSUE VALUES('7001','101','1','10-DEC-06','')
+ INSERT INTO ISSUE VALUES('7001','101','1','10-DEC-06','')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CE17018.SYS_C00100677) violated - parent key not found 
+
+
+SQL> INSERT INTO ISSUE VALUES('&ISSUEID','&BOOK_NO','&MEMBERID','&ISSUEDATE','&RETURNDATE')
+  2  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO MEMBER VALUES('&MEMBERID','&MEMBERNAME','&ADDRESS','&ACC_OPEN_DATE','&MEMBERSHIP','&FEES','&MAX_BOOKS','&PENALTY')
+SQL> /
+Enter value for memberid: 1
+Enter value for membername: A
+Enter value for address: SURAT
+Enter value for acc_open_date: 12-FEB-00
+Enter value for membership: Lifetime
+Enter value for fees: 1000
+Enter value for max_books: 20
+Enter value for penalty: 4500
+old   1: INSERT INTO MEMBER VALUES('&MEMBERID','&MEMBERNAME','&ADDRESS','&ACC_OPEN_DATE','&MEMBERSHIP','&FEES','&MAX_BOOKS','&PENALTY')
+new   1: INSERT INTO MEMBER VALUES('1','A','SURAT','12-FEB-00','Lifetime','1000','20','4500')
+INSERT INTO MEMBER VALUES('1','A','SURAT','12-FEB-00','Lifetime','1000','20','4500')
+*
+ERROR at line 1:
+ORA-02290: check constraint (CE17018.PENALTY) violated 
+
+
+SQL> /
+Enter value for memberid: 1
+Enter value for membername: A
+Enter value for address: SURAT
+Enter value for acc_open_date: 12-FEB-00
+Enter value for membership: Lifetime
+Enter value for fees: 1000
+Enter value for max_books: 20
+Enter value for penalty: 300
+old   1: INSERT INTO MEMBER VALUES('&MEMBERID','&MEMBERNAME','&ADDRESS','&ACC_OPEN_DATE','&MEMBERSHIP','&FEES','&MAX_BOOKS','&PENALTY')
+new   1: INSERT INTO MEMBER VALUES('1','A','SURAT','12-FEB-00','Lifetime','1000','20','300')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for memberid: 2
+Enter value for membername: B
+Enter value for address: BHUJ
+Enter value for acc_open_date: 10-FEB-99
+Enter value for membership: Annual
+Enter value for fees: 300
+Enter value for max_books: 30
+Enter value for penalty: 500
+old   1: INSERT INTO MEMBER VALUES('&MEMBERID','&MEMBERNAME','&ADDRESS','&ACC_OPEN_DATE','&MEMBERSHIP','&FEES','&MAX_BOOKS','&PENALTY')
+new   1: INSERT INTO MEMBER VALUES('2','B','BHUJ','10-FEB-99','Annual','300','30','500')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for memberid: 3
+Enter value for membername: C
+Enter value for address: UNJHA
+Enter value for acc_open_date: 20-MARCH-99
+Enter value for membership: Quartely
+Enter value for fees: 400
+Enter value for max_books: 40
+Enter value for penalty: 800
+old   1: INSERT INTO MEMBER VALUES('&MEMBERID','&MEMBERNAME','&ADDRESS','&ACC_OPEN_DATE','&MEMBERSHIP','&FEES','&MAX_BOOKS','&PENALTY')
+new   1: INSERT INTO MEMBER VALUES('3','C','UNJHA','20-MARCH-99','Quartely','400','40','800')
+INSERT INTO MEMBER VALUES('3','C','UNJHA','20-MARCH-99','Quartely','400','40','800')
+*
+ERROR at line 1:
+ORA-02290: check constraint (CE17018.SYS_C00100542) violated 
+
+
+SQL> /
+Enter value for memberid: 3
+Enter value for membername: C
+Enter value for address: UNJHA
+Enter value for acc_open_date: 20-MAR-99
+Enter value for membership: Lifetime
+Enter value for fees: 400
+Enter value for max_books: 40
+Enter value for penalty: 800
+old   1: INSERT INTO MEMBER VALUES('&MEMBERID','&MEMBERNAME','&ADDRESS','&ACC_OPEN_DATE','&MEMBERSHIP','&FEES','&MAX_BOOKS','&PENALTY')
+new   1: INSERT INTO MEMBER VALUES('3','C','UNJHA','20-MAR-99','Lifetime','400','40','800')
+
+1 row created.
+
+Commit complete.
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SPOOL OFF

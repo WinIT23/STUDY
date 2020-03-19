@@ -1,0 +1,604 @@
+SQL> select * from tab;
+
+TNAME                          TABTYPE CLUSTERID                                                    
+------------------------------ ------- ---------                                                    
+BIN$0xN5N2VvQYm6dXR/Qgobtw==$0 TABLE                                                                
+BIN$7n4jpdFjQ9+ovRAL5HQ3kA==$0 TABLE                                                                
+BOOKS                          TABLE                                                                
+CLIENT                         TABLE                                                                
+EMP                            TABLE                                                                
+ISSUE                          TABLE                                                                
+MEMBER                         TABLE                                                                
+STUDENT                        TABLE                                                                
+
+8 rows selected.
+
+SQL> desc books;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ BOOK_NO                                               NOT NULL NUMBER(6)
+ BOOK_NAME                                             NOT NULL VARCHAR2(30)
+ AUTHOR_NAME                                                    VARCHAR2(30)
+ COST                                                           NUMBER(7,2)
+ CATEGORY                                                       CHAR(10)
+
+SQL> select * from books
+  2  where cost > all(select cost from books);
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from books
+  2* where cost >= all(select cost from books)
+SQL> /
+
+  BOOK_NO BOOK_NAME                      AUTHOR_NAME                         COST CATEGORY          
+--------- ------------------------------ ------------------------------ --------- ----------        
+      104 PL SQL-REF                     SCOTT URMAN                          750 DATABASE          
+
+SQL> desc member;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ MEMBER_ID                                             NOT NULL NUMBER(5)
+ MEMBER_NAME                                                    VARCHAR2(30)
+ MEMBER_ADDRESS                                                 VARCHAR2(50)
+ ACC_OPEN_DATE                                                  DATE
+ MEMBERSHIP_TYPE                                                VARCHAR2(20)
+ FEES_PAID                                                      NUMBER(4)
+ MAX_BOOKS_ALLOWED                                              NUMBER(2)
+ PENALTY_AMOUNT                                                 NUMBER(7,2)
+
+SQL> select * from member;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            300                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            800                           
+                                                                                                    
+
+SQL> select * from member
+  2  where
+  3  .
+SQL> desc books;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ BOOK_NO                                               NOT NULL NUMBER(6)
+ BOOK_NAME                                             NOT NULL VARCHAR2(30)
+ AUTHOR_NAME                                                    VARCHAR2(30)
+ COST                                                           NUMBER(7,2)
+ CATEGORY                                                       CHAR(10)
+
+SQL> desc issue;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ LIB_ISSUE_ID                                          NOT NULL NUMBER(10)
+ BOOK_NO                                                        NUMBER(6)
+ MEMBER_ID                                                      NUMBER(5)
+ ISSUE_DATE                                                     DATE
+ RETURN_DATE                                                    DATE
+
+SQL> select book_no from issue where member_id in(select member_id from member);
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select book_no from issue where member_id in(select member_id from member) group by member_id
+SQL> /
+select book_no from issue where member_id in(select member_id from member) group by member_id
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> 
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select member_id,book_no from issue where member_id in(select member_id from member) group by member_id
+SQL> ?
+
+ HELP
+ ----
+
+ Accesses this command line help system. Enter HELP INDEX or ? INDEX
+ for a list of topics. In iSQL*Plus, click the Help button to display
+ iSQL*Plus online help.
+ You can view SQL*Plus resources at http://otn.oracle.com/tech/sql_plus/
+ and the Oracle Database Library at http://otn.oracle.com/documentation/
+
+ HELP|? [topic]
+
+
+SQL> /
+select member_id,book_no from issue where member_id in(select member_id from member) group by member_id
+                 *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select member_id,book_no from issue where member_id in(select member_id from member)
+SQL> /
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select member_id,book_no from issue where member_id in(select member_id from member)
+SQL> /
+
+no rows selected
+
+SQL> save num2;
+Created file num2
+SQL> @num2
+
+no rows selected
+
+SQL> desc issue;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ LIB_ISSUE_ID                                          NOT NULL NUMBER(10)
+ BOOK_NO                                                        NUMBER(6)
+ MEMBER_ID                                                      NUMBER(5)
+ ISSUE_DATE                                                     DATE
+ RETURN_DATE                                                    DATE
+
+SQL> select * from books;
+
+  BOOK_NO BOOK_NAME                      AUTHOR_NAME                         COST CATEGORY          
+--------- ------------------------------ ------------------------------ --------- ----------        
+      101 LET US C                       DENIS RITCHIE                        450 SCIENCE           
+      102 ORACLE COMPLETE REFERENCE      LONI                                 550 DATABASE          
+      103 MASTERING SQL                  LONI                                 300 RDBMS             
+      104 PL SQL-REF                     SCOTT URMAN                          750 DATABASE          
+
+SQL> select * from member;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            300                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            800                           
+                                                                                                    
+
+SQL> insert into issue values(201, 101, 1, "17-jan-2019", "20-jan-2019")
+  2  ;
+insert into issue values(201, 101, 1, "17-jan-2019", "20-jan-2019")
+                                                     *
+ERROR at line 1:
+ORA-00984: column not allowed here 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(201, 101, 1, '17-jan-2019', '20-jan-2019')
+  2  ;
+
+1 row created.
+
+Commit complete.
+SQL> save insertissue;
+Created file insertissue
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(200, 100, 2, '20-jan-2019', '22-jan-2019')
+  2  ;
+insert into issue values(200, 100, 2, '20-jan-2019', '22-jan-2019')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CE17018.SYS_C00100676) violated - parent key not found 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(200, 102, 2, '20-jan-2019', '22-jan-2019')
+  2  ;
+
+1 row created.
+
+Commit complete.
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(200, 103, 3, '20-jan-2019', '27-jan-2019')
+  2  ;
+insert into issue values(200, 103, 3, '20-jan-2019', '27-jan-2019')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CE17018.SYS_C00100813) violated 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(202, 103, 3, '20-jan-2019', '27-jan-2019')
+  2  ;
+
+1 row created.
+
+Commit complete.
+SQL> select * from issue;
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                
+------------ --------- --------- --------- ---------                                                
+         201       101         1 17-JAN-19 20-JAN-19                                                
+         200       102         2 20-JAN-19 22-JAN-19                                                
+         202       103         3 20-JAN-19 27-JAN-19                                                
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select * from issue
+SQL> insert into issue values(202, 103, 3, '20-jan-2019', '27-jan-2019')
+  2  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(202, 101, 2, '22-jan-2019', '27-jan-2019')
+SQL> ;
+  1* insert into issue values(202, 101, 2, '22-jan-2019', '27-jan-2019')
+SQL> ;
+  1* insert into issue values(202, 101, 2, '22-jan-2019', '27-jan-2019')
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(202, 101, 2, '22-jan-2019', '27-jan-2019');
+SQL> /
+insert into issue values(202, 101, 2, '22-jan-2019', '27-jan-2019');
+                                                                   *
+ERROR at line 1:
+ORA-00911: invalid character 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(202, 101, 2, '22-jan-2019', '27-jan-2019')
+SQL> /
+insert into issue values(202, 101, 2, '22-jan-2019', '27-jan-2019')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CE17018.SYS_C00100813) violated 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(203, 101, 2, '22-jan-2019', '27-jan-2019')
+SQL> /
+
+1 row created.
+
+Commit complete.
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(204, 101, 3, '25-jan-2019', '29-jan-2019')
+SQL> /
+
+1 row created.
+
+Commit complete.
+SQL> select * from issue;
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                
+------------ --------- --------- --------- ---------                                                
+         201       101         1 17-JAN-19 20-JAN-19                                                
+         200       102         2 20-JAN-19 22-JAN-19                                                
+         202       103         3 20-JAN-19 27-JAN-19                                                
+         203       101         2 22-JAN-19 27-JAN-19                                                
+         204       101         3 25-JAN-19 29-JAN-19                                                
+
+SQL> select * from books;
+
+  BOOK_NO BOOK_NAME                      AUTHOR_NAME                         COST CATEGORY          
+--------- ------------------------------ ------------------------------ --------- ----------        
+      101 LET US C                       DENIS RITCHIE                        450 SCIENCE           
+      102 ORACLE COMPLETE REFERENCE      LONI                                 550 DATABASE          
+      103 MASTERING SQL                  LONI                                 300 RDBMS             
+      104 PL SQL-REF                     SCOTT URMAN                          750 DATABASE          
+
+SQL> insert into issue values(204, 101, 3, '25-jan-2019', '29-jan-2019')
+  2  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(205, 101, 4, '23-jan-2019', '24-jan-2019')
+SQL> /
+insert into issue values(205, 101, 4, '23-jan-2019', '24-jan-2019')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CE17018.SYS_C00100677) violated - parent key not found 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(205, 101, 2, '23-jan-2019', '24-jan-2019')
+SQL> /
+
+1 row created.
+
+Commit complete.
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(205, 104, 2, '23-jan-2019', '24-jan-2019')
+SQL> /
+insert into issue values(205, 104, 2, '23-jan-2019', '24-jan-2019')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CE17018.SYS_C00100813) violated 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(206, 104, 2, '23-jan-2019', '24-jan-2019')
+SQL> /
+
+1 row created.
+
+Commit complete.
+SQL> select * from issu;
+select * from issu
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select * from issue
+SQL> /
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                
+------------ --------- --------- --------- ---------                                                
+         201       101         1 17-JAN-19 20-JAN-19                                                
+         200       102         2 20-JAN-19 22-JAN-19                                                
+         202       103         3 20-JAN-19 27-JAN-19                                                
+         203       101         2 22-JAN-19 27-JAN-19                                                
+         204       101         3 25-JAN-19 29-JAN-19                                                
+         205       101         2 23-JAN-19 24-JAN-19                                                
+         206       104         2 23-JAN-19 24-JAN-19                                                
+
+7 rows selected.
+
+SQL> insert into issue values(206, 104, 2, '23-jan-2019', '24-jan-2019')
+  2  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into issue values(207, 103, 2, '23-jan-2019', '24-jan-2019')
+SQL> /
+
+1 row created.
+
+Commit complete.
+SQL> alter table issue
+  2  .
+SQL> update issue
+  2  delete
+  3  .
+SQL> delete from issue where lib_issue_id = 205;
+
+1 row deleted.
+
+Commit complete.
+SQL> select * from issue;
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                
+------------ --------- --------- --------- ---------                                                
+         201       101         1 17-JAN-19 20-JAN-19                                                
+         200       102         2 20-JAN-19 22-JAN-19                                                
+         202       103         3 20-JAN-19 27-JAN-19                                                
+         203       101         2 22-JAN-19 27-JAN-19                                                
+         204       101         3 25-JAN-19 29-JAN-19                                                
+         206       104         2 23-JAN-19 24-JAN-19                                                
+         207       103         2 23-JAN-19 24-JAN-19                                                
+
+7 rows selected.
+
+SQL> select * from member where not exists ( select book_id from books minus select book_id from issue where issue.member_id = member.member_id);
+select * from member where not exists ( select book_id from books minus select book_id from issue where issue.member_id = member.member_id)
+                                               *
+ERROR at line 1:
+ORA-00904: "BOOK_ID": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select * from member where not exists ( select book_no from books minus select book_no from issue where issue.member_id = member.member_id)
+SQL> /
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+
+SQL> select month(issue_date) from issue where exists (select member_id from issue
+  2  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select i1.month(issue_date) from issue i1 where (select member_id from issue i2  where i1.month(issue_date) = i2.month(issue_date))
+SQL> /
+select i1.month(issue_date) from issue i1 where (select member_id from issue i2  where i1.month(issue_date) = i2.month(issue_date))
+                                                                                                                                  *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> select month('14-jan-2019') from dual;
+select month('14-jan-2019') from dual
+       *
+ERROR at line 1:
+ORA-00904: "MONTH": invalid identifier 
+
+
+SQL> select substr(to_char(issue_date),3,3) from issue;
+
+SUB                                                                                                 
+---                                                                                                 
+-JA                                                                                                 
+-JA                                                                                                 
+-JA                                                                                                 
+-JA                                                                                                 
+-JA                                                                                                 
+-JA                                                                                                 
+-JA                                                                                                 
+
+7 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr(to_char(issue_date),4,3) from issue
+SQL> /
+
+SUB                                                                                                 
+---                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+
+7 rows selected.
+
+SQL> select * from books;
+
+  BOOK_NO BOOK_NAME                      AUTHOR_NAME                         COST CATEGORY          
+--------- ------------------------------ ------------------------------ --------- ----------        
+      101 LET US C                       DENIS RITCHIE                        450 SCIENCE           
+      102 ORACLE COMPLETE REFERENCE      LONI                                 550 DATABASE          
+      103 MASTERING SQL                  LONI                                 300 RDBMS             
+      104 PL SQL-REF                     SCOTT URMAN                          750 DATABASE          
+
+SQL> select substr(to_char(issue_date),4,3) from issue i1 where exists ()
+  2  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr(to_char(issue_date),4,3) from issue i1 where exists (select member_id from member minus select * from issue i2 where i1.substr(to_char(issue_date),4,3) = i2.substr(to_char(issue_date),4,3))
+SQL> /
+select substr(to_char(issue_date),4,3) from issue i1 where exists (select member_id from member minus select * from issue i2 where i1.substr(to_char(issue_date),4,3) = i2.substr(to_char(issue_date),4,3))
+                                                                                                                                                                        *
+ERROR at line 1:
+ORA-00904: "I2"."SUBSTR": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr(to_char(issue_date),4,3) from issue where exists (select member_id from member m1 minus select member_id from issue i1 where substr(to_char(select issue_date from issue where member_id = m1.member_id),4,3) = substr(to_char(select issue_date from issue where member_id = i1.member_id),4,3))
+SQL> /
+select substr(to_char(issue_date),4,3) from issue where exists (select member_id from member m1 minus select member_id from issue i1 where substr(to_char(select issue_date from issue where member_id = m1.member_id),4,3) = substr(to_char(select issue_date from issue where member_id = i1.member_id),4,3))
+                                                                                                                                                          *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr(to_char(issue_date),4,3) from issue where exists (select member_id from member m1 minus (select member_id from issue i1 where substr(to_char(select issue_date from issue where member_id = m1.member_id),4,3) = substr(to_char(select issue_date from issue where member_id = i1.member_id),4,3)))
+SQL> /
+select substr(to_char(issue_date),4,3) from issue where exists (select member_id from member m1 minus (select member_id from issue i1 where substr(to_char(select issue_date from issue where member_id = m1.member_id),4,3) = substr(to_char(select issue_date from issue where member_id = i1.member_id),4,3)))
+                                                                                                                                                           *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr(to_char(issue_date),4,3) from issue where exists (select member_id from member m1 minus (select member_id from issue i1 where (select substr(to_char(select issue_date from issue where member_id = m1.member_id),4,3) from member) in (select substr(to_char(select issue_date from issue where member_id = i1.member_id),4,3))) from issue)
+SQL> /
+select substr(to_char(issue_date),4,3) from issue where exists (select member_id from member m1 minus (select member_id from issue i1 where (select substr(to_char(select issue_date from issue where member_id = m1.member_id),4,3) from member) in (select substr(to_char(select issue_date from issue where member_id = i1.member_id),4,3))) from issue)
+                                                                                                                                                                   *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select substr(to_char(issue_date),4,3) from issue 
+  2* where exists (select member_id from member m1 minus select member_id from issue i1 where dateofissuemember = dateofmember)
+SQL> select * from issue;
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                
+------------ --------- --------- --------- ---------                                                
+         201       101         1 17-JAN-19 20-JAN-19                                                
+         200       102         2 20-JAN-19 22-JAN-19                                                
+         202       103         3 20-JAN-19 27-JAN-19                                                
+         203       101         2 22-JAN-19 27-JAN-19                                                
+         204       101         3 25-JAN-19 29-JAN-19                                                
+         206       104         2 23-JAN-19 24-JAN-19                                                
+         207       103         2 23-JAN-19 24-JAN-19                                                
+
+7 rows selected.
+
+SQL>  select substr(to_char(issue_date),4,3) from issue
+  2   where exists (select member_id from member m1 minus select member_id from issue i1 where dateof
+  3   select * from issue;select substr(to_char(issue_date),4,3) from issue
+  4  where exists (select member_id from member m1 minus select member_id from issue i1 where dateof
+  5  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select substr(to_char(issue_date),4,3) from issue
+  2  where exists(select member_id from member m1 minus select member_id from issue where
+  3* (select substr(to_char(issue_date),4,3) from issue where member_id in(select member_id from member)) in select substr(to_char(issue_date),4,3) from issue where member_id in(select member_id from issue))
+SQL> /
+(select substr(to_char(issue_date),4,3) from issue where member_id in(select member_id from member)) in select substr(to_char(issue_date),4,3) from issue where member_id in(select member_id from issue))
+                                                                                                        *
+ERROR at line 3:
+ORA-00936: missing expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select substr(to_char(issue_date),4,3) from issue
+  2  where exists(select member_id from member m1 minus select member_id from issue where
+  3* (select substr(to_char(issue_date),4,3) from issue where member_id in(select member_id from member)) in select substr(to_char(issue_date),4,3) from issue where member_id in(select member_id from issue))
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;

@@ -1,0 +1,651 @@
+SQL> set autocommit on
+SQL> select * from tab;
+
+TNAME                          TABTYPE CLUSTERID                                                    
+------------------------------ ------- ---------                                                    
+BIN$0xN5N2VvQYm6dXR/Qgobtw==$0 TABLE                                                                
+BIN$7n4jpdFjQ9+ovRAL5HQ3kA==$0 TABLE                                                                
+BOOKS                          TABLE                                                                
+CLIENT                         TABLE                                                                
+EMP                            TABLE                                                                
+ISSUE                          TABLE                                                                
+MEMBER                         TABLE                                                                
+STUDENT                        TABLE                                                                
+
+8 rows selected.
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        HSC_MARKS       JEE
+-------- ------------------------------ --------- ------------------------------ --------- ---------
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                               90.33       154
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                          89.78       180
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                               87.56       130
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                              89.23       145
+17BCE009 Mayank Barnwal                 23-JUN-99                                    87.33       145
+17BCE065 Aum Naik                       21-AUG-00                                    96.67       130
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                              85.67       140
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                         84.33       143
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                          87.44       123
+17BCE007 Vinit Desai                    23-MAR-99                                    87.67        86
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                               90.33        90
+17BCE090 Chitrang Patel                 13-MAY-99                                    78.88        74
+17BCE016 Levin Dhabi                    03-JAN-99                                    81.33       150
+17BCE034 Samarth Solanki                23-FEB-99                                    95.33       122
+17BCE087 Gaurav Ladhha                  02-SEP-00                                    87.55       143
+17BCE054 Harsh Naik                     23-APR-00 RCNI                               87.33       110
+17BCE056 Kunal Chhatwani                27-MAR-99                                    97.22       160
+17BCE018 Vraj Desai                     02-JUN-00                                    94.33       119
+17BCE019 Dev Gagrani                    13-JAN-00                                    90.13       160
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                               94.33       180
+
+20 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE CLUSTERID                                                    
+------------------------------ ------- ---------                                                    
+BIN$0xN5N2VvQYm6dXR/Qgobtw==$0 TABLE                                                                
+BIN$7n4jpdFjQ9+ovRAL5HQ3kA==$0 TABLE                                                                
+BOOKS                          TABLE                                                                
+CLIENT                         TABLE                                                                
+EMP                            TABLE                                                                
+ISSUE                          TABLE                                                                
+MEMBER                         TABLE                                                                
+STUDENT                        TABLE                                                                
+
+8 rows selected.
+
+SQL> select * from ce17020.student_info;
+
+ROLL_NO  NAME                 DOB       MEMBERS                        JEE_SCORE HSC_MARKS          
+-------- -------------------- --------- ------------------------------ --------- ---------          
+17BIT053 Pablo Escobar        21-JUN-99                                      108        90          
+17BCE020 Dev Joshi            13-JAN-00                                      157        90          
+17BCE018 Vraj Desai           02-JUN-00                                      119        94          
+17BCE019 Dev Gagrani          03-AUG-99 RCNI                                 180        94          
+17BCE007 Ridham Avaiya        10-AUG-99                                      116        94          
+17BCE065 Aum Naik             21-SEP-99 ISTE                                 140        96          
+17BCE012 Bhaumik Chaudhari    12-FEB-00 AUGUN                                112     86.36          
+17BCE003 Akshar Patel         15-OCT-99                                       96      86.9          
+17BCE013 Pavan Shah           11-JAN-00                                       85     86.12          
+17BCE002 Abhishek Bhacchan    13-SEP-99 ISTE                                 124     91.26          
+17BCE001 Aaryan Gupta         26-JAN-00 ISTE                                 123     96.84          
+17BCE005 Anuj Mishra          24-NOV-99                                      145     87.87          
+17BCE006 Manish Pandey        17-JAN-00 RCNI                                  79     75.96          
+17BCE014 Khodidas Chauhan     25-JAN-00                                      126     93.58          
+17BCE015 Chinmay Shukla       14-DEC-99 RCNI                                 124     89.36          
+17BCE047 Mayur Ladumor        15-AUG-99                                      145     85.26          
+17BCE009 Mayank Doshi         16-MAR-00 AUGUN                                116     86.16          
+17BCE010 Bharat Adharu        19-APR-00 ISTE                                 145     87.45          
+17BCE025 Meet Gamdha          16-FEB-00                                      158     97.26          
+17BCE023 Jay Ghabhawala       31-JAN-00                                      146     89.16          
+17BCE024 Rutvik Gajjar        26-OCT-99                                      135     87.49          
+
+21 rows selected.
+
+SQL> grant select on member to ce17020;
+
+Grant succeeded.
+
+SQL> select * from ce17020.student_info;
+select * from ce17020.student_info
+                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> revoke select on member to ce17020;
+revoke select on member to ce17020
+                        *
+ERROR at line 1:
+ORA-00905: missing keyword 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* revoke select on member from ce17020
+SQL> /
+
+Revoke succeeded.
+
+SQL> grant insert,delete on student to ce17020;
+
+Grant succeeded.
+
+SQL> desc student;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ROLLNO                                                         VARCHAR2(8)
+ NAME                                                           VARCHAR2(30)
+ DOB                                                            DATE
+ MEMBERS                                                        VARCHAR2(30)
+ HSC_MARKS                                                      NUMBER(5,2)
+ JEE                                                            NUMBER(3)
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        HSC_MARKS       JEE
+-------- ------------------------------ --------- ------------------------------ --------- ---------
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                               90.33       154
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                          89.78       180
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                               87.56       130
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                              89.23       145
+17BCE009 Mayank Barnwal                 23-JUN-99                                    87.33       145
+17BCE065 Aum Naik                       21-AUG-00                                    96.67       130
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                              85.67       140
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                         84.33       143
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                          87.44       123
+17BCE007 Vinit Desai                    23-MAR-99                                    87.67        86
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                               90.33        90
+17BCE090 Chitrang Patel                 13-MAY-99                                    78.88        74
+17BCE016 Levin Dhabi                    03-JAN-99                                    81.33       150
+17BCE034 Samarth Solanki                23-FEB-99                                    95.33       122
+17BCE087 Gaurav Ladhha                  02-SEP-00                                    87.55       143
+17BCE054 Harsh Naik                     23-APR-00 RCNI                               87.33       110
+17BCE056 Kunal Chhatwani                27-MAR-99                                    97.22       160
+17BCE000 DHJSAFDJH                      12-JAN-55 ISTE                                 120       100
+17BCE018 Vraj Desai                     02-JUN-00                                    94.33       119
+17BCE019 Dev Gagrani                    13-JAN-00                                    90.13       160
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                               94.33       180
+
+21 rows selected.
+
+SQL> INSERT INTO CE17020.STUDENT_INFO VALUES('17BCE000','DSFSDF',02-06-99,'SDSD',78,89);
+INSERT INTO CE17020.STUDENT_INFO VALUES('17BCE000','DSFSDF',02-06-99,'SDSD',78,89)
+                                                                 *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected DATE got NUMBER 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO CE17020.STUDENT_INFO VALUES('17BCE000','DSFSDF','02-06-99','SDSD',78,89)
+SQL> /
+INSERT INTO CE17020.STUDENT_INFO VALUES('17BCE000','DSFSDF','02-06-99','SDSD',78,89)
+                                                            *
+ERROR at line 1:
+ORA-01843: not a valid month 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO CE17020.STUDENT_INFO VALUES('17BCE000','DSFSDF','02-JUN-99','SDSD',78,89)
+SQL> /
+
+1 row created.
+
+Commit complete.
+SQL> SELECT * FROM STUDENT;
+
+ROLLNO   NAME                           DOB       MEMBERS                        HSC_MARKS       JEE
+-------- ------------------------------ --------- ------------------------------ --------- ---------
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                               90.33       154
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                          89.78       180
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                               87.56       130
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                              89.23       145
+17BCE009 Mayank Barnwal                 23-JUN-99                                    87.33       145
+17BCE065 Aum Naik                       21-AUG-00                                    96.67       130
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                              85.67       140
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                         84.33       143
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                          87.44       123
+17BCE007 Vinit Desai                    23-MAR-99                                    87.67        86
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                               90.33        90
+17BCE090 Chitrang Patel                 13-MAY-99                                    78.88        74
+17BCE016 Levin Dhabi                    03-JAN-99                                    81.33       150
+17BCE034 Samarth Solanki                23-FEB-99                                    95.33       122
+17BCE087 Gaurav Ladhha                  02-SEP-00                                    87.55       143
+17BCE054 Harsh Naik                     23-APR-00 RCNI                               87.33       110
+17BCE056 Kunal Chhatwani                27-MAR-99                                    97.22       160
+17BCE000 DHJSAFDJH                      12-JAN-55 ISTE                                 120       100
+17BCE500 DHJSAFDJH                      12-JAN-55 ISTE                                 120       100
+17BCE018 Vraj Desai                     02-JUN-00                                    94.33       119
+17BCE019 Dev Gagrani                    13-JAN-00                                    90.13       160
+
+ROLLNO   NAME                           DOB       MEMBERS                        HSC_MARKS       JEE
+-------- ------------------------------ --------- ------------------------------ --------- ---------
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                               94.33       180
+
+22 rows selected.
+
+SQL> DELETE FROM CE17020.STUDENT_INFO WHERE ROLL_NO = '17BCE000';
+
+1 row deleted.
+
+Commit complete.
+SQL> SELECT * FROM STUDENT;
+
+ROLLNO   NAME                           DOB       MEMBERS                        HSC_MARKS       JEE
+-------- ------------------------------ --------- ------------------------------ --------- ---------
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                               90.33       154
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                          89.78       180
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                               87.56       130
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                              89.23       145
+17BCE009 Mayank Barnwal                 23-JUN-99                                    87.33       145
+17BCE065 Aum Naik                       21-AUG-00                                    96.67       130
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                              85.67       140
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                         84.33       143
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                          87.44       123
+17BCE007 Vinit Desai                    23-MAR-99                                    87.67        86
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                               90.33        90
+17BCE090 Chitrang Patel                 13-MAY-99                                    78.88        74
+17BCE016 Levin Dhabi                    03-JAN-99                                    81.33       150
+17BCE034 Samarth Solanki                23-FEB-99                                    95.33       122
+17BCE087 Gaurav Ladhha                  02-SEP-00                                    87.55       143
+17BCE054 Harsh Naik                     23-APR-00 RCNI                               87.33       110
+17BCE056 Kunal Chhatwani                27-MAR-99                                    97.22       160
+17BCE018 Vraj Desai                     02-JUN-00                                    94.33       119
+17BCE019 Dev Gagrani                    13-JAN-00                                    90.13       160
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                               94.33       180
+
+20 rows selected.
+
+SQL> REVOKE ALL FROM ALL;
+REVOKE ALL FROM ALL
+                *
+ERROR at line 1:
+ORA-00987: missing or invalid username(s) 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* REVOKE ALL ON STUDENT FROM ALL
+SQL> /
+REVOKE ALL ON STUDENT FROM ALL
+                           *
+ERROR at line 1:
+ORA-00987: missing or invalid username(s) 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* REVOKE ALL ON STUDENT FROM CE17020
+SQL> /
+
+Revoke succeeded.
+
+SQL> GRANT SELECT,UPDATE(ROLLNO,NAME) ON STUDENT TO CE17020;
+
+Grant succeeded.
+
+SQL> SELECT * FROM CE17020.STUDENT_INFO;
+
+ROLL_NO  NAME                 DOB       MEMBERS                        JEE_SCORE HSC_MARKS          
+-------- -------------------- --------- ------------------------------ --------- ---------          
+17BIT053 Pablo Escobar        21-JUN-99                                      108        90          
+17BCE020 Dev Joshi            13-JAN-00                                      157        90          
+17BCE018 Vraj Desai           02-JUN-00                                      119        94          
+17BCE019 Dev Gagrani          03-AUG-99 RCNI                                 180        94          
+17BCE007 Ridham Avaiya        10-AUG-99                                      116        94          
+17BCE065 Aum Naik             21-SEP-99 ISTE                                 140        96          
+17BCE012 Bhaumik Chaudhari    12-FEB-00 AUGUN                                112     86.36          
+17BCE003 Akshar Patel         15-OCT-99                                       96      86.9          
+17BCE013 Pavan Shah           11-JAN-00                                       85     86.12          
+17BCE002 Abhishek Bhacchan    13-SEP-99 ISTE                                 124     91.26          
+17BCE001 Aaryan Gupta         26-JAN-00 ISTE                                 123     96.84          
+17BCE005 Anuj Mishra          24-NOV-99                                      145     87.87          
+17BCE006 Manish Pandey        17-JAN-00 RCNI                                  79     75.96          
+17BCE014 Khodidas Chauhan     25-JAN-00                                      126     93.58          
+17BCE015 Chinmay Shukla       14-DEC-99 RCNI                                 124     89.36          
+17BCE047 Mayur Ladumor        15-AUG-99                                      145     85.26          
+17BCE009 Mayank Doshi         16-MAR-00 AUGUN                                116     86.16          
+17BCE010 Bharat Adharu        19-APR-00 ISTE                                 145     87.45          
+17BCE025 Meet Gamdha          16-FEB-00                                      158     97.26          
+17BCE023 Jay Ghabhawala       31-JAN-00                                      146     89.16          
+17BCE024 Rutvik Gajjar        26-OCT-99                                      135     87.49          
+
+21 rows selected.
+
+SQL> UPDATE CE17020.STUDENT_INFO
+  2  SET HSC_MARKS = 0
+  3  WHERE HSC_MARKS = 86.16;
+
+1 row updated.
+
+Commit complete.
+SQL> SELECT * FROM STUDENT;
+
+ROLLNO   NAME                           DOB       MEMBERS                        HSC_MARKS       JEE
+-------- ------------------------------ --------- ------------------------------ --------- ---------
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                               90.33       154
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                          89.78       180
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                               87.56       130
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                              89.23       145
+17BCE009 Mayank Barnwal                 23-JUN-99                                    87.33       145
+17BCE065 Aum Naik                       21-AUG-00                                    96.67       130
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                              85.67       140
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                         84.33       143
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                          87.44       123
+17BCE007 Vinit Desai                    23-MAR-99                                    87.67        86
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                               90.33        90
+17BCE090 Chitrang Patel                 13-MAY-99                                    78.88        74
+17BCE016 Levin Dhabi                    03-JAN-99                                    81.33       150
+17BCE034 Samarth Solanki                23-FEB-99                                    95.33       122
+17BCE087 Gaurav Ladhha                  02-SEP-00                                    87.55       143
+17BCE054 Harsh Naik                     23-APR-00 RCNI                               87.33       110
+17BCE056 Kunal Chhatwani                27-MAR-99                                    97.22       160
+17BCE018 VRAJ DESAI                     02-JUN-00                                    94.33       119
+17BCE019 Dev Gagrani                    13-JAN-00                                    90.13       160
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                               94.33       180
+
+20 rows selected.
+
+SQL> UPDATE CE17020.STUDENT_INFO
+  2  SET HSC_MARKS = 86.16
+  3  WHERE HSC_MARKS = 0;
+
+1 row updated.
+
+Commit complete.
+SQL> SELECT * FRO MSTUDENT;
+SELECT * FRO MSTUDENT
+         *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM STUDENT
+SQL> /
+
+ROLLNO   NAME                           DOB       MEMBERS                        HSC_MARKS       JEE
+-------- ------------------------------ --------- ------------------------------ --------- ---------
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                               90.33       154
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                          89.78       180
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                               87.56       130
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                              89.23       145
+17BCE009 Mayank Barnwal                 23-JUN-99                                    87.33       145
+17BCE065 Aum Naik                       21-AUG-00                                    96.67       130
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                              85.67       140
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                         84.33       143
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                          87.44       123
+17BCE007 Vinit Desai                    23-MAR-99                                    87.67        86
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                               90.33        90
+17BCE090 Chitrang Patel                 13-MAY-99                                    78.88        74
+17BCE016 Levin Dhabi                    03-JAN-99                                    81.33       150
+17BCE034 Samarth Solanki                23-FEB-99                                    95.33       122
+17BCE087 Gaurav Ladhha                  02-SEP-00                                    87.55       143
+17BCE054 Harsh Naik                     23-APR-00 RCNI                               87.33       110
+17BCE056 Kunal Chhatwani                27-MAR-99                                    97.22       160
+17BCE018 Vraj Desai                     02-JUN-00                                    94.33       119
+17BCE019 Dev Gagrani                    13-JAN-00                                    90.13       160
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                               94.33       180
+
+20 rows selected.
+
+SQL> REVOKE ALL FROM ON STUDENT FROM CE17020;
+REVOKE ALL FROM ON STUDENT FROM CE17020
+           *
+ERROR at line 1:
+ORA-00969: missing ON keyword 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* REVOKE ALL  ON STUDENT FROM CE17020
+SQL> /
+
+Revoke succeeded.
+
+SQL> GRANT SELECT(ROLLNO,DOB,JEE) ON STUDENT TO CE17020;
+GRANT SELECT(ROLLNO,DOB,JEE) ON STUDENT TO CE17020
+            *
+ERROR at line 1:
+ORA-00969: missing ON keyword 
+
+
+SQL> CREATE VIEW V1 AS SELECT ROLLNO,DOB,JEE FROM STUDENT;
+
+View created.
+
+SQL> GRANT SELECT ON V1 TO CE17020;
+
+Grant succeeded.
+
+SQL> SELECT * FROM CE17020.STUDENT_INFO;
+SELECT * FROM CE17020.STUDENT_INFO
+                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM CE17020.V1
+SQL> /
+
+ROLL_NO  NAME                 DOB                                                                   
+-------- -------------------- ---------                                                             
+17BIT053 Pablo Escobar        21-JUN-99                                                             
+17BCE020 Dev Joshi            13-JAN-00                                                             
+17BCE018 Vraj Desai           02-JUN-00                                                             
+17BCE019 Dev Gagrani          03-AUG-99                                                             
+17BCE007 Ridham Avaiya        10-AUG-99                                                             
+17BCE065 Aum Naik             21-SEP-99                                                             
+17BCE012 Bhaumik Chaudhari    12-FEB-00                                                             
+17BCE003 Akshar Patel         15-OCT-99                                                             
+17BCE013 Pavan Shah           11-JAN-00                                                             
+17BCE002 Abhishek Bhacchan    13-SEP-99                                                             
+17BCE001 Aaryan Gupta         26-JAN-00                                                             
+17BCE005 Anuj Mishra          24-NOV-99                                                             
+17BCE006 Manish Pandey        17-JAN-00                                                             
+17BCE014 Khodidas Chauhan     25-JAN-00                                                             
+17BCE015 Chinmay Shukla       14-DEC-99                                                             
+17BCE047 Mayur Ladumor        15-AUG-99                                                             
+17BCE009 Mayank Doshi         16-MAR-00                                                             
+17BCE010 Bharat Adharu        19-APR-00                                                             
+17BCE025 Meet Gamdha          16-FEB-00                                                             
+17BCE023 Jay Ghabhawala       31-JAN-00                                                             
+17BCE024 Rutvik Gajjar        26-OCT-99                                                             
+
+21 rows selected.
+
+SQL> REVOKE ALL ON V1 FROM CE17020;
+
+Revoke succeeded.
+
+SQL> DELETE V1;
+
+20 rows deleted.
+
+Commit complete.
+SQL> SELECT * FROM STUDENT;
+
+no rows selected
+
+SQL> @INSERT
+Enter value for roll: 17BCE001
+Enter value for name: VRAJ
+Enter value for dob: 02-JUN-00
+Enter value for hsc: 100
+Enter value for members: ISTE
+Enter value for jee: 200
+old   1: INSERT INTO student_info VALUES ('&Roll','&Name','&dob','&hsc','&members','&jee')
+new   1: INSERT INTO student_info VALUES ('17BCE001','VRAJ','02-JUN-00','100','ISTE','200')
+INSERT INTO student_info VALUES ('17BCE001','VRAJ','02-JUN-00','100','ISTE','200')
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO student VALUES ('&Roll','&Name','&dob','&hsc','&members','&jee')
+SQL> /
+Enter value for roll: 17BCE018
+Enter value for name: VRAJ
+Enter value for dob: 02-JUN-00
+Enter value for hsc: 100
+Enter value for members: ISTE
+Enter value for jee: 200
+old   1: INSERT INTO student VALUES ('&Roll','&Name','&dob','&hsc','&members','&jee')
+new   1: INSERT INTO student VALUES ('17BCE018','VRAJ','02-JUN-00','100','ISTE','200')
+INSERT INTO student VALUES ('17BCE018','VRAJ','02-JUN-00','100','ISTE','200')
+                                                                *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> DESC STUDENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ROLLNO                                                         VARCHAR2(8)
+ NAME                                                           VARCHAR2(30)
+ DOB                                                            DATE
+ MEMBERS                                                        VARCHAR2(30)
+ HSC_MARKS                                                      NUMBER(5,2)
+ JEE                                                            NUMBER(3)
+
+SQL> INSERT INTO VALUES('&ROLL','&NAME','&DOB','&MEMBERS','&HSC','&JEE');
+Enter value for roll: 17BCE001
+Enter value for name: AARYAN
+Enter value for dob: 09-JAN-00
+Enter value for members: ISTE
+Enter value for hsc: 60
+Enter value for jee: 200
+old   1: INSERT INTO VALUES('&ROLL','&NAME','&DOB','&MEMBERS','&HSC','&JEE')
+new   1: INSERT INTO VALUES('17BCE001','AARYAN','09-JAN-00','ISTE','60','200')
+INSERT INTO VALUES('17BCE001','AARYAN','09-JAN-00','ISTE','60','200')
+            *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO STUDENT VALUES('&ROLL','&NAME','&DOB','&MEMBERS','&HSC','&JEE')
+SQL> /
+Enter value for roll: 17BCE001
+Enter value for name: AARYAN
+Enter value for dob: 09-JAN-00
+Enter value for members: ISTE
+Enter value for hsc: 100
+Enter value for jee: 200
+old   1: INSERT INTO STUDENT VALUES('&ROLL','&NAME','&DOB','&MEMBERS','&HSC','&JEE')
+new   1: INSERT INTO STUDENT VALUES('17BCE001','AARYAN','09-JAN-00','ISTE','100','200')
+
+1 row created.
+
+Commit complete.
+SQL> SAVE INSERTS;
+Created file INSERTS
+SQL> @INSERTS
+Enter value for roll: .
+Enter value for name: .
+Enter value for dob: .
+Enter value for members: .
+Enter value for hsc: .
+Enter value for jee: .
+old   1: INSERT INTO STUDENT VALUES('&ROLL','&NAME','&DOB','&MEMBERS','&HSC','&JEE')
+new   1: INSERT INTO STUDENT VALUES('.','.','.','.','.','.')
+INSERT INTO STUDENT VALUES('.','.','.','.','.','.')
+                                   *
+ERROR at line 1:
+ORA-01858: a non-numeric character was found where a numeric was expected 
+
+
+SQL> .
+SQL> DROP STUDENT;
+DROP STUDENT
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* DROP TABLE STUDENT
+SQL> /
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENT AS SELECT * FROM CE17020.STUDENT_INFO;
+
+Table created.
+
+SQL> SELECT * FROM STUDENT;
+
+ROLL_NO    NAME                 DOB       MEMBERSHIP           JEE HSC_MARKS                        
+---------- -------------------- --------- -------------------- --- ---------                        
+17BCE001   Aaryan               17-JUL-99                      156        93                        
+17BCE007   RIDHAM               10-AUG-99                      116        93                        
+17BCE002   ABHISHEK             17-JUN-99                      120        91                        
+17BCE003   AKSHAR               15-AUG-99                      130        90                        
+17BCE020   DEV                  12-FEB-00                      157        90                        
+17BCE019   VRAJ                 18-FEB-00                      146        93                        
+17BCE018   DEV                  28-AUG-99                      180        94                        
+17BCE016   MANAD                12-JUN-99                      140        91                        
+17BCE005   ANUJ                 13-SEP-99                      130        91                        
+17BCE006   ASHISH               12-SEP-99                      135        92                        
+17BCE008   ASHISH               23-OCT-99                      140        87                        
+17BCE011   BHAVY                24-OCT-99 RCNI                 139        93                        
+17BCE012   BHAUMIK              14-APR-99                      95         93                        
+17BIT107   MEET                 14-APR-00                      109        93                        
+17BCE014   CHINMAY              16-AUG-99                      159        93                        
+17BCE015   KHODIDAS             13-AUG-99                      168        90                        
+17BCE009   MAYANK               12-OCT-99                      148        89                        
+17BIT102   GOPAL                04-OCT-99                      120        92                        
+17BIT079   MALAY                02-AUG-99                      133        92                        
+17BCE035   KRISH                23-SEP-99 ISTE                 146        92                        
+
+20 rows selected.
+
+SQL> GRANT SELECT ON CE17020.STUDENT_INFO TO CE17007;
+
+Grant succeeded.
+
+SQL> SELECT * FROM STUDENT_INFO;
+SELECT * FROM STUDENT_INFO
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM CE17020.STUDENT_INFO
+SQL> /
+
+ROLL_NO    NAME                 DOB       MEMBERSHIP           JEE HSC_MARKS                        
+---------- -------------------- --------- -------------------- --- ---------                        
+17BCE001   Aaryan               17-JUL-99                      156        93                        
+17BCE007   RIDHAM               10-AUG-99                      116        93                        
+17BCE002   ABHISHEK             17-JUN-99                      120        91                        
+17BCE003   AKSHAR               15-AUG-99                      130        90                        
+17BCE020   DEV                  12-FEB-00                      157        90                        
+17BCE019   VRAJ                 18-FEB-00                      146        93                        
+17BCE018   DEV                  28-AUG-99                      180        94                        
+17BCE016   MANAD                12-JUN-99                      140        91                        
+17BCE005   ANUJ                 13-SEP-99                      130        91                        
+17BCE006   ASHISH               12-SEP-99                      135        92                        
+17BCE008   ASHISH               23-OCT-99                      140        87                        
+17BCE011   BHAVY                24-OCT-99 RCNI                 139        93                        
+17BCE012   BHAUMIK              14-APR-99                      95         93                        
+17BIT107   MEET                 14-APR-00                      109        93                        
+17BCE014   CHINMAY              16-AUG-99                      159        93                        
+17BCE015   KHODIDAS             13-AUG-99                      168        90                        
+17BCE009   MAYANK               12-OCT-99                      148        89                        
+17BIT102   GOPAL                04-OCT-99                      120        92                        
+17BIT079   MALAY                02-AUG-99                      133        92                        
+17BCE035   KRISH                23-SEP-99 ISTE                 146        92                        
+
+20 rows selected.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> spool off

@@ -1,0 +1,36 @@
+1
+select * from books
+where cost >= all(select cost from books)
+
+2
+select * from member where not exists ( select book_no from books minus select book_no from issue where issue.member_id = member.member_id)
+
+5
+SELECT * FROM MEMBER NATURAL JOIN (SELECT MEMBER_ID,COUNT(*) AS MAXIMUM FROM ISSUE
+WHERE EXISTS(SELECT * FROM MEMBER M2 WHERE ISSUE.MEMBER_ID = M2.MEMBER_ID AND MEMBERSHIP_TYPE='Lifetime') GROUP BY MEMBER_ID) WHERE MAXIMUM >= ALL(SELECT MAXIMUM FROM (SELECT MEMBER_ID,COUNT(*) AS MAXIMUM FROM ISSUE
+WHERE EXISTS(SELECT * FROM MEMBER M2 WHERE ISSUE.MEMBER_ID = M2.MEMBER_ID AND MEMBERSHIP_TYPE='Lifetime') GROUP BY MEMBER_ID))
+
+
+select m_id,count(*)
+from member n.join issue
+where membership_type=Lifetime
+group by m_id
+having count(*) >= all (count(*)
+from member n.join issue
+where membership_type=Lifetime
+group by m_id)
+
+
+
+6
+SELECT * FROM BOOKS B1
+WHERE COST > (SELECT AVG(COST) FROM BOOKS B2 WHERE B1.CATEGORY = B2.CATEGORY)
+
+
+4
+select distinct AUTHOR_NAME from books where AUTHOR_NAME = ANY(select MEMBER_NAME from member)
+
+
+3
+select distinct to_char(issue_date,'mon') from issue i2
+where not exists (select member_id from member minus select member_id from issue i1 where to_char(i1.issue_date,'mon') = to_char(i2.issue_date,'mon'))

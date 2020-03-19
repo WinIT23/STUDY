@@ -1,0 +1,242 @@
+SQL> set autocommit on;
+SQL> commit;
+
+Commit complete.
+
+SQL> select
+  2  * from member;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            300                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            800                           
+                                                                                                    
+        4 LONI                           SURAT                                                      
+12-FEB-99 Lifetime                  2000                50            700                           
+                                                                                                    
+
+SQL> select TO_CHAR(sysdate,'m') from dual;
+select TO_CHAR(sysdate,'m') from dual
+                       *
+ERROR at line 1:
+ORA-01821: date format not recognized 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select TO_CHAR(sysdate,'MON') from dual
+SQL> /
+
+TO_                                                                                                 
+---                                                                                                 
+SEP                                                                                                 
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select TO_CHAR(ISSUE_DATE,'MON') from issue
+SQL> /
+
+TO_                                                                                                 
+---                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+JAN                                                                                                 
+
+7 rows selected.
+
+SQL> select * from issue;
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                
+------------ --------- --------- --------- ---------                                                
+         201       101         1 17-JAN-19 20-JAN-19                                                
+         200       102         2 20-JAN-19 22-JAN-19                                                
+         202       103         3 20-JAN-19 27-JAN-19                                                
+         203       101         2 22-JAN-19 27-JAN-19                                                
+         204       101         3 25-JAN-19 29-JAN-19                                                
+         206       104         2 23-JAN-19 24-JAN-19                                                
+         207       103         2 23-JAN-19 24-JAN-19                                                
+
+7 rows selected.
+
+SQL> select to_char(issue_date,'mon') from member where
+  2  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select to_char(issue_date,'mon') from member 
+  2* where not exists (select * from member minus select * from issue where to_char(to_char(issue.issue_date,'mon')) = to_char(member.issue_date,'mon') )
+SQL> /
+select to_char(issue_date,'mon') from member 
+               *
+ERROR at line 1:
+ORA-00904: "ISSUE_DATE": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select to_char(issue_date,'mon') from issue
+  2* where not exists (select * from member minus select * from issue where to_char(to_char(issue.issue_date,'mon')) = to_char(member.issue_date,'mon') )
+SQL> /
+where not exists (select * from member minus select * from issue where to_char(to_char(issue.issue_date,'mon')) = to_char(member.issue_date,'mon') )
+                                                                                                                          *
+ERROR at line 2:
+ORA-00904: "MEMBER"."ISSUE_DATE": invalid identifier 
+
+
+SQL> desc member;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ MEMBER_ID                                             NOT NULL NUMBER(5)
+ MEMBER_NAME                                                    VARCHAR2(30)
+ MEMBER_ADDRESS                                                 VARCHAR2(50)
+ ACC_OPEN_DATE                                                  DATE
+ MEMBERSHIP_TYPE                                                VARCHAR2(20)
+ FEES_PAID                                                      NUMBER(4)
+ MAX_BOOKS_ALLOWED                                              NUMBER(2)
+ PENALTY_AMOUNT                                                 NUMBER(7,2)
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select to_char(issue_date,'mon') from issue i2
+  2* where not exists (select * from member minus select * from issue i1 where to_char(to_char(i1.issue_date,'mon')) = to_char(i2.issue_date,'mon') )
+SQL> /
+where not exists (select * from member minus select * from issue i1 where to_char(to_char(i1.issue_date,'mon')) = to_char(i2.issue_date,'mon') )
+                  *
+ERROR at line 2:
+ORA-01789: query block has incorrect number of result columns 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select to_char(issue_date,'mon') from issue i2
+  2* where not exists (select member_id from member minus select member_id from issue i1 where to_char(to_char(i1.issue_date,'mon')) = to_char(i2.issue_date,'mon') )
+SQL> /
+
+no rows selected
+
+SQL> select * from member;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            300                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            800                           
+                                                                                                    
+        4 LONI                           SURAT                                                      
+12-FEB-99 Lifetime                  2000                50            700                           
+                                                                                                    
+
+SQL> select * from issue;
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                
+------------ --------- --------- --------- ---------                                                
+         201       101         1 17-JAN-19 20-JAN-19                                                
+         200       102         2 20-JAN-19 22-JAN-19                                                
+         202       103         3 20-JAN-19 27-JAN-19                                                
+         203       101         2 22-JAN-19 27-JAN-19                                                
+         204       101         3 25-JAN-19 29-JAN-19                                                
+         206       104         2 23-JAN-19 24-JAN-19                                                
+         207       103         2 23-JAN-19 24-JAN-19                                                
+
+7 rows selected.
+
+SQL> insert into issue values(208,104,4,'23-jan-2019','23-feb-2019');
+
+1 row created.
+
+Commit complete.
+SQL> select to_char(issue_date,'mon') from issue i2
+  2  where not exists (select member_id from member minus select member_id from issue i1 where to_ch.
+  3  ed
+  4  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select to_char(issue_date,'mon') from issue i2
+  2  where not exists (select member_id from member minus select member_id from issue i1 where to_char(i1.issue_date,'mon') = to_char(i2.issue_date,'mon')
+  3* ed
+SQL> /
+ed
+*
+ERROR at line 3:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select to_char(issue_date,'mon') from issue i2
+  2  where not exists (select member_id from member minus select member_id from issue i1 where to_char(i1.issue_date,'mon') = to_char(i2.issue_date,'mon'))
+  3* ed
+SQL> /
+ed
+*
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select to_char(issue_date,'mon') from issue i2
+  2* where not exists (select member_id from member minus select member_id from issue i1 where to_char(i1.issue_date,'mon') = to_char(i2.issue_date,'mon'))
+SQL> /
+
+TO_                                                                                                 
+---                                                                                                 
+jan                                                                                                 
+jan                                                                                                 
+jan                                                                                                 
+jan                                                                                                 
+jan                                                                                                 
+jan                                                                                                 
+jan                                                                                                 
+jan                                                                                                 
+
+8 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select distinct to_char(issue_date,'mon') from issue i2
+  2* where not exists (select member_id from member minus select member_id from issue i1 where to_char(i1.issue_date,'mon') = to_char(i2.issue_date,'mon'))
+SQL> /
+
+TO_                                                                                                 
+---                                                                                                 
+jan                                                                                                 
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select distinct to_char(issue_date,'mon') from issue i2
+  2* where not exists (select member_id from member minus select member_id from issue i1 where to_char(i1.issue_date,'mon') = to_char(i2.issue_date,'mon'))
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;

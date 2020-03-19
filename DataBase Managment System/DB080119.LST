@@ -1,0 +1,1269 @@
+SQL> set autocommit on
+SQL> select * from tab;
+
+TNAME                          TABTYPE CLUSTERID                                                    
+------------------------------ ------- ---------                                                    
+CLIENT                         TABLE                                                                
+STUDENT                        TABLE                                                                
+STUDENTINFORMATION             TABLE                                                                
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE HSC_MARKS      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE007 Vinit Desai                    23-MAR-99                                86      87.67      
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                           90      90.33      
+17BCE090 Chitrang Patel                 13-MAY-99                                74      78.88      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE087 Gaurav Ladhha                  02-SEP-00                                143     87.55      
+17BCE054 Harsh Naik                     23-APR-00 RCNI                           110     87.33      
+17BCE056 Kunal Chhatwani                27-MAR-99                                160     97.22      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+20 rows selected.
+
+SQL>   CREATE TABLE emp
+  2  ( empid varchar2(10),
+  3    empname varchar(30),
+  4    basic number(8,2),
+  5    projectid varchar(10),
+  6    mobno1 varchar(10),
+  7    mobno2 varchar(10)
+  8  );
+
+Table created.
+
+SQL> INSERT INTO TABLE student values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2');
+Enter value for employee_id: .
+Enter value for name: .
+Enter value for salary: .
+Enter value for projectid: .
+Enter value for mobile_num1: .
+Enter value for mobile_num2: .
+old   1: INSERT INTO TABLE student values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO TABLE student values('.','.','.','.','.','.')
+INSERT INTO TABLE student values('.','.','.','.','.','.')
+            *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> SAVE insert
+Created file insert
+SQL> @insert
+Enter value for employee_id: 17vrjce018
+Enter value for name: Vraj Desai
+Enter value for salary: 40000
+Enter value for projectid: 17BCE01
+Enter value for mobile_num1: 7686957698
+Enter value for mobile_num2: 
+old   1: INSERT INTO TABLE student values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO TABLE student values('17vrjce018','Vraj Desai','40000','17BCE01','7686957698','')
+INSERT INTO TABLE student values('17vrjce018','Vraj Desai','40000','17BCE01','7686957698','')
+            *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* INSERT INTO TABLE emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+SQL> @insert
+Enter value for employee_id: 17BCEvrj001
+Enter value for name: Vraj Desai
+Enter value for salary: 60000
+Enter value for projectid: BCE01
+Enter value for mobile_num1: 7687998789
+Enter value for mobile_num2: 
+old   1: INSERT INTO TABLE student values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO TABLE student values('17BCEvrj001','Vraj Desai','60000','BCE01','7687998789','')
+INSERT INTO TABLE student values('17BCEvrj001','Vraj Desai','60000','BCE01','7687998789','')
+            *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* INSERT INTO TABLE emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+SQL> /
+Enter value for employee_id: .
+Enter value for name: .
+Enter value for salary: .
+Enter value for projectid: .
+Enter value for mobile_num1: .
+Enter value for mobile_num2: .
+old   1: INSERT INTO TABLE emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO TABLE emp values('.','.','.','.','.','.')
+INSERT INTO TABLE emp values('.','.','.','.','.','.')
+            *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+SQL> /
+Enter value for employee_id: 17vrj001
+Enter value for name: Vraj Desai
+Enter value for salary: 70000
+Enter value for projectid: BCE01
+Enter value for mobile_num1: 7898687968
+Enter value for mobile_num2: 
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17vrj001','Vraj Desai','70000','BCE01','7898687968','')
+
+1 row created.
+
+Commit complete.
+SQL> save insertinto
+Created file insertinto
+SQL> @insertinto
+Enter value for employee_id: 17dev001
+Enter value for name: Dev Joshi
+Enter value for salary: 50000
+Enter value for projectid: BCE01
+Enter value for mobile_num1: 9897898079
+Enter value for mobile_num2: 9879879889
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17dev001','Dev Joshi','50000','BCE01','9897898079','9879879889')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for employee_id: 17dev002
+Enter value for name: Dev Gagrani
+Enter value for salary: 45456.67
+Enter value for projectid: BCE02
+Enter value for mobile_num1: 8978978967
+Enter value for mobile_num2: 
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17dev002','Dev Gagrani','45456.67','BCE02','8978978967','')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for employee_id: 17ary001
+Enter value for name: Aaryan Gupta
+Enter value for salary: 50000
+Enter value for projectid: BCE05
+Enter value for mobile_num1: 9879987987
+Enter value for mobile_num2: 
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17ary001','Aaryan Gupta','50000','BCE05','9879987987','')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for employee_id: 17aum001
+Enter value for name: Aum Naik
+Enter value for salary: 40000
+Enter value for projectid: BCE02
+Enter value for mobile_num1: 9890798079
+Enter value for mobile_num2: 7878678987
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17aum001','Aum Naik','40000','BCE02','9890798079','7878678987')
+
+1 row created.
+
+Commit complete.
+SQL> select * from emp;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17vrj001   Vraj Desai                         70000 BCE01      7898687968                           
+17dev001   Dev Joshi                          50000 BCE01      9897898079 9879879889                
+17dev002   Dev Gagrani                     45456.67 BCE02      8978978967                           
+17ary001   Aaryan Gupta                       50000 BCE05      9879987987                           
+17aum001   Aum Naik                           40000 BCE02      9890798079 7878678987                
+
+SQL> @insertinto
+Enter value for employee_id: 17aks001
+Enter value for name: Akshay Mehta
+Enter value for salary: 60000
+Enter value for projectid: BCE02
+Enter value for mobile_num1: 9879776876
+Enter value for mobile_num2: 
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17aks001','Akshay Mehta','60000','BCE02','9879776876','')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for employee_id: 17mht001
+Enter value for name: Mohit Nankani
+Enter value for salary: 58000
+Enter value for projectid: BCE03
+Enter value for mobile_num1: 7567879687
+Enter value for mobile_num2: 
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17mht001','Mohit Nankani','58000','BCE03','7567879687','')
+
+1 row created.
+
+Commit complete.
+SQL> select * from emp
+  2  where mobno2 is null;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17vrj001   Vraj Desai                         70000 BCE01      7898687968                           
+17dev002   Dev Gagrani                     45456.67 BCE02      8978978967                           
+17ary001   Aaryan Gupta                       50000 BCE05      9879987987                           
+17aks001   Akshay Mehta                       60000 BCE02      9879776876                           
+17mht001   Mohit Nankani                      58000 BCE03      7567879687                           
+
+SQL> @insertinto
+Enter value for employee_id: 17mht002
+Enter value for name: Mohit Gevariya
+Enter value for salary: 60000
+Enter value for projectid: BCE04
+Enter value for mobile_num1: 9787968797
+Enter value for mobile_num2: 
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17mht002','Mohit Gevariya','60000','BCE04','9787968797','')
+
+1 row created.
+
+Commit complete.
+SQL> select * from emp;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17vrj001   Vraj Desai                         70000 BCE01      7898687968                           
+17dev001   Dev Joshi                          50000 BCE01      9897898079 9879879889                
+17dev002   Dev Gagrani                     45456.67 BCE02      8978978967                           
+17ary001   Aaryan Gupta                       50000 BCE05      9879987987                           
+17aum001   Aum Naik                           40000 BCE02      9890798079 7878678987                
+17aks001   Akshay Mehta                       60000 BCE02      9879776876                           
+17mht001   Mohit Nankani                      58000 BCE03      7567879687                           
+17mht002   Mohit Gevariya                     60000 BCE04      9787968797                           
+
+8 rows selected.
+
+SQL> @insertinto
+Enter value for employee_id: 17met001
+Enter value for name: meet Gamdha
+Enter value for salary: 40000
+Enter value for projectid: BCE06
+Enter value for mobile_num1: 8798697869
+Enter value for mobile_num2: 
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17met001','meet Gamdha','40000','BCE06','8798697869','')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for employee_id: 17dip001
+Enter value for name: Dipanshi Digga
+Enter value for salary: 50000
+Enter value for projectid: BCE04
+Enter value for mobile_num1: 8798879887
+Enter value for mobile_num2: 8797879878
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17dip001','Dipanshi Digga','50000','BCE04','8798879887','8797879878')
+
+1 row created.
+
+Commit complete.
+SQL> select * from emp;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17vrj001   Vraj Desai                         70000 BCE01      7898687968                           
+17dev001   Dev Joshi                          50000 BCE01      9897898079 9879879889                
+17dev002   Dev Gagrani                     45456.67 BCE02      8978978967                           
+17ary001   Aaryan Gupta                       50000 BCE05      9879987987                           
+17aum001   Aum Naik                           40000 BCE02      9890798079 7878678987                
+17aks001   Akshay Mehta                       60000 BCE02      9879776876                           
+17mht001   Mohit Nankani                      58000 BCE03      7567879687                           
+17mht002   Mohit Gevariya                     60000 BCE04      9787968797                           
+17met001   meet Gamdha                        40000 BCE06      8798697869                           
+17dip001   Dipanshi Digga                     50000 BCE04      8798879887 8797879878                
+
+10 rows selected.
+
+SQL> select * from emp
+  2  where mobno1 is not null and mobno2 is not null;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17dev001   Dev Joshi                          50000 BCE01      9897898079 9879879889                
+17aum001   Aum Naik                           40000 BCE02      9890798079 7878678987                
+17dip001   Dipanshi Digga                     50000 BCE04      8798879887 8797879878                
+
+SQL> @insertinto
+Enter value for employee_id: 17anj001
+Enter value for name: Anuj Gupta
+Enter value for salary: 20000
+Enter value for projectid: 
+Enter value for mobile_num1: 8797896879
+Enter value for mobile_num2: 
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17anj001','Anuj Gupta','20000','','8797896879','')
+
+1 row created.
+
+Commit complete.
+SQL> select * from emp
+  2  where projectid is null;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17anj001   Anuj Gupta                         20000            8797896879                           
+
+SQL> @insertinto
+Enter value for employee_id: 17raj001
+Enter value for name: Raj Mehta
+Enter value for salary: 35000
+Enter value for projectid: BCH01
+Enter value for mobile_num1: 8978987978
+Enter value for mobile_num2: 
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('17raj001','Raj Mehta','35000','BCH01','8978987978','')
+
+1 row created.
+
+Commit complete.
+SQL> select * from student
+  2  where projectid like '%CH%';
+where projectid like '%CH%'
+      *
+ERROR at line 2:
+ORA-00904: "PROJECTID": invalid identifier 
+
+
+SQL> desc emp;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPID                                                          VARCHAR2(10)
+ EMPNAME                                                        VARCHAR2(30)
+ BASIC                                                          NUMBER(8,2)
+ PROJECTID                                                      VARCHAR2(10)
+ MOBNO1                                                         VARCHAR2(10)
+ MOBNO2                                                         VARCHAR2(10)
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where projectid is like '%CH%'
+SQL> /
+where projectid is like '%CH%'
+                   *
+ERROR at line 2:
+ORA-00908: missing NULL keyword 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where projectid = '%CH%'
+SQL> /
+where projectid = '%CH%'
+      *
+ERROR at line 2:
+ORA-00904: "PROJECTID": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where (projectid like '%CH%')
+SQL> /
+where (projectid like '%CH%')
+       *
+ERROR at line 2:
+ORA-00904: "PROJECTID": invalid identifier 
+
+
+SQL> select * from emp
+  2  where projectid like '%CH%';
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17raj001   Raj Mehta                          35000 BCH01      8978987978                           
+
+SQL> CREATE TABLE employeeid(
+  2  empid varchar2(10));
+
+Table created.
+
+SQL> insert into employeeid values('&ID');
+Enter value for id: BCE01
+old   1: insert into employeeid values('&ID')
+new   1: insert into employeeid values('BCE01')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for id: BCE02
+old   1: insert into employeeid values('&ID')
+new   1: insert into employeeid values('BCE02')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for id: BCE03
+old   1: insert into employeeid values('&ID')
+new   1: insert into employeeid values('BCE03')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for id: BCE04
+old   1: insert into employeeid values('&ID')
+new   1: insert into employeeid values('BCE04')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for id: BCE05
+old   1: insert into employeeid values('&ID')
+new   1: insert into employeeid values('BCE05')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for id: BCE06
+old   1: insert into employeeid values('&ID')
+new   1: insert into employeeid values('BCE06')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for id: BCH01
+old   1: insert into employeeid values('&ID')
+new   1: insert into employeeid values('BCH01')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for id: BCH02
+old   1: insert into employeeid values('&ID')
+new   1: insert into employeeid values('BCH02')
+
+1 row created.
+
+Commit complete.
+SQL> select * from employeeid
+  2  where.
+  3  .
+SQL> select * from employeeid
+  2  .
+SQL> select * from employeeid*emp
+  2  where employeeid.empid != emp.empid;
+select * from employeeid*emp
+                        *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select * from employeeid
+  2  where emp.empid not in employeeid.empid;
+where emp.empid not in employeeid.empid
+      *
+ERROR at line 2:
+ORA-00904: "EMP"."EMPID": invalid identifier 
+
+
+SQL> select * from employeeid
+  2  .
+SQL> alter table employeeid
+  2  .
+SQL> drop employeeid;
+drop employeeid
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* drop table employeeid
+SQL> /
+
+Table dropped.
+
+SQL> @insertinto
+Enter value for employee_id: 
+Enter value for name: 
+Enter value for salary: 
+Enter value for projectid: BCE07
+Enter value for mobile_num1: 
+Enter value for mobile_num2: 
+old   1: INSERT INTO emp values('&employee_ID','&NAME','&SALARY','&projectID','&mobile_num1','&mobile_num2')
+new   1: INSERT INTO emp values('','','','BCE07','','')
+
+1 row created.
+
+Commit complete.
+SQL> select * from emp
+  2  .
+SQL> select projectid from emp
+  2  where empid is null;
+
+PROJECTID                                                                                           
+----------                                                                                          
+BCE07                                                                                               
+
+SQL> select empid,name,basic from emp sorted by basic;
+select empid,name,basic from emp sorted by basic
+                                        *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select empid,name,basic from emp order by basic
+SQL> /
+select empid,name,basic from emp order by basic
+             *
+ERROR at line 1:
+ORA-00904: "NAME": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select empid,empname,basic from emp order by basic
+SQL> /
+
+EMPID      EMPNAME                            BASIC                                                 
+---------- ------------------------------ ---------                                                 
+17anj001   Anuj Gupta                         20000                                                 
+17raj001   Raj Mehta                          35000                                                 
+17aum001   Aum Naik                           40000                                                 
+17met001   meet Gamdha                        40000                                                 
+17dev002   Dev Gagrani                     45456.67                                                 
+17dev001   Dev Joshi                          50000                                                 
+17ary001   Aaryan Gupta                       50000                                                 
+17dip001   Dipanshi Digga                     50000                                                 
+17mht001   Mohit Nankani                      58000                                                 
+17aks001   Akshay Mehta                       60000                                                 
+17mht002   Mohit Gevariya                     60000                                                 
+17vrj001   Vraj Desai                         70000                                                 
+                                                                                                    
+
+13 rows selected.
+
+SQL> select distinct projectid from emp;
+
+PROJECTID                                                                                           
+----------                                                                                          
+                                                                                                    
+BCE04                                                                                               
+BCE05                                                                                               
+BCE01                                                                                               
+BCE03                                                                                               
+BCE02                                                                                               
+BCE07                                                                                               
+BCE06                                                                                               
+BCH01                                                                                               
+
+9 rows selected.
+
+SQL> select * from emp;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17vrj001   Vraj Desai                         70000 BCE01      7898687968                           
+17dev001   Dev Joshi                          50000 BCE01      9897898079 9879879889                
+17dev002   Dev Gagrani                     45456.67 BCE02      8978978967                           
+17ary001   Aaryan Gupta                       50000 BCE05      9879987987                           
+17aum001   Aum Naik                           40000 BCE02      9890798079 7878678987                
+17aks001   Akshay Mehta                       60000 BCE02      9879776876                           
+17mht001   Mohit Nankani                      58000 BCE03      7567879687                           
+17mht002   Mohit Gevariya                     60000 BCE04      9787968797                           
+17met001   meet Gamdha                        40000 BCE06      8798697869                           
+17dip001   Dipanshi Digga                     50000 BCE04      8798879887 8797879878                
+17anj001   Anuj Gupta                         20000            8797896879                           
+17raj001   Raj Mehta                          35000 BCH01      8978987978                           
+                                                    BCE07                                           
+
+13 rows selected.
+
+SQL> 
+SQL> select * from emp
+  2  where mobno1 is not null and mobno2 is not null;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17dev001   Dev Joshi                          50000 BCE01      9897898079 9879879889                
+17aum001   Aum Naik                           40000 BCE02      9890798079 7878678987                
+17dip001   Dipanshi Digga                     50000 BCE04      8798879887 8797879878                
+
+SQL> select * from emp
+  2  where projectid is null;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17anj001   Anuj Gupta                         20000            8797896879                           
+
+SQL> select * from emp
+  2  where projectid like '%CH%';
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2                    
+---------- ------------------------------ --------- ---------- ---------- ----------                
+17raj001   Raj Mehta                          35000 BCH01      8978987978                           
+
+SQL> select projectid from emp
+  2  where empid is null;
+
+PROJECTID                                                                                           
+----------                                                                                          
+BCE07                                                                                               
+
+SQL> select empid,empname,basic from emp order by basic;
+
+EMPID      EMPNAME                            BASIC                                                 
+---------- ------------------------------ ---------                                                 
+17anj001   Anuj Gupta                         20000                                                 
+17raj001   Raj Mehta                          35000                                                 
+17aum001   Aum Naik                           40000                                                 
+17met001   meet Gamdha                        40000                                                 
+17dev002   Dev Gagrani                     45456.67                                                 
+17dev001   Dev Joshi                          50000                                                 
+17ary001   Aaryan Gupta                       50000                                                 
+17dip001   Dipanshi Digga                     50000                                                 
+17mht001   Mohit Nankani                      58000                                                 
+17aks001   Akshay Mehta                       60000                                                 
+17mht002   Mohit Gevariya                     60000                                                 
+17vrj001   Vraj Desai                         70000                                                 
+                                                                                                    
+
+13 rows selected.
+
+SQL> select distinct projectid from emp;
+
+PROJECTID                                                                                           
+----------                                                                                          
+                                                                                                    
+BCE04                                                                                               
+BCE05                                                                                               
+BCE01                                                                                               
+BCE03                                                                                               
+BCE02                                                                                               
+BCE07                                                                                               
+BCE06                                                                                               
+BCH01                                                                                               
+
+9 rows selected.
+
+SQL> alter table emp
+  2  add grade number(1);
+
+Table altered.
+
+SQL> update emp
+  2  if(basic>=50000)
+  3  set grade = 1
+  4  else
+  5  set grade = 2;
+if(basic>=50000)
+  *
+ERROR at line 2:
+ORA-00971: missing SET keyword 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = 1
+  3  where basic>=50000
+  4  set grade = 2
+  5* where basic < 50000
+  6  ;
+set grade = 2
+*
+ERROR at line 4:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> update emp
+  2  set grade = 1
+  3  where basic >= 50000
+  4  ;
+
+7 rows updated.
+
+Commit complete.
+SQL> update emp
+  2  set grade = 2
+  3  where basic <50000
+  4  ;
+
+5 rows updated.
+
+Commit complete.
+SQL> select * from emp;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1     MOBNO2         GRADE      
+---------- ------------------------------ --------- ---------- ---------- ---------- ---------      
+17vrj001   Vraj Desai                         70000 BCE01      7898687968                    1      
+17dev001   Dev Joshi                          50000 BCE01      9897898079 9879879889         1      
+17dev002   Dev Gagrani                     45456.67 BCE02      8978978967                    2      
+17ary001   Aaryan Gupta                       50000 BCE05      9879987987                    1      
+17aum001   Aum Naik                           40000 BCE02      9890798079 7878678987         2      
+17aks001   Akshay Mehta                       60000 BCE02      9879776876                    1      
+17mht001   Mohit Nankani                      58000 BCE03      7567879687                    1      
+17mht002   Mohit Gevariya                     60000 BCE04      9787968797                    1      
+17met001   meet Gamdha                        40000 BCE06      8798697869                    2      
+17dip001   Dipanshi Digga                     50000 BCE04      8798879887 8797879878         1      
+17anj001   Anuj Gupta                         20000            8797896879                    2      
+17raj001   Raj Mehta                          35000 BCH01      8978987978                    2      
+                                                    BCE07                                           
+
+13 rows selected.
+
+SQL> alter table emp
+  2  drop column mobno2;
+
+Table altered.
+
+SQL> select * from emp;
+
+EMPID      EMPNAME                            BASIC PROJECTID  MOBNO1         GRADE                 
+---------- ------------------------------ --------- ---------- ---------- ---------                 
+17vrj001   Vraj Desai                         70000 BCE01      7898687968         1                 
+17dev001   Dev Joshi                          50000 BCE01      9897898079         1                 
+17dev002   Dev Gagrani                     45456.67 BCE02      8978978967         2                 
+17ary001   Aaryan Gupta                       50000 BCE05      9879987987         1                 
+17aum001   Aum Naik                           40000 BCE02      9890798079         2                 
+17aks001   Akshay Mehta                       60000 BCE02      9879776876         1                 
+17mht001   Mohit Nankani                      58000 BCE03      7567879687         1                 
+17mht002   Mohit Gevariya                     60000 BCE04      9787968797         1                 
+17met001   meet Gamdha                        40000 BCE06      8798697869         2                 
+17dip001   Dipanshi Digga                     50000 BCE04      8798879887         1                 
+17anj001   Anuj Gupta                         20000            8797896879         2                 
+17raj001   Raj Mehta                          35000 BCH01      8978987978         2                 
+                                                    BCE07                                           
+
+13 rows selected.
+
+SQL> alter table emp
+  2  add proid char(5);
+
+Table altered.
+
+SQL> update emp
+  2  set proid = projectid char(5);
+set proid = projectid char(5)
+                      *
+ERROR at line 2:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> alter table emp
+  2  modify column projectid char(5);
+modify column projectid char(5)
+                        *
+ERROR at line 2:
+ORA-00905: missing keyword 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  alter table emp
+  2* modify projectid char(5)
+SQL> /
+
+Table altered.
+
+SQL> desc emp;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPID                                                          VARCHAR2(10)
+ EMPNAME                                                        VARCHAR2(30)
+ BASIC                                                          NUMBER(8,2)
+ PROJECTID                                                      CHAR(5)
+ MOBNO1                                                         VARCHAR2(10)
+ GRADE                                                          NUMBER(1)
+ PROID                                                          CHAR(5)
+
+SQL> update emp
+  2  set grade = 1
+  3  where basic > 100000,
+  4  set grade = 2
+  5  where basic <= 100000 and basic >50000,
+  6  set grade = 3
+  7  where basic <= 50000 and basic >10000,
+  8  set grade = 4
+  9  where basic <=10000;
+where basic > 100000,
+                    *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = 1
+  3  where basic > 100000
+  4  set grade = 2
+  5  where basic <= 100000 and basic >50000
+  6  set grade = 3
+  7  where basic <= 50000 and basic >10000
+  8  set grade = 4
+  9* where basic <=10000
+SQL> /
+set grade = 2
+*
+ERROR at line 4:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = 1
+  3  where basic > 100000
+  4  or
+  5  set grade = 2
+  6  where basic <= 100000 and basic >50000
+  7  or 
+  8  set grade = 3
+  9  where basic <= 50000 and basic >10000
+ 10  or
+ 11  set grade = 4
+ 12* where basic <=10000
+ 13  /
+set grade = 2
+*
+ERROR at line 5:
+ORA-01747: invalid user.table.column, table.column, or column specification 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = 1
+  3  where basic > 100000
+  4  set grade = 2
+  5  where basic <= 100000 and basic >50000
+  6  set grade = 3
+  7  where basic <= 50000 and basic >10000
+  8  set grade = 4
+  9* where basic <=10000
+ 10  /
+set grade = 2
+*
+ERROR at line 4:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = 1
+  3  where basic > 100000
+  4  and
+  5  set grade = 2
+  6  where basic <= 100000 and basic >50000
+  7  and
+  8  set grade = 3
+  9  where basic <= 50000 and basic >10000
+ 10  and
+ 11  set grade = 4
+ 12* where basic <=10000
+SQL> /
+set grade = 2
+*
+ERROR at line 5:
+ORA-01747: invalid user.table.column, table.column, or column specification 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = CASE
+  3  when basic > 100000
+  4  then grade = 1
+  5  when basic <= 100000 and basic >50000
+  6  then grade = 2
+  7  when basic <= 50000 and basic >10000
+  8  then grade = 3
+  9  when basic <=10000
+ 10  then grade = 4
+ 11* end
+ 12  /
+then grade = 1
+           *
+ERROR at line 4:
+ORA-00905: missing keyword 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = CASE
+  3  when basic > 100000
+  4  then grade = 1
+  5  when basic <= 100000 and basic >50000
+  6  then grade = 2
+  7  when basic <= 50000 and basic >10000
+  8  then grade = 3
+  9  when basic <=10000
+ 10  then grade = 4
+ 11  else grade
+ 12* end
+SQL> /
+then grade = 1
+           *
+ERROR at line 4:
+ORA-00905: missing keyword 
+
+
+SQL> select grade,projectid from emp
+  2  where projectid.
+  3  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select grade,projectid from emp
+  2* where projectid.
+SQL> 
+SQL> 
+SQL> update emp
+  2  .
+SQL> commit
+  2  update emp
+  3  set grade = case
+  4  when salary > 100000
+  5  then 1
+  6  when salary <= 100000 and salary > 50000
+  7  then 2
+  8  when salary <= 50000 and salaray > 10000
+  9  then 3
+ 10  else 4
+ 11  end
+ 12  ;
+update emp
+*
+ERROR at line 2:
+ORA-02185: a token other than WORK follows COMMIT 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = case
+  3  when salary > 100000
+  4  then 1
+  5  when salary <= 100000 and salary > 50000
+  6  then 2
+  7  when salary <= 50000 and salaray > 10000
+  8  then 3
+  9  else 4
+ 10* end
+ 11  ;
+when salary <= 50000 and salaray > 10000
+                         *
+ERROR at line 7:
+ORA-00904: "SALARAY": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = case
+  3  when salary > 100000
+  4  then 1
+  5  when salary <= 100000 and salary > 50000
+  6  then 2
+  7  when salary <= 50000 and salary > 10000
+  8  then 3
+  9  else 4
+ 10* end
+ 11  ;
+when salary <= 50000 and salary > 10000
+                         *
+ERROR at line 7:
+ORA-00904: "SALARY": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = case
+  3  when basic > 100000
+  4  then 1
+  5  when basic <= 100000 and basic > 50000
+  6  then 2
+  7  when basic <= 50000 and basic > 10000
+  8  then 3
+  9  else 4
+ 10* end
+ 11  ;
+
+13 rows updated.
+
+Commit complete.
+SQL> select * from emp;
+
+EMPID      EMPNAME                            BASIC PROJE MOBNO1         GRADE PROID                
+---------- ------------------------------ --------- ----- ---------- --------- -----                
+17vrj001   Vraj Desai                         70000 BCE01 7898687968         2                      
+17dev001   Dev Joshi                          50000 BCE01 9897898079         3                      
+17dev002   Dev Gagrani                     45456.67 BCE02 8978978967         3                      
+17ary001   Aaryan Gupta                       50000 BCE05 9879987987         3                      
+17aum001   Aum Naik                           40000 BCE02 9890798079         3                      
+17aks001   Akshay Mehta                       60000 BCE02 9879776876         2                      
+17mht001   Mohit Nankani                      58000 BCE03 7567879687         2                      
+17mht002   Mohit Gevariya                     60000 BCE04 9787968797         2                      
+17met001   meet Gamdha                        40000 BCE06 8798697869         3                      
+17dip001   Dipanshi Digga                     50000 BCE04 8798879887         3                      
+17anj001   Anuj Gupta                         20000       8797896879         3                      
+17raj001   Raj Mehta                          35000 BCH01 8978987978         3                      
+                                                    BCE07                    4                      
+
+13 rows selected.
+
+SQL> alter table emp
+  2  drop proid;
+drop proid
+     *
+ERROR at line 2:
+ORA-00905: missing keyword 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  alter table emp
+  2* drop column proid
+SQL> /
+
+Table altered.
+
+SQL> select * from emp;
+
+EMPID      EMPNAME                            BASIC PROJE MOBNO1         GRADE                      
+---------- ------------------------------ --------- ----- ---------- ---------                      
+17vrj001   Vraj Desai                         70000 BCE01 7898687968         2                      
+17dev001   Dev Joshi                          50000 BCE01 9897898079         3                      
+17dev002   Dev Gagrani                     45456.67 BCE02 8978978967         3                      
+17ary001   Aaryan Gupta                       50000 BCE05 9879987987         3                      
+17aum001   Aum Naik                           40000 BCE02 9890798079         3                      
+17aks001   Akshay Mehta                       60000 BCE02 9879776876         2                      
+17mht001   Mohit Nankani                      58000 BCE03 7567879687         2                      
+17mht002   Mohit Gevariya                     60000 BCE04 9787968797         2                      
+17met001   meet Gamdha                        40000 BCE06 8798697869         3                      
+17dip001   Dipanshi Digga                     50000 BCE04 8798879887         3                      
+17anj001   Anuj Gupta                         20000       8797896879         3                      
+17raj001   Raj Mehta                          35000 BCH01 8978987978         3                      
+                                                    BCE07                    4                      
+
+13 rows selected.
+
+SQL> column mobno1 format a(9999999);
+SP2-0246: Illegal FORMAT string "a(9999999)"
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select * from emp
+SQL> column empname format a(15);
+SP2-0246: Illegal FORMAT string "a(15)"
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select * from emp
+SQL>  column empname format 15;
+SP2-0246: Illegal FORMAT string "15"
+SQL> 
+SQL> column empname format 15;
+SP2-0246: Illegal FORMAT string "15"
+SQL> update emp
+  2  set grade as null
+  3  where grade = 4;
+set grade as null
+          *
+ERROR at line 2:
+ORA-00927: missing equal sign 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  update emp
+  2  set grade = null
+  3* where grade = 4
+SQL> /
+
+1 row updated.
+
+Commit complete.
+SQL> select * from emp;
+
+EMPID      EMPNAME                            BASIC PROJE MOBNO1         GRADE                      
+---------- ------------------------------ --------- ----- ---------- ---------                      
+17vrj001   Vraj Desai                         70000 BCE01 7898687968         2                      
+17dev001   Dev Joshi                          50000 BCE01 9897898079         3                      
+17dev002   Dev Gagrani                     45456.67 BCE02 8978978967         3                      
+17ary001   Aaryan Gupta                       50000 BCE05 9879987987         3                      
+17aum001   Aum Naik                           40000 BCE02 9890798079         3                      
+17aks001   Akshay Mehta                       60000 BCE02 9879776876         2                      
+17mht001   Mohit Nankani                      58000 BCE03 7567879687         2                      
+17mht002   Mohit Gevariya                     60000 BCE04 9787968797         2                      
+17met001   meet Gamdha                        40000 BCE06 8798697869         3                      
+17dip001   Dipanshi Digga                     50000 BCE04 8798879887         3                      
+17anj001   Anuj Gupta                         20000       8797896879         3                      
+17raj001   Raj Mehta                          35000 BCH01 8978987978         3                      
+                                                    BCE07                                           
+
+13 rows selected.
+
+SQL> select count(*) from emp;
+
+ COUNT(*)                                                                                           
+---------                                                                                           
+       13                                                                                           
+
+SQL> select max(basic) from emp;
+
+MAX(BASIC)                                                                                          
+----------                                                                                          
+     70000                                                                                          
+
+SQL> select min(basic) from emp;
+
+MIN(BASIC)                                                                                          
+----------                                                                                          
+     20000                                                                                          
+
+SQL> select count(*),max(basic),min(basic) from emp;
+
+ COUNT(*) MAX(BASIC) MIN(BASIC)                                                                     
+--------- ---------- ----------                                                                     
+       13      70000      20000                                                                     
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select count(*),max(basic),min(basic),avg(basic),sum(basic) from emp
+SQL> /
+
+ COUNT(*) MAX(BASIC) MIN(BASIC) AVG(BASIC) SUM(BASIC)                                               
+--------- ---------- ---------- ---------- ----------                                               
+       13      70000      20000  48204.723  578456.67                                               
+
+SQL> select max(basic),projectid group by proid;
+select max(basic),projectid group by proid
+                            *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select max(basic),projectid from emp group by proid
+SQL> /
+select max(basic),projectid from emp group by proid
+                                              *
+ERROR at line 1:
+ORA-00904: "PROID": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select max(basic),projectid from emp group by projectid
+SQL> /
+
+MAX(BASIC) PROJE                                                                                    
+---------- -----                                                                                    
+     20000                                                                                          
+     60000 BCE04                                                                                    
+     50000 BCE05                                                                                    
+     70000 BCE01                                                                                    
+     58000 BCE03                                                                                    
+     60000 BCE02                                                                                    
+           BCE07                                                                                    
+     40000 BCE06                                                                                    
+     35000 BCH01                                                                                    
+
+9 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select max(basic),projectid from emp group by projectid
+  2* where projectid is not null and basic is not null
+SQL> /
+where projectid is not null and basic is not null
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select max(basic),projectid from emp 
+  2  where projectid is not null and basic is not null
+  3* group by projectid
+SQL> /
+
+MAX(BASIC) PROJE                                                                                    
+---------- -----                                                                                    
+     60000 BCE04                                                                                    
+     50000 BCE05                                                                                    
+     70000 BCE01                                                                                    
+     58000 BCE03                                                                                    
+     60000 BCE02                                                                                    
+     40000 BCE06                                                                                    
+     35000 BCH01                                                                                    
+
+7 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off

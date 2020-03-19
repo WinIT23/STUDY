@@ -1,0 +1,1024 @@
+SQL> desc member;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ MEMBER_ID                                             NOT NULL NUMBER(5)
+ MEMBER_NAME                                                    VARCHAR2(30)
+ MEMBER_ADDRESS                                                 VARCHAR2(50)
+ ACC_OPEN_DATE                                                  DATE
+ MEMBERSHIP_TYPE                                                VARCHAR2(20)
+ FEES_PAID                                                      NUMBER(4)
+ MAX_BOOKS_ALLOWED                                              NUMBER(2)
+ PENALTY_AMOUNT                                                 NUMBER(7,2)
+
+SQL> desc issue;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ LIB_ISSUE_ID                                          NOT NULL NUMBER(10)
+ BOOK_NO                                                        NUMBER(6)
+ MEMBER_ID                                                      NUMBER(5)
+ ISSUE_DATE                                                     DATE
+ RETURN_DATE                                                    DATE
+
+SQL> CREATE OR REPLACE UPDATE_PENALTY(MEM_ID IN NUMBER) AS
+  2  CURSOR C1 IS SELECT DATEDIFF(DAY,ISSUE_DATE,RETURN_DATE) FROM ISSUE WHERE MEMBER_ID = MEM_ID
+  3  AND RETURN_DATE IS NOT NULL;
+CREATE OR REPLACE UPDATE_PENALTY(MEM_ID IN NUMBER) AS
+                  *
+ERROR at line 1:
+ORA-00922: missing or invalid option 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE UPDATE_PENALTY(MEM_ID IN NUMBER) AS
+  2  CURSOR C1 IS SELECT DATEDIFF(DAY,ISSUE_DATE,RETURN_DATE) FROM ISSUE WHERE MEMBER_ID = MEM_ID
+  3* AND RETURN_DATE IS NOT NULL
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE UPDATE_PENALTY(MEM_ID IN NUMBER) AS
+  2  CURSOR C1 IS SELECT DATEDIFF(DAY,ISSUE_DATE,RETURN_DATE) 
+  3  FROM ISSUE WHERE MEMBER_ID = MEM_ID AND RETURN_DATE IS NOT NULL;
+  4  DIFF NUMBER;
+  5  PENALTY NUMBER := 0;
+  6  BEGIN
+  7  	OPEN C1;
+  8  	LOOP
+  9  	EXIT WHEN C1%NOTFOUND;
+ 10  		FETCH C1 INTO DIFF;
+ 11  		IF DIFF <= 15 THEN PENALTY := PENALTY + 0;
+ 12  		ELSE IF DIFF <= 30 THEN PENALTY := PENALTY + (DIFF-15);
+ 13  		ELSE IF DIFF <= 60 THEN PENALTY := PENALTY + (DIFF-30)*1.5 + 15;
+ 14  		ELSE PENALTY = PENALTY + 60+(DIFF-60)*3;
+ 15  		END IF;
+ 16  		END IF;
+ 17  		END IF;
+ 18  	EXIT LOOP;
+ 19  	UPDATE MEMBER 
+ 20  	SET PENALTY_AMMOUNT = PENALTY
+ 21  	WHERE MEMBER_ID = MEM_ID;
+ 22* END;
+ 23  
+ 24  ;
+ 25  .
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS;
+Errors for PROCEDURE UPDATE_PENALTY:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+14/16    PLS-00103: Encountered the symbol "=" when expecting one of the                            
+         following:                                                                                 
+         := . ( @ % ;                                                                               
+                                                                                                    
+15/3     PLS-00103: Encountered the symbol "END"                                                    
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE UPDATE_PENALTY(MEM_ID IN NUMBER) AS
+  2  CURSOR C1 IS SELECT DATEDIFF(DAY,ISSUE_DATE,RETURN_DATE) 
+  3  FROM ISSUE WHERE MEMBER_ID = MEM_ID AND RETURN_DATE IS NOT NULL;
+  4  DIFF NUMBER;
+  5  PENALTY NUMBER := 0;
+  6  BEGIN
+  7  	OPEN C1;
+  8  	LOOP
+  9  	EXIT WHEN C1%NOTFOUND;
+ 10  		FETCH C1 INTO DIFF;
+ 11  		IF DIFF <= 15 THEN PENALTY := PENALTY + 0;
+ 12  		ELSE IF DIFF <= 30 THEN PENALTY := PENALTY + (DIFF-15);
+ 13  		ELSE IF DIFF <= 60 THEN PENALTY := PENALTY + (DIFF-30)*1.5 + 15;
+ 14  		ELSE PENALTY := PENALTY + 60+(DIFF-60)*3;
+ 15  		END IF;
+ 16  		END IF;
+ 17  		END IF;
+ 18  	EXIT LOOP;
+ 19  	UPDATE MEMBER 
+ 20  	SET PENALTY_AMMOUNT = PENALTY
+ 21  	WHERE MEMBER_ID = MEM_ID;
+ 22  END;
+ 23* ;
+ 24  .
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS;
+Errors for PROCEDURE UPDATE_PENALTY:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+22/4     PLS-00103: Encountered the symbol ";" when expecting one of the                            
+         following:                                                                                 
+         loop                                                                                       
+                                                                                                    
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE UPDATE_PENALTY(MEM_ID IN NUMBER) AS
+  2  CURSOR C1 IS SELECT RETURN_DATE-ISSUE_DATE FROM ISSUE 
+  3  WHERE MEMBER_ID = MEM_ID AND RETURN_DATE IS NOT NULL;
+  4  DIFF NUMBER;
+  5  PENALTY NUMBER := 0;
+  6  BEGIN
+  7  	OPEN C1;
+  8  	LOOP
+  9  	EXIT WHEN C1%NOTFOUND;
+ 10  		FETCH C1 INTO DIFF;
+ 11  		IF DIFF <= 15 THEN PENALTY := PENALTY + 0;
+ 12  		ELSE IF DIFF <= 30 THEN PENALTY := PENALTY + (DIFF-15);
+ 13  		ELSE IF DIFF <= 60 THEN PENALTY := PENALTY + (DIFF-30)*1.5 + 15;
+ 14  		ELSE PENALTY := PENALTY + 60+(DIFF-60)*3;
+ 15  		END IF;
+ 16  		END IF;
+ 17  		END IF;
+ 18  	EXIT LOOP;
+ 19  	UPDATE MEMBER 
+ 20  	SET PENALTY_AMMOUNT = PENALTY
+ 21  	WHERE MEMBER_ID = MEM_ID;
+ 22* END
+ 23  .
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS;
+Errors for PROCEDURE UPDATE_PENALTY:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+23/0     PLS-00103: Encountered the symbol "end-of-file" when expecting                             
+         one of the following:                                                                      
+         loop                                                                                       
+                                                                                                    
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE UPDATE_PENALTY(MEM_ID IN NUMBER) AS
+  2  CURSOR C1 IS SELECT RETURN_DATE-ISSUE_DATE FROM ISSUE 
+  3  WHERE MEMBER_ID = MEM_ID AND RETURN_DATE IS NOT NULL;
+  4  DIFF NUMBER;
+  5  PENALTY NUMBER := 0;
+  6  BEGIN
+  7  	OPEN C1;
+  8  	LOOP
+  9  	EXIT WHEN C1%NOTFOUND;
+ 10  		FETCH C1 INTO DIFF;
+ 11  		IF DIFF <= 15 THEN PENALTY := PENALTY + 0;
+ 12  		ELSE IF DIFF <= 30 THEN PENALTY := PENALTY + (DIFF-15);
+ 13  		ELSE IF DIFF <= 60 THEN PENALTY := PENALTY + (DIFF-30)*1.5 + 15;
+ 14  		ELSE PENALTY := PENALTY + 60+(DIFF-60)*3;
+ 15  		END IF;
+ 16  		END IF;
+ 17  		END IF;
+ 18  	EXIT LOOP;
+ 19  	UPDATE MEMBER 
+ 20  	SET PENALTY_AMMOUNT = PENALTY
+ 21  	WHERE MEMBER_ID = MEM_ID;
+ 22* END;
+SQL> .
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS;
+Errors for PROCEDURE UPDATE_PENALTY:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+22/4     PLS-00103: Encountered the symbol ";" when expecting one of the                            
+         following:                                                                                 
+         loop                                                                                       
+                                                                                                    
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE UPDATE_PENALTY(MEM_ID IN NUMBER) AS
+  2  CURSOR C1 IS SELECT RETURN_DATE-ISSUE_DATE FROM ISSUE 
+  3  WHERE MEMBER_ID = MEM_ID AND RETURN_DATE IS NOT NULL;
+  4  DIFF NUMBER;
+  5  PENALTY NUMBER := 0;
+  6  BEGIN
+  7  	OPEN C1;
+  8  	LOOP
+  9  	EXIT WHEN C1%NOTFOUND;
+ 10  		FETCH C1 INTO DIFF;
+ 11  		IF DIFF <= 15 THEN PENALTY := PENALTY + 0;
+ 12  		ELSE IF DIFF <= 30 THEN PENALTY := PENALTY + (DIFF-15);
+ 13  		ELSE IF DIFF <= 60 THEN PENALTY := PENALTY + (DIFF-30)*1.5 + 15;
+ 14  		ELSE PENALTY := PENALTY + 60+(DIFF-60)*3;
+ 15  		END IF;
+ 16  		END IF;
+ 17  		END IF;
+ 18  	END LOOP;
+ 19  	UPDATE MEMBER 
+ 20  	SET PENALTY_AMMOUNT = PENALTY
+ 21  	WHERE MEMBER_ID = MEM_ID;
+ 22* END;
+SQL> .
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS;
+Errors for PROCEDURE UPDATE_PENALTY:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+19/2     PL/SQL: SQL Statement ignored                                                              
+20/6     PL/SQL: ORA-00904: "PENALTY_AMMOUNT": invalid identifier                                   
+SQL> DESC MEMBER;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ MEMBER_ID                                             NOT NULL NUMBER(5)
+ MEMBER_NAME                                                    VARCHAR2(30)
+ MEMBER_ADDRESS                                                 VARCHAR2(50)
+ ACC_OPEN_DATE                                                  DATE
+ MEMBERSHIP_TYPE                                                VARCHAR2(20)
+ FEES_PAID                                                      NUMBER(4)
+ MAX_BOOKS_ALLOWED                                              NUMBER(2)
+ PENALTY_AMOUNT                                                 NUMBER(7,2)
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE UPDATE_PENALTY(MEM_ID IN NUMBER) AS
+  2  CURSOR C1 IS SELECT RETURN_DATE-ISSUE_DATE FROM ISSUE 
+  3  WHERE MEMBER_ID = MEM_ID AND RETURN_DATE IS NOT NULL;
+  4  DIFF NUMBER;
+  5  PENALTY NUMBER := 0;
+  6  BEGIN
+  7  	OPEN C1;
+  8  	LOOP
+  9  	EXIT WHEN C1%NOTFOUND;
+ 10  		FETCH C1 INTO DIFF;
+ 11  		IF DIFF <= 15 THEN PENALTY := PENALTY + 0;
+ 12  		ELSE IF DIFF <= 30 THEN PENALTY := PENALTY + (DIFF-15);
+ 13  		ELSE IF DIFF <= 60 THEN PENALTY := PENALTY + (DIFF-30)*1.5 + 15;
+ 14  		ELSE PENALTY := PENALTY + 60+(DIFF-60)*3;
+ 15  		END IF;
+ 16  		END IF;
+ 17  		END IF;
+ 18  	END LOOP;
+ 19  	UPDATE MEMBER 
+ 20  	SET PENALTY_AMOUNT = PENALTY
+ 21  	WHERE MEMBER_ID = MEM_ID;
+ 22* END;
+SQL> .
+SQL> /
+
+Procedure created.
+
+SQL> EXEC UPDATE_PENALTY(101);
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> SEELCT * FROM MEMBER;
+SP2-0042: unknown command beginning "SEELCT * F..." - rest of line ignored.
+SQL> SELECT * FROM MEMBER;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            300                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            800                           
+                                                                                                    
+        4 LONI                           SURAT                                                      
+12-FEB-99 Lifetime                  2000                50            700                           
+                                                                                                    
+
+SQL> EXEC UPDATE_PENALTY(1);
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> SELECT * FROM MEMBER;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20              0                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            800                           
+                                                                                                    
+        4 LONI                           SURAT                                                      
+12-FEB-99 Lifetime                  2000                50            700                           
+                                                                                                    
+
+SQL> SELECT * FROM ISSUE;
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                
+------------ --------- --------- --------- ---------                                                
+         201       101         1 17-JAN-19 20-JAN-19                                                
+         200       102         2 20-JAN-19 22-JAN-19                                                
+         202       103         3 20-JAN-19 27-JAN-19                                                
+         203       101         2 22-JAN-19 27-JAN-19                                                
+         204       101         3 25-JAN-19 29-JAN-19                                                
+         206       104         2 23-JAN-19 24-JAN-19                                                
+         207       103         2 23-JAN-19 24-JAN-19                                                
+         208       104         4 23-JAN-19 23-FEB-19                                                
+
+8 rows selected.
+
+SQL> EXEC UPDATE_PENALTY(4);
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> SELECT * FROM MEMBER;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20              0                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            800                           
+                                                                                                    
+        4 LONI                           SURAT                                                      
+12-FEB-99 Lifetime                  2000                50             33                           
+                                                                                                    
+
+SQL> INSERT INTO ISSUE VALUES(209,101,3,'19-JAN-2019','20-MAR-2019');
+
+1 row created.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO ISSUE VALUES(210,102,2,'10-JAN-2019','23-MAR-2019')
+SQL> /
+
+1 row created.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* INSERT INTO ISSUE VALUES(211,102,1,'7-JAN-2019','13-MAR-2019')
+SQL> /
+
+1 row created.
+
+Commit complete.
+SQL> SELECT * FROM ISSUE;
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                
+------------ --------- --------- --------- ---------                                                
+         201       101         1 17-JAN-19 20-JAN-19                                                
+         200       102         2 20-JAN-19 22-JAN-19                                                
+         202       103         3 20-JAN-19 27-JAN-19                                                
+         203       101         2 22-JAN-19 27-JAN-19                                                
+         204       101         3 25-JAN-19 29-JAN-19                                                
+         206       104         2 23-JAN-19 24-JAN-19                                                
+         207       103         2 23-JAN-19 24-JAN-19                                                
+         208       104         4 23-JAN-19 23-FEB-19                                                
+         209       101         3 19-JAN-19 20-MAR-19                                                
+         210       102         2 10-JAN-19 23-MAR-19                                                
+         211       102         1 07-JAN-19 13-MAR-19                                                
+
+11 rows selected.
+
+SQL> EXEC UPDATE_PENALTY(1);
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM ISSUE
+SQL> EXEC UPDATE_PENALTY(2);
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM ISSUE
+SQL> EXEC VUPDATE_PENALTY(3);
+BEGIN VUPDATE_PENALTY(3); END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7: 
+PLS-00201: identifier 'VUPDATE_PENALTY' must be declared 
+ORA-06550: line 1, column 7: 
+PL/SQL: Statement ignored 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM ISSUE
+SQL> EXEC UPDATE_PENALTY(3);
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> SELECT * FROM MEMBER;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            150                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            192                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            120                           
+                                                                                                    
+        4 LONI                           SURAT                                                      
+12-FEB-99 Lifetime                  2000                50             33                           
+                                                                                                    
+
+SQL> IJUHFG.
+SP2-0042: unknown command "IJUHFG." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE ALL() AS
+  2  CURSOR C2 IS SELECT MEMBER_ID FROM MEMBER;
+  3  MEM_ID NUMBER;
+  4  LOOP
+  5  EXIT WHEN C2%NOTFOUND;
+  6  	FETCH C2 INTO MEM_ID;
+  7  	UPDATE_PENALTY(MEM_ID);
+  8* END LOOP;
+  9  /
+CREATE OR REPLACE PROCEDURE ALL() AS
+                            *
+ERROR at line 1:
+ORA-04050: invalid or missing procedure, function, or package name 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE ALL_PENALTY() AS
+  2  CURSOR C2 IS SELECT MEMBER_ID FROM MEMBER;
+  3  MEM_ID NUMBER;
+  4  LOOP
+  5  EXIT WHEN C2%NOTFOUND;
+  6  	FETCH C2 INTO MEM_ID;
+  7  	UPDATE_PENALTY(MEM_ID);
+  8* END LOOP;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS;
+Errors for PROCEDURE ALL_PENALTY:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+1/23     PLS-00103: Encountered the symbol ")" when expecting one of the                            
+         following:                                                                                 
+         <an identifier> <a double-quoted delimited-identifier>                                     
+         current                                                                                    
+                                                                                                    
+5/6      PLS-00103: Encountered the symbol "WHEN" when expecting one of                             
+         the following:                                                                             
+         := . ( @ % ; not null range default character                                              
+                                                                                                    
+6/2      PLS-00103: Encountered the symbol "FETCH"                                                  
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE ALL_PENALTY AS
+  2  CURSOR C2 IS SELECT MEMBER_ID FROM MEMBER;
+  3  MEM_ID NUMBER;
+  4  LOOP
+  5  EXIT WHEN C2%NOTFOUND;
+  6  	FETCH C2 INTO MEM_ID;
+  7  	UPDATE_PENALTY(MEM_ID);
+  8* END LOOP;
+SQL> /
+
+Warning: Procedure created with compilation errors.
+
+SQL> SHOW ERRORS;
+Errors for PROCEDURE ALL_PENALTY:
+
+LINE/COL ERROR                                                                                      
+-------- -----------------------------------------------------------------                          
+5/6      PLS-00103: Encountered the symbol "WHEN" when expecting one of                             
+         the following:                                                                             
+         := . ( @ % ; not null range default character                                              
+                                                                                                    
+6/2      PLS-00103: Encountered the symbol "FETCH"                                                  
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE ALL_PENALTY AS
+  2  CURSOR C2 IS SELECT MEMBER_ID FROM MEMBER;
+  3  MEM_ID NUMBER;
+  4  BEGIN
+  5  LOOP
+  6  EXIT WHEN C2%NOTFOUND;
+  7  	FETCH C2 INTO MEM_ID;
+  8  	UPDATE_PENALTY(MEM_ID);
+  9  END LOOP;
+ 10* END;
+SQL> /
+
+Procedure created.
+
+SQL> EXEC ALL_PENALTY;
+BEGIN ALL_PENALTY; END;
+
+*
+ERROR at line 1:
+ORA-01001: invalid cursor 
+ORA-06512: at "CE17018.ALL_PENALTY", line 6 
+ORA-06512: at line 1 
+
+
+SQL> EXEC ALL_PENALTY();
+BEGIN ALL_PENALTY(); END;
+
+*
+ERROR at line 1:
+ORA-01001: invalid cursor 
+ORA-06512: at "CE17018.ALL_PENALTY", line 6 
+ORA-06512: at line 1 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE ALL_PENALTY AS
+  2  CURSOR C2 IS SELECT MEMBER_ID FROM MEMBER;
+  3  MEM_ID NUMBER;
+  4  BEGIN
+  5  LOOP
+  6  EXIT WHEN C2%NOTFOUND;
+  7  	FETCH C2 INTO MEM_ID;
+  8  	UPDATE_PENALTY(MEM_ID);
+  9  END LOOP;
+ 10* END;
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE PROCEDURE ALL_PENALTY AS
+  2  CURSOR C2 IS SELECT MEMBER_ID FROM MEMBER;
+  3  MEM_ID NUMBER;
+  4  BEGIN
+  5  OPEN C2;
+  6  LOOP
+  7  EXIT WHEN C2%NOTFOUND;
+  8  	FETCH C2 INTO MEM_ID;
+  9  	UPDATE_PENALTY(MEM_ID);
+ 10  END LOOP;
+ 11* END;
+SQL> /
+
+Procedure created.
+
+SQL> EXEC ALL_PENALTY();
+
+PL/SQL procedure successfully completed.
+
+Commit complete.
+SQL> SELECT * FROM MEMBER;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            150                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            192                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            120                           
+                                                                                                    
+        4 LONI                           SURAT                                                      
+12-FEB-99 Lifetime                  2000                50             33                           
+                                                                                                    
+
+SQL> CREATE TRIGGER ADD_PENALTY AFTER UPDATE OF MEMBER.
+  2  .
+SQL> DESC ISSUE;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ LIB_ISSUE_ID                                          NOT NULL NUMBER(10)
+ BOOK_NO                                                        NUMBER(6)
+ MEMBER_ID                                                      NUMBER(5)
+ ISSUE_DATE                                                     DATE
+ RETURN_DATE                                                    DATE
+
+SQL> CREATE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+  2  REFERENCING OLD AS O ,NEW AS N
+  3  BEGIN
+  4  DBMS_OUTPUT.PUT_LINE(:O.BOOK_NO||' '||:N.BOOK_NO);
+  5  END;
+  6  /
+REFERENCING OLD AS O ,NEW AS N
+                     *
+ERROR at line 2:
+ORA-04079: invalid trigger specification 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+  2  REFERENCING OLD AS O  NEW AS N
+  3  BEGIN
+  4  DBMS_OUTPUT.PUT_LINE(:O.BOOK_NO||' '||:N.BOOK_NO);
+  5* END;
+SQL> /
+CREATE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+               *
+ERROR at line 1:
+ORA-04082: NEW or OLD references not allowed in table level triggers 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+  2  REFERENCING OLD AS O  NEW AS N
+  3  BEGIN
+  4  DBMS_OUTPUT.PUT_LINE(:O.BOOK_NO||' '||:N.BOOK_NO);
+  5* END;
+SQL> /
+CREATE OR REPLACE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+                          *
+ERROR at line 1:
+ORA-04082: NEW or OLD references not allowed in table level triggers 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+  2  REFERENCING OLD AS O  
+  3  BEGIN
+  4  DBMS_OUTPUT.PUT_LINE(:O.BOOK_NO||' '||:N.BOOK_NO);
+  5* END;
+SQL> /
+CREATE OR REPLACE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+                          *
+ERROR at line 1:
+ORA-04082: NEW or OLD references not allowed in table level triggers 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+  2  BEGIN
+  3  DBMS_OUTPUT.PUT_LINE(:OLD.BOOK_NO||' '||:NEW.BOOK_NO);
+  4* END;
+SQL> /
+CREATE OR REPLACE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+                          *
+ERROR at line 1:
+ORA-04082: NEW or OLD references not allowed in table level triggers 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE TRIGGER T1 AFTER UPDATE ON ISSUE
+  2  BEGIN
+  3  DBMS_OUTPUT.PUT_LINE(:OLD.BOOK_NO||' '||:NEW.BOOK_NO);
+  4* END;
+SQL> /
+CREATE OR REPLACE TRIGGER T1 AFTER UPDATE ON ISSUE
+                          *
+ERROR at line 1:
+ORA-04082: NEW or OLD references not allowed in table level triggers 
+
+
+SQL>  CREATE OR REPLACE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+  2   BEGIN
+  3   DBMS_OUTPUT.PUT_LINE(:OLD.BOOK_NO||' '||:NEW.BOOK_NO);
+  4   END;
+  5  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1   CREATE OR REPLACE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE FOR EACH ROW
+  2   BEGIN
+  3   DBMS_OUTPUT.PUT_LINE(:OLD.BOOK_NO||' '||:NEW.BOOK_NO);
+  4*  END;
+SQL> /
+
+Trigger created.
+
+SQL> SELECT * FROM ISSUE;
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                
+------------ --------- --------- --------- ---------                                                
+         201       101         1 17-JAN-19 20-JAN-19                                                
+         200       102         2 20-JAN-19 22-JAN-19                                                
+         202       103         3 20-JAN-19 27-JAN-19                                                
+         203       101         2 22-JAN-19 27-JAN-19                                                
+         204       101         3 25-JAN-19 29-JAN-19                                                
+         206       104         2 23-JAN-19 24-JAN-19                                                
+         207       103         2 23-JAN-19 24-JAN-19                                                
+         208       104         4 23-JAN-19 23-FEB-19                                                
+         209       101         3 19-JAN-19 20-MAR-19                                                
+         210       102         2 10-JAN-19 23-MAR-19                                                
+         211       102         1 07-JAN-19 13-MAR-19                                                
+
+11 rows selected.
+
+SQL> UPDATE ISSUE SET BOOK_NO=102 WHERE LIB_ISSUE_ID=201;
+
+1 row updated.
+
+Commit complete.
+SQL> SET SERVEROUTPUT ON;
+SQL> 
+SQL> UPDATE ISSUE SET BOOK_NO=102 WHERE LIB_ISSUE_ID=201;
+102 102                                                                                             
+
+1 row updated.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* UPDATE ISSUE SET BOOK_NO=101 WHERE LIB_ISSUE_ID=201
+SQL> /
+102 101                                                                                             
+
+1 row updated.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* UPDATE ISSUE SET BOOK_NO=101 WHERE LIB_ISSUE_ID=201
+SQL>  CREATE OR REPLACE TRIGGER T1 AFTER UPDATE OF BOOK_NO ON ISSUE
+  2   BEGIN
+  3   DBMS_OUTPUT.PUT_LINE(:OLD.BOOK_NO||' '||:NEW.BOOK_NO);
+  4   END;
+  5  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1   CREATE OR REPLACE TRIGGER T1 
+  2  AFTER UPDATE OF BOOK_NO ON ISSUE
+  3   BEGIN
+  4   DBMS_OUTPUT.PUT_LINE(:OLD.BOOK_NO||' '||:NEW.BOOK_NO);
+  5*  END;
+SQL> /
+ CREATE OR REPLACE TRIGGER T1 
+                           *
+ERROR at line 1:
+ORA-04082: NEW or OLD references not allowed in table level triggers 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   CREATE OR REPLACE TRIGGER T1 
+  2   AFTER UPDATE OF BOOK_NO ON ISSUE
+  3   BEGIN
+  4   DBMS_OUTPUT.PUT_LINE('UPDATE');
+  5*  END;
+  6  /
+
+Trigger created.
+
+SQL> UPDATE ISSUE SET BOOK_NO=101 WHERE BOOK_NO=102;
+UPDATE                                                                                              
+
+3 rows updated.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* UPDATE ISSUE SET BOOK_NO=101 WHERE BOOK_NO=102
+SQL> CREATE OR REPLACE TRIGGER T1
+  2  AFTER UPDATE OF BOOK_NO ON ISSUE
+  3  BEGIN
+  4  DBMS_OUTPUT.PUT_LINE('UPDATE');
+  5  END;
+  6  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE OR REPLACE TRIGGER T1
+  2  AFTER UPDATE OF BOOK_NO ON ISSUE
+  3  FOR EACH ROW
+  4  BEGIN
+  5  DBMS_OUTPUT.PUT_LINE('UPDATE');
+  6* END;
+SQL> /
+
+Trigger created.
+
+SQL> UPDATE ISSUE SET BOOK_NO=101 WHERE BOOK_NO=102
+  2  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1* UPDATE ISSUE SET BOOK_NO=102 WHERE BOOK_NO=101
+SQL> /
+UPDATE                                                                                              
+UPDATE                                                                                              
+UPDATE                                                                                              
+UPDATE                                                                                              
+UPDATE                                                                                              
+UPDATE                                                                                              
+UPDATE                                                                                              
+
+7 rows updated.
+
+Commit complete.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* UPDATE ISSUE SET BOOK_NO=102 WHERE BOOK_NO=101
+SQL>   CREATE OR REPLACE TRIGGER T1
+  2   AFTER UPDATE OF BOOK_NO ON ISSUE
+  3    BEGIN
+  4    DBMS_OUTPUT.PUT_LINE(:OLD.BOOK_NO||' '||:NEW.BOOK_NO);
+  5    END;
+  6  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1   CREATE OR REPLACE TRIGGER T1
+  2   AFTER UPDATE OF RETURN_DATE ON ISSUE
+  3   FOR EACH ROW
+  4  DIFF NUMBER;
+  5  P NUMBER;
+  6  BEGIN
+  7  SELECT :NEW.RETURN_DATE-:NEW.ISSUE_DATE INTO DIFF FROM DUAL;
+  8  P:= DIFF ;
+  9  UPDATE MEMBER SET PENALTY_AMOUNT=PENALTY_AMOUNT+P
+ 10  WHERE MEMBER_ID=:NEW.MEMBER_ID;
+ 11*  END;
+ 12  /
+DIFF NUMBER;
+*
+ERROR at line 4:
+ORA-04079: invalid trigger specification 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   CREATE OR REPLACE TRIGGER T1
+  2   AFTER UPDATE OF RETURN_DATE ON ISSUE
+  3   FOR EACH ROW 
+  4  DECLARE 
+  5  DIFF NUMBER;
+  6  P NUMBER;
+  7  BEGIN
+  8  SELECT :NEW.RETURN_DATE-:NEW.ISSUE_DATE INTO DIFF FROM DUAL;
+  9  P:= DIFF ;
+ 10  UPDATE MEMBER SET PENALTY_AMOUNT=PENALTY_AMOUNT+P
+ 11  WHERE MEMBER_ID=:NEW.MEMBER_ID;
+ 12*  END;
+SQL> /
+
+Trigger created.
+
+SQL> SELECT * FROM MEMBER;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            150                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            192                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            120                           
+                                                                                                    
+        4 LONI                           SURAT                                                      
+12-FEB-99 Lifetime                  2000                50             33                           
+                                                                                                    
+
+SQL> SET LINES 200
+SQL> /
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                     ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                                   
+--------- ------------------------------ -------------------------------------------------- --------- -------------------- --------- ----------------- --------------                                   
+        1 A                              SURAT                                              12-FEB-00 Lifetime                  1000                20            150                                   
+        2 B                              BHUJ                                               10-FEB-99 Annual                     300                30            192                                   
+        3 C                              UNJHA                                              20-MAR-99 Lifetime                   400                40            120                                   
+        4 LONI                           SURAT                                              12-FEB-99 Lifetime                  2000                50             33                                   
+
+SQL> SELECT * FROM ISSUE;
+
+LIB_ISSUE_ID   BOOK_NO MEMBER_ID ISSUE_DAT RETURN_DA                                                                                                                                                    
+------------ --------- --------- --------- ---------                                                                                                                                                    
+         201       102         1 17-JAN-19 20-JAN-19                                                                                                                                                    
+         200       102         2 20-JAN-19 22-JAN-19                                                                                                                                                    
+         202       103         3 20-JAN-19 27-JAN-19                                                                                                                                                    
+         203       102         2 22-JAN-19 27-JAN-19                                                                                                                                                    
+         204       102         3 25-JAN-19 29-JAN-19                                                                                                                                                    
+         206       104         2 23-JAN-19 24-JAN-19                                                                                                                                                    
+         207       103         2 23-JAN-19 24-JAN-19                                                                                                                                                    
+         208       104         4 23-JAN-19 23-FEB-19                                                                                                                                                    
+         209       102         3 19-JAN-19 20-MAR-19                                                                                                                                                    
+         210       102         2 10-JAN-19 23-MAR-19                                                                                                                                                    
+         211       102         1 07-JAN-19 13-MAR-19                                                                                                                                                    
+
+11 rows selected.
+
+SQL> INSERT INTO ISSUE VALUES (212,101,1,'07-NOV-2019',NULL);
+
+1 row created.
+
+Commit complete.
+SQL> UPDATE ISSUE SET RETURN_DATE='17-NOVE-2019'
+  2  WHERE LIB_ISSUE_ID=212
+  3  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1  UPDATE ISSUE SET RETURN_DATE='17-NOV-2019'
+  2* WHERE LIB_ISSUE_ID=212
+SQL> /
+
+1 row updated.
+
+Commit complete.
+SQL> SELECT * FROM MEMBER
+  2  ;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                     ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                                   
+--------- ------------------------------ -------------------------------------------------- --------- -------------------- --------- ----------------- --------------                                   
+        1 A                              SURAT                                              12-FEB-00 Lifetime                  1000                20            160                                   
+        2 B                              BHUJ                                               10-FEB-99 Annual                     300                30            192                                   
+        3 C                              UNJHA                                              20-MAR-99 Lifetime                   400                40            120                                   
+        4 LONI                           SURAT                                              12-FEB-99 Lifetime                  2000                50             33                                   
+
+SQL>  CREATE OR REPLACE TRIGGER T1
+  2   AFTER UPDATE OF RETURN_DATE ON ISSUE
+  3   FOR EACH ROW
+  4  DECLARE
+  5  DIFF NUMBER;
+  6  P NUMBER;
+  7  BEGIN
+  8  SELECT :NEW.RETURN_DATE-:NEW.ISSUE_DATE INTO DIFF FROM DUAL;
+  9  P:= DIFF ;
+ 10  UPDATE MEMBER SET PENALTY_AMOUNT=PENALTY_AMOUNT+P
+ 11  WHERE MEMBER_ID=:NEW.MEMBER_ID;
+ 12   END;
+ 13  .
+SQL> ED
+Wrote file afiedt.buf
+
+  1   CREATE OR REPLACE TRIGGER T1
+  2   AFTER UPDATE OF RETURN_DATE ON ISSUE
+  3   FOR EACH ROW
+  4  DECLARE
+  5  DIFF NUMBER;
+  6  P NUMBER;
+  7  BEGIN
+  8  SELECT :NEW.RETURN_DATE-:NEW.ISSUE_DATE INTO DIFF FROM DUAL;
+  9  P:= DIFF ;
+ 10  UPDATE MEMBER SET PENALTY_AMOUNT=PENALTY_AMOUNT+P
+ 11  WHERE MEMBER_ID=:NEW.MEMBER_ID;
+ 12*  END;
+ 13  .
+SQL> SPOOL OFF;

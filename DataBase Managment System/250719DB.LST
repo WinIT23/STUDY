@@ -1,0 +1,853 @@
+SQL> desc student;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ROLLNO                                                         VARCHAR2(8)
+ NAME                                                           VARCHAR2(30)
+ DOB                                                            DATE
+ HSC_MARKS                                                      VARCHAR2(5)
+ MEMBERS                                                        VARCHAR2(30)
+ JEE_SCORE                                                      VARCHAR2(3)
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 Vraj Desai                     02-JUN-00 94.33                                119          
+17BCE019 Dev Gagrani                    13-JAN-00 90.13                                160          
+17BCE020 Dev Joshi                      03-AUG-99 94.33 RCNI                           180          
+
+SQL> auto commit on
+SP2-0042: unknown command beginning "auto commi..." - rest of line ignored.
+SQL> insert into student values('&ROLLNO','&NAME','&DOB','&HSC_MARKS','&CLUB_MEMBER','&JEE_MARKS');
+Enter value for rollno: 17BCE001
+Enter value for name: AAryan Gupta
+Enter value for dob: 01-jan-2000
+Enter value for hsc_marks: 90.33
+Enter value for club_member: ISTE
+Enter value for jee_marks: 154
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&HSC_MARKS','&CLUB_MEMBER','&JEE_MARKS')
+new   1: insert into student values('17BCE001','AAryan Gupta','01-jan-2000','90.33','ISTE','154')
+
+1 row created.
+
+SQL> save insert
+SP2-0540: File "insert.sql" already exists.
+Use "SAVE filename[.ext] REPLACE".
+SQL> save input
+Created file input
+SQL> @input
+Enter value for rollno: 17BCE004
+Enter value for name: Anjali Gama
+Enter value for dob: 04-feb-1999
+Enter value for hsc_marks: 89.78
+Enter value for club_member: RCNI,ISTE
+Enter value for jee_marks: 180
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&HSC_MARKS','&CLUB_MEMBER','&JEE_MARKS')
+new   1: insert into student values('17BCE004','Anjali Gama','04-feb-1999','89.78','RCNI,ISTE','180')
+
+1 row created.
+
+SQL> @input
+Enter value for rollno: 17BCE010
+Enter value for name: Bharat Adharyu
+Enter value for dob: 02-jun-1999
+Enter value for hsc_marks: 87.56
+Enter value for club_member: ISTE
+Enter value for jee_marks: 130
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&HSC_MARKS','&CLUB_MEMBER','&JEE_MARKS')
+new   1: insert into student values('17BCE010','Bharat Adharyu','02-jun-1999','87.56','ISTE','130')
+
+1 row created.
+
+SQL> alter table student
+  2  modify (HSC_MARKS number(6,2));
+modify (HSC_MARKS number(6,2))
+        *
+ERROR at line 2:
+ORA-01439: column to be modified must be empty to change datatype 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  alter table student
+  2* add (HSC number(6,2))
+SQL> /
+
+Table altered.
+
+SQL> desc student;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ROLLNO                                                         VARCHAR2(8)
+ NAME                                                           VARCHAR2(30)
+ DOB                                                            DATE
+ HSC_MARKS                                                      VARCHAR2(5)
+ MEMBERS                                                        VARCHAR2(30)
+ JEE_SCORE                                                      VARCHAR2(3)
+ HSC                                                            NUMBER(6,2)
+
+SQL> UPDATE STUDENT SET HSC=INT(HSC_MARKS) ;
+UPDATE STUDENT SET HSC=INT(HSC_MARKS) 
+                       *
+ERROR at line 1:
+ORA-00904: "INT": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* UPDATE STUDENT SET HSC=INT(HSC_MARKS) 
+SQL> UPDATE STUDENT
+  2  SET hsc = CAST(hsc_marks AS NUMBER(6,2);
+SET hsc = CAST(hsc_marks AS NUMBER(6,2)
+                                      *
+ERROR at line 2:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  UPDATE STUDENT
+  2* SET hsc = CAST(hsc_marks AS NUMBER(6,2))
+SQL> /
+
+6 rows updated.
+
+SQL> SELECT * FROM STUDENT;
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE       HSC
+-------- ------------------------------ --------- ----- ------------------------------ --- ---------
+17BCE001 AAryan Gupta                   01-JAN-00 90.33 ISTE                           154     90.33
+17BCE004 Anjali Gama                    04-FEB-99 89.78 RCNI,ISTE                      180     89.78
+17BCE010 Bharat Adharyu                 02-JUN-99 87.56 ISTE                           130     87.56
+17BCE018 Vraj Desai                     02-JUN-00 94.33                                119     94.33
+17BCE019 Dev Gagrani                    13-JAN-00 90.13                                160     90.13
+17BCE020 Dev Joshi                      03-AUG-99 94.33 RCNI                           180     94.33
+
+6 rows selected.
+
+SQL> ALTER TABLE STUDENT
+  2  DELETE HSC_MARKS;
+DELETE HSC_MARKS
+*
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE STUDENT
+  2* DROP HSC_MARKS
+SQL> /
+DROP HSC_MARKS
+     *
+ERROR at line 2:
+ORA-00905: missing keyword 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE STUDENT
+  2* DROP COLUMN HSC_MARKS
+SQL> /
+
+Table altered.
+
+SQL> DESC STUDENT
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ROLLNO                                                         VARCHAR2(8)
+ NAME                                                           VARCHAR2(30)
+ DOB                                                            DATE
+ MEMBERS                                                        VARCHAR2(30)
+ JEE_SCORE                                                      VARCHAR2(3)
+ HSC                                                            NUMBER(6,2)
+
+SQL> @INPUT
+Enter value for rollno: 32
+Enter value for name: 2
+Enter value for dob: 2
+Enter value for hsc_marks: 2
+Enter value for club_member: 2
+Enter value for jee_marks: 2
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&HSC_MARKS','&CLUB_MEMBER','&JEE_MARKS')
+new   1: insert into student values('32','2','2','2','2','2')
+insert into student values('32','2','2','2','2','2')
+                                    *
+ERROR at line 1:
+ORA-01840: input value not long enough for date format 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS',)
+SQL> SAVE INPUT
+SP2-0540: File "INPUT.sql" already exists.
+Use "SAVE filename[.ext] REPLACE".
+SQL> SAVE INPUT.SQL REPLACE
+Wrote file INPUT.SQL
+SQL> @INPUT
+Enter value for rollno: 17BCE009
+Enter value for name: Mayank Barnwal
+Enter value for dob: 07-jan-00
+Enter value for club_member: ISTE
+Enter value for jee_marks: 168
+Enter value for hsc_marks: 93.23
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS',)
+new   1: insert into student values('17BCE009','Mayank Barnwal','07-jan-00','ISTE','168','93.23',)
+insert into student values('17BCE009','Mayank Barnwal','07-jan-00','ISTE','168','93.23',)
+                                                                                        *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+SQL> save input.sql replace
+Wrote file input.sql
+SQL> @input
+Enter value for rollno: 17BCE011
+Enter value for name: Bhavya Shah
+Enter value for dob: 11-sep-1999
+Enter value for club_member: AUGEN
+Enter value for jee_marks: 145
+Enter value for hsc_marks: 89.23
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE011','Bhavya Shah','11-sep-1999','AUGEN','145','89.23')
+
+1 row created.
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE       HSC      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 AAryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+7 rows selected.
+
+SQL> desc student;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ROLLNO                                                         VARCHAR2(8)
+ NAME                                                           VARCHAR2(30)
+ DOB                                                            DATE
+ MEMBERS                                                        VARCHAR2(30)
+ JEE_SCORE                                                      VARCHAR2(3)
+ HSC                                                            NUMBER(6,2)
+
+SQL> @input
+Enter value for rollno: 17BCE009
+Enter value for name: Mayank Barnwal
+Enter value for dob: 23-jun-1999
+Enter value for club_member: 
+Enter value for jee_marks: 145
+Enter value for hsc_marks: 87.33
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE009','Mayank Barnwal','23-jun-1999','','145','87.33')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 17BCE065
+Enter value for name: Aum Naik
+Enter value for dob: 21-aug-00
+Enter value for club_member: 
+Enter value for jee_marks: 130
+Enter value for hsc_marks: 96.67
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE065','Aum Naik','21-aug-00','','130','96.67')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 17BCE007
+Enter value for name: Ridham Avaiya
+Enter value for dob: 25-mar-1999
+Enter value for club_member: AUGEN
+Enter value for jee_marks: 140
+Enter value for hsc_marks: 85.67
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE007','Ridham Avaiya','25-mar-1999','AUGEN','140','85.67')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 17BCE014
+Enter value for name: Khodidas Chauhan
+Enter value for dob: 21-jul-00
+Enter value for club_member: AUGEN,ISTE
+Enter value for jee_marks: 143
+Enter value for hsc_marks: 84.33
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE014','Khodidas Chauhan','21-jul-00','AUGEN,ISTE','143','84.33')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 17BCE017
+Enter value for name: Manad Desai
+Enter value for dob: 24-dec-00
+Enter value for club_member: ISTE,RCNI
+Enter value for jee_marks: 123
+Enter value for hsc_marks: 87.44
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE017','Manad Desai','24-dec-00','ISTE,RCNI','123','87.44')
+
+1 row created.
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE       HSC      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 AAryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+12 rows selected.
+
+SQL> @input
+Enter value for rollno: 17BCE007
+Enter value for name: Vinit Desai
+Enter value for dob: 23-mar-1999
+Enter value for club_member: 
+Enter value for jee_marks: 86
+Enter value for hsc_marks: 87.67
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE007','Vinit Desai','23-mar-1999','','86','87.67')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 17BCE023
+Enter value for name: Sanket Patel
+Enter value for dob: 20-mar-1999
+Enter value for club_member: ISTE
+Enter value for jee_marks: 90
+Enter value for hsc_marks: 90.33
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE023','Sanket Patel','20-mar-1999','ISTE','90','90.33')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 17BCE090
+Enter value for name: Chitrang Patel
+Enter value for dob: 13-may-99
+Enter value for club_member: 
+Enter value for jee_marks: 74
+Enter value for hsc_marks: 78.88
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE090','Chitrang Patel','13-may-99','','74','78.88')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 17BCE016
+Enter value for name: Levin Dhabi
+Enter value for dob: 03-jan-99
+Enter value for club_member: 
+Enter value for jee_marks: 150
+Enter value for hsc_marks: 81.33
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE016','Levin Dhabi','03-jan-99','','150','81.33')
+
+1 row created.
+
+SQL> /
+Enter value for rollno: 17BCE034
+Enter value for name: Samarth Solanki
+Enter value for dob: 23-feb-99
+Enter value for club_member: 
+Enter value for jee_marks: 122
+Enter value for hsc_marks: 95.33
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE034','Samarth Solanki','23-feb-99','','122','95.33')
+
+1 row created.
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE       HSC      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 AAryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE007 Vinit Desai                    23-MAR-99                                86      87.67      
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                           90      90.33      
+17BCE090 Chitrang Patel                 13-MAY-99                                74      78.88      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+17 rows selected.
+
+SQL> @input
+Enter value for rollno: 17BCE087
+Enter value for name: Gaurav Ladhha
+Enter value for dob: 02-sep-00
+Enter value for club_member: 
+Enter value for jee_marks: 143
+Enter value for hsc_marks: 87.55
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE087','Gaurav Ladhha','02-sep-00','','143','87.55')
+
+1 row created.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> set autocommit on
+SQL> @input
+Enter value for rollno: 17BCE054
+Enter value for name: Harsh Naik
+Enter value for dob: 23-apr-00
+Enter value for club_member: RCNI
+Enter value for jee_marks: 110
+Enter value for hsc_marks: 87.33
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE054','Harsh Naik','23-apr-00','RCNI','110','87.33')
+
+1 row created.
+
+Commit complete.
+SQL> /
+Enter value for rollno: 17BCE056
+Enter value for name: Kunal Chhatwani
+Enter value for dob: 27-mar-99
+Enter value for club_member: 
+Enter value for jee_marks: 160
+Enter value for hsc_marks: 97.22
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE056','Kunal Chhatwani','27-mar-99','','160','97.22')
+
+1 row created.
+
+Commit complete.
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE       HSC      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 AAryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE007 Vinit Desai                    23-MAR-99                                86      87.67      
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                           90      90.33      
+17BCE090 Chitrang Patel                 13-MAY-99                                74      78.88      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE087 Gaurav Ladhha                  02-SEP-00                                143     87.55      
+17BCE054 Harsh Naik                     23-APR-00 RCNI                           110     87.33      
+17BCE056 Kunal Chhatwani                27-MAR-99                                160     97.22      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+20 rows selected.
+
+SQL> select * from student
+  2  where members is null;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE       HSC      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Vinit Desai                    23-MAR-99                                86      87.67      
+17BCE090 Chitrang Patel                 13-MAY-99                                74      78.88      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE087 Gaurav Ladhha                  02-SEP-00                                143     87.55      
+17BCE056 Kunal Chhatwani                27-MAR-99                                160     97.22      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+
+10 rows selected.
+
+SQL> select * from student
+  2  where(jee_score>120);
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE       HSC      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 AAryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE087 Gaurav Ladhha                  02-SEP-00                                143     87.55      
+17BCE056 Kunal Chhatwani                27-MAR-99                                160     97.22      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+15 rows selected.
+
+SQL> @input
+Enter value for rollno: 17BCE006
+Enter value for name: Aarjavi Vyas
+Enter value for dob: 13-mar-99
+Enter value for club_member: 
+Enter value for jee_marks: 114
+Enter value for hsc_marks: 1000
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE006','Aarjavi Vyas','13-mar-99','','114','1000')
+
+1 row created.
+
+Commit complete.
+SQL> alter table
+  2  modify (HSC number(5,2));\
+  3  .
+SQL> ed
+Wrote file afiedt.buf
+
+  1  alter table
+  2* modify (HSC number(5,2));
+SQL> /
+modify (HSC number(5,2));
+*
+ERROR at line 2:
+ORA-00903: invalid table name 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  alter table student
+  2* modify (HSC number(5,2));
+SQL> /
+modify (HSC number(5,2));
+                        *
+ERROR at line 2:
+ORA-00911: invalid character 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  alter table student
+  2* modify (HSC number(5,2))
+SQL> /
+modify (HSC number(5,2))
+        *
+ERROR at line 2:
+ORA-01440: column to be modified must be empty to decrease precision or scale 
+
+
+SQL> delete * from student
+  2  where HSC=1000
+  3  
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE       HSC      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 AAryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE007 Vinit Desai                    23-MAR-99                                86      87.67      
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                           90      90.33      
+17BCE090 Chitrang Patel                 13-MAY-99                                74      78.88      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE087 Gaurav Ladhha                  02-SEP-00                                143     87.55      
+17BCE054 Harsh Naik                     23-APR-00 RCNI                           110     87.33      
+17BCE056 Kunal Chhatwani                27-MAR-99                                160     97.22      
+17BCE006 Aarjavi Vyas                   13-MAR-99                                114      1000      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+21 rows selected.
+
+SQL> delete * from student where HSC=1000;
+delete * from student where HSC=1000
+       *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* delete from student where HSC=1000
+SQL> /
+
+1 row deleted.
+
+Commit complete.
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE       HSC      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 AAryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE007 Vinit Desai                    23-MAR-99                                86      87.67      
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                           90      90.33      
+17BCE090 Chitrang Patel                 13-MAY-99                                74      78.88      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE087 Gaurav Ladhha                  02-SEP-00                                143     87.55      
+17BCE054 Harsh Naik                     23-APR-00 RCNI                           110     87.33      
+17BCE056 Kunal Chhatwani                27-MAR-99                                160     97.22      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+20 rows selected.
+
+SQL> alter table student
+  2  modify (HSC number(5,2));
+modify (HSC number(5,2))
+        *
+ERROR at line 2:
+ORA-01440: column to be modified must be empty to decrease precision or scale 
+
+
+SQL> select * from student
+  2  where name like 'a%';
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where name like 'a%' or 'A%'
+SQL> /
+where name like 'a%' or 'A%'
+                           *
+ERROR at line 2:
+ORA-00920: invalid relational operator 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where name like '[aA]%'
+SQL> /
+
+no rows selected
+
+SQL> select * from student
+  2  where name like 'A%';
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE       HSC      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 AAryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+
+SQL> update student
+  2  set name = 'Aaryan Gupta'
+  3  where rollno='17BCE001';
+
+1 row updated.
+
+Commit complete.
+SQL>  select * from student
+  2   where name like 'A%';
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE       HSC      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+
+SQL> alter table student
+  2  add HSC_MARKS number(5,2);
+
+Table altered.
+
+SQL> update student
+  2  set HSC_MARKS = cast(HSC as number(5,2));
+
+20 rows updated.
+
+Commit complete.
+SQL> alter table student
+  2  drop HSC;
+drop HSC
+     *
+ERROR at line 2:
+ORA-00905: missing keyword 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  alter table student
+  2* drop column HSC
+SQL> /
+
+Table altered.
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE HSC_MARKS      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE007 Vinit Desai                    23-MAR-99                                86      87.67      
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                           90      90.33      
+17BCE090 Chitrang Patel                 13-MAY-99                                74      78.88      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE087 Gaurav Ladhha                  02-SEP-00                                143     87.55      
+17BCE054 Harsh Naik                     23-APR-00 RCNI                           110     87.33      
+17BCE056 Kunal Chhatwani                27-MAR-99                                160     97.22      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+20 rows selected.
+
+SQL> @input
+Enter value for rollno: 17BCE069
+Enter value for name: YO YO
+Enter value for dob: 14-jan-99
+Enter value for club_member: 
+Enter value for jee_marks: 124
+Enter value for hsc_marks: 1000
+old   1: insert into student values('&ROLLNO','&NAME','&DOB','&CLUB_MEMBER','&JEE_MARKS','&HSC_MARKS')
+new   1: insert into student values('17BCE069','YO YO','14-jan-99','','124','1000')
+insert into student values('17BCE069','YO YO','14-jan-99','','124','1000')
+                                                                   *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column 
+
+
+SQL> select * from student
+  2  where dob like '%JUL%';
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE HSC_MARKS      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where dob like '%JUL%' or dob like '%AUG'
+SQL> /
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE HSC_MARKS      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where dob like '%JUL%' or dob like '%AUG%'
+SQL> /
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE HSC_MARKS      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select * from student
+  2* where dob like '%JUL%' or dob like '%AUG%'
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       MEMBERS                        JEE HSC_MARKS      
+-------- ------------------------------ --------- ------------------------------ --- ---------      
+17BCE001 Aaryan Gupta                   01-JAN-00 ISTE                           154     90.33      
+17BCE004 Anjali Gama                    04-FEB-99 RCNI,ISTE                      180     89.78      
+17BCE010 Bharat Adharyu                 02-JUN-99 ISTE                           130     87.56      
+17BCE011 Bhavya Shah                    11-SEP-99 AUGEN                          145     89.23      
+17BCE009 Mayank Barnwal                 23-JUN-99                                145     87.33      
+17BCE065 Aum Naik                       21-AUG-00                                130     96.67      
+17BCE007 Ridham Avaiya                  25-MAR-99 AUGEN                          140     85.67      
+17BCE014 Khodidas Chauhan               21-JUL-00 AUGEN,ISTE                     143     84.33      
+17BCE017 Manad Desai                    24-DEC-00 ISTE,RCNI                      123     87.44      
+17BCE007 Vinit Desai                    23-MAR-99                                86      87.67      
+17BCE023 Sanket Patel                   20-MAR-99 ISTE                           90      90.33      
+17BCE090 Chitrang Patel                 13-MAY-99                                74      78.88      
+17BCE016 Levin Dhabi                    03-JAN-99                                150     81.33      
+17BCE034 Samarth Solanki                23-FEB-99                                122     95.33      
+17BCE087 Gaurav Ladhha                  02-SEP-00                                143     87.55      
+17BCE054 Harsh Naik                     23-APR-00 RCNI                           110     87.33      
+17BCE056 Kunal Chhatwani                27-MAR-99                                160     97.22      
+17BCE018 Vraj Desai                     02-JUN-00                                119     94.33      
+17BCE019 Dev Gagrani                    13-JAN-00                                160     90.13      
+17BCE020 Dev Joshi                      03-AUG-99 RCNI                           180     94.33      
+
+20 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off

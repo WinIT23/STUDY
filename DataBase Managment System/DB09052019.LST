@@ -1,0 +1,65 @@
+SQL> set autocommit on
+SQL> select * from tab;
+
+TNAME                          TABTYPE CLUSTERID                                                    
+------------------------------ ------- ---------                                                    
+BIN$0xN5N2VvQYm6dXR/Qgobtw==$0 TABLE                                                                
+BIN$7n4jpdFjQ9+ovRAL5HQ3kA==$0 TABLE                                                                
+BOOKS                          TABLE                                                                
+CLIENT                         TABLE                                                                
+EMP                            TABLE                                                                
+ISSUE                          TABLE                                                                
+MEMBER                         TABLE                                                                
+STUDENT                        TABLE                                                                
+
+8 rows selected.
+
+SQL> select * from member;
+
+MEMBER_ID MEMBER_NAME                    MEMBER_ADDRESS                                             
+--------- ------------------------------ --------------------------------------------------         
+ACC_OPEN_ MEMBERSHIP_TYPE      FEES_PAID MAX_BOOKS_ALLOWED PENALTY_AMOUNT                           
+--------- -------------------- --------- ----------------- --------------                           
+        1 A                              SURAT                                                      
+12-FEB-00 Lifetime                  1000                20            300                           
+                                                                                                    
+        2 B                              BHUJ                                                       
+10-FEB-99 Annual                     300                30            500                           
+                                                                                                    
+        3 C                              UNJHA                                                      
+20-MAR-99 Lifetime                   400                40            800                           
+                                                                                                    
+
+SQL> select * from emp;
+
+EMPID      EMPNAME                            BASIC PROJE MOBNO1         GRADE                      
+---------- ------------------------------ --------- ----- ---------- ---------                      
+17vrj001   Vraj Desai                         70000 BCE01 7898687968         2                      
+17dev001   Dev Joshi                          50000 BCE01 9897898079         3                      
+17dev002   Dev Gagrani                     45456.67 BCE02 8978978967         3                      
+17ary001   Aaryan Gupta                       50000 BCE05 9879987987         3                      
+17aum001   Aum Naik                           40000 BCE02 9890798079         3                      
+17aks001   Akshay Mehta                       60000 BCE02 9879776876         2                      
+17mht001   Mohit Nankani                      58000 BCE03 7567879687         2                      
+17mht002   Mohit Gevariya                     60000 BCE04 9787968797         2                      
+17met001   meet Gamdha                        40000 BCE06 8798697869         3                      
+17dip001   Dipanshi Digga                     50000 BCE04 8798879887         3                      
+17anj001   Anuj Gupta                         20000       8797896879         3                      
+17raj001   Raj Mehta                          35000 BCH01 8978987978         3                      
+                                                    BCE07                                           
+
+13 rows selected.
+
+SQL> select category,count(category) from books group by category;
+
+CATEGORY   COUNT(CATEGORY)                                                                          
+---------- ---------------                                                                          
+RDBMS                    1                                                                          
+DATABASE                 2                                                                          
+SCIENCE                  1                                                                          
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off

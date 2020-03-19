@@ -1,0 +1,337 @@
+SQL> CREATE TABLE student(
+  2  RollNo varchar2(8),
+  3  Name varchar2(30),
+  4  DOB date,
+  5  HSC_marks varchar2(5),
+  6  members varchar2(30),
+  7  JEE_score varchar2(3)
+  8  );
+
+Table created.
+
+SQL> /
+CREATE TABLE student(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE CLUSTERID                                                    
+------------------------------ ------- ---------                                                    
+CLIENT                         TABLE                                                                
+STUDENT                        TABLE                                                                
+STUDENTINFORMATION             TABLE                                                                
+
+SQL> INSERT INTO student values('17BCE018','VRAJ','02-jun-00','94.33%',null,'119');
+INSERT INTO student values('17BCE018','VRAJ','02-jun-00','94.33%',null,'119')
+                                                         *
+ERROR at line 1:
+ORA-12899: value too large for column "CE17018"."STUDENT"."HSC_MARKS" (actual: 6, maximum: 5) 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* INSERT INTO student values('17BCE018','VRAJ','02-jun-00','94.33',null,'119')
+SQL> /
+
+1 row created.
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 VRAJ                           02-JUN-00 94.33                                119          
+
+SQL> INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE');
+Enter value for roll: 17BCE020
+Enter value for name: DEV JOSHI
+Enter value for dob: 13-jan-00
+Enter value for hsc: 90.12
+Enter value for member: 
+Enter value for jee: 157
+old   1: INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+new   1: INSERT INTO student VALUES('17BCE020','DEV JOSHI','13-jan-00','90.12','','157')
+
+1 row created.
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 VRAJ                           02-JUN-00 94.33                                119          
+17BCE020 DEV JOSHI                      13-JAN-00 90.12                                157          
+
+SQL> decs student;
+SP2-0042: unknown command beginning "decs stude..." - rest of line ignored.
+SQL> desc student;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ ROLLNO                                                         VARCHAR2(8)
+ NAME                                                           VARCHAR2(30)
+ DOB                                                            DATE
+ HSC_MARKS                                                      VARCHAR2(5)
+ MEMBERS                                                        VARCHAR2(30)
+ JEE_SCORE                                                      VARCHAR2(3)
+
+SQL> INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE');
+Enter value for roll: 17BCE019
+Enter value for name: DEV GAGRANI
+Enter value for dob: 03-aug-99
+Enter value for hsc: 94.20
+Enter value for member: RCNI
+Enter value for jee: 180
+old   1: INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+new   1: INSERT INTO student VALUES('17BCE019','DEV GAGRANI','03-aug-99','94.20','RCNI','180')
+
+1 row created.
+
+SQL> save insert_into;
+Created file insert_into
+SQL> @insert_into
+Enter value for roll: 17BCE007
+Enter value for name: RIdham Avaiya
+Enter value for dob: 10-aug-99
+Enter value for hsc: 90.78
+Enter value for member: 
+Enter value for jee: 116
+old   1: INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+new   1: INSERT INTO student VALUES('17BCE007','RIdham Avaiya','10-aug-99','90.78','','116')
+
+1 row created.
+
+SQL> @insert_into
+Enter value for roll: 17BCE065
+Enter value for name: Aum Naik
+Enter value for dob: 21-sep-00
+Enter value for hsc: 96.33
+Enter value for member: RCNI , ISTE
+Enter value for jee: 140
+old   1: INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+new   1: INSERT INTO student VALUES('17BCE065','Aum Naik','21-sep-00','96.33','RCNI , ISTE','140')
+
+1 row created.
+
+SQL> select * from student;
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 VRAJ                           02-JUN-00 94.33                                119          
+17BCE020 DEV JOSHI                      13-JAN-00 90.12                                157          
+17BCE019 DEV GAGRANI                    03-AUG-99 94.20 RCNI                           180          
+17BCE007 RIdham Avaiya                  10-AUG-99 90.78                                116          
+17BCE065 Aum Naik                       21-SEP-00 96.33 RCNI , ISTE                    140          
+
+SQL> save display;
+Created file display
+SQL> @insert_into
+Enter value for roll: 17bce012
+Enter value for name: Rohit Bhandara
+Enter value for dob: 09-jun-99
+Enter value for hsc: 92.66
+Enter value for member: 
+Enter value for jee: 120
+old   1: INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+new   1: INSERT INTO student VALUES('17bce012','Rohit Bhandara','09-jun-99','92.66','','120')
+
+1 row created.
+
+SQL> @display
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 VRAJ                           02-JUN-00 94.33                                119          
+17BCE020 DEV JOSHI                      13-JAN-00 90.12                                157          
+17BCE019 DEV GAGRANI                    03-AUG-99 94.20 RCNI                           180          
+17BCE007 RIdham Avaiya                  10-AUG-99 90.78                                116          
+17BCE065 Aum Naik                       21-SEP-00 96.33 RCNI , ISTE                    140          
+17bce012 Rohit Bhandara                 09-JUN-99 92.66                                120          
+
+6 rows selected.
+
+SQL> @insert_into
+Enter value for roll: 17BCE090
+Enter value for name: Virat Kohli
+Enter value for dob: 09-sep-99
+Enter value for hsc: 78.99
+Enter value for member: RCNI
+Enter value for jee: 200
+old   1: INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+new   1: INSERT INTO student VALUES('17BCE090','Virat Kohli','09-sep-99','78.99','RCNI','200')
+
+1 row created.
+
+SQL> @display
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 VRAJ                           02-JUN-00 94.33                                119          
+17BCE020 DEV JOSHI                      13-JAN-00 90.12                                157          
+17BCE019 DEV GAGRANI                    03-AUG-99 94.20 RCNI                           180          
+17BCE007 RIdham Avaiya                  10-AUG-99 90.78                                116          
+17BCE065 Aum Naik                       21-SEP-00 96.33 RCNI , ISTE                    140          
+17bce012 Rohit Bhandara                 09-JUN-99 92.66                                120          
+17BCE090 Virat Kohli                    09-SEP-99 78.99 RCNI                           200          
+
+7 rows selected.
+
+SQL> @insert_into
+Enter value for roll: 17BCE001
+Enter value for name: Aaryan Gupta
+Enter value for dob: 40-jun-99
+Enter value for hsc: 92.67
+Enter value for member: ISTE
+Enter value for jee: 170
+old   1: INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+new   1: INSERT INTO student VALUES('17BCE001','Aaryan Gupta','40-jun-99','92.67','ISTE','170')
+INSERT INTO student VALUES('17BCE001','Aaryan Gupta','40-jun-99','92.67','ISTE','170')
+                                                     *
+ERROR at line 1:
+ORA-01847: day of month must be between 1 and last day of month 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+SQL> @insert_info
+SP2-0310: unable to open file "insert_info.sql"
+SQL> @insert_into
+Enter value for roll: 17BCE001
+Enter value for name: Aaryan Gupta
+Enter value for dob: 02-feb-99
+Enter value for hsc: 89.60
+Enter value for member: ISTE
+Enter value for jee: 160
+old   1: INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+new   1: INSERT INTO student VALUES('17BCE001','Aaryan Gupta','02-feb-99','89.60','ISTE','160')
+
+1 row created.
+
+SQL> @display
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 VRAJ                           02-JUN-00 94.33                                119          
+17BCE020 DEV JOSHI                      13-JAN-00 90.12                                157          
+17BCE019 DEV GAGRANI                    03-AUG-99 94.20 RCNI                           180          
+17BCE007 RIdham Avaiya                  10-AUG-99 90.78                                116          
+17BCE065 Aum Naik                       21-SEP-00 96.33 RCNI , ISTE                    140          
+17bce012 Rohit Bhandara                 09-JUN-99 92.66                                120          
+17BCE090 Virat Kohli                    09-SEP-99 78.99 RCNI                           200          
+17BCE001 Aaryan Gupta                   02-FEB-99 89.60 ISTE                           160          
+
+8 rows selected.
+
+SQL> @insert_into
+Enter value for roll: 17BCE060
+Enter value for name: Ajay Pandya
+Enter value for dob: 09-oct-00
+Enter value for hsc: 93.33
+Enter value for member: 
+Enter value for jee: 167
+old   1: INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+new   1: INSERT INTO student VALUES('17BCE060','Ajay Pandya','09-oct-00','93.33','','167')
+
+1 row created.
+
+SQL> @display
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 VRAJ                           02-JUN-00 94.33                                119          
+17BCE020 DEV JOSHI                      13-JAN-00 90.12                                157          
+17BCE019 DEV GAGRANI                    03-AUG-99 94.20 RCNI                           180          
+17BCE007 RIdham Avaiya                  10-AUG-99 90.78                                116          
+17BCE065 Aum Naik                       21-SEP-00 96.33 RCNI , ISTE                    140          
+17bce012 Rohit Bhandara                 09-JUN-99 92.66                                120          
+17BCE090 Virat Kohli                    09-SEP-99 78.99 RCNI                           200          
+17BCE001 Aaryan Gupta                   02-FEB-99 89.60 ISTE                           160          
+17BCE060 Ajay Pandya                    09-OCT-00 93.33                                167          
+
+9 rows selected.
+
+SQL> @insert_into
+Enter value for roll: 17BCE035
+Enter value for name: Kosam Ganjoo
+Enter value for dob: 09-aug-99
+Enter value for hsc: 90.88
+Enter value for member: ISTE , AUGEN
+Enter value for jee: 140
+old   1: INSERT INTO student VALUES('&ROLL','&NAME','&DOB','&hsc','&member','&JEE')
+new   1: INSERT INTO student VALUES('17BCE035','Kosam Ganjoo','09-aug-99','90.88','ISTE , AUGEN','140')
+
+1 row created.
+
+SQL> @display
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 VRAJ                           02-JUN-00 94.33                                119          
+17BCE020 DEV JOSHI                      13-JAN-00 90.12                                157          
+17BCE019 DEV GAGRANI                    03-AUG-99 94.20 RCNI                           180          
+17BCE007 RIdham Avaiya                  10-AUG-99 90.78                                116          
+17BCE065 Aum Naik                       21-SEP-00 96.33 RCNI , ISTE                    140          
+17bce012 Rohit Bhandara                 09-JUN-99 92.66                                120          
+17BCE090 Virat Kohli                    09-SEP-99 78.99 RCNI                           200          
+17BCE001 Aaryan Gupta                   02-FEB-99 89.60 ISTE                           160          
+17BCE060 Ajay Pandya                    09-OCT-00 93.33                                167          
+17BCE035 Kosam Ganjoo                   09-AUG-99 90.88 ISTE , AUGEN                   140          
+
+10 rows selected.
+
+SQL> update student
+  2  set ROLLNO = '17BCE012'
+  3  where (name='Rohit Bhandara');
+
+1 row updated.
+
+SQL> @display
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 VRAJ                           02-JUN-00 94.33                                119          
+17BCE020 DEV JOSHI                      13-JAN-00 90.12                                157          
+17BCE019 DEV GAGRANI                    03-AUG-99 94.20 RCNI                           180          
+17BCE007 RIdham Avaiya                  10-AUG-99 90.78                                116          
+17BCE065 Aum Naik                       21-SEP-00 96.33 RCNI , ISTE                    140          
+17BCE012 Rohit Bhandara                 09-JUN-99 92.66                                120          
+17BCE090 Virat Kohli                    09-SEP-99 78.99 RCNI                           200          
+17BCE001 Aaryan Gupta                   02-FEB-99 89.60 ISTE                           160          
+17BCE060 Ajay Pandya                    09-OCT-00 93.33                                167          
+17BCE035 Kosam Ganjoo                   09-AUG-99 90.88 ISTE , AUGEN                   140          
+
+10 rows selected.
+
+SQL> update student
+  2  set name = 'Vraj Desai'
+  3  where (ROLLNO = '17BCE018');
+
+1 row updated.
+
+SQL> @display
+
+ROLLNO   NAME                           DOB       HSC_M MEMBERS                        JEE          
+-------- ------------------------------ --------- ----- ------------------------------ ---          
+17BCE018 Vraj Desai                     02-JUN-00 94.33                                119          
+17BCE020 DEV JOSHI                      13-JAN-00 90.12                                157          
+17BCE019 DEV GAGRANI                    03-AUG-99 94.20 RCNI                           180          
+17BCE007 RIdham Avaiya                  10-AUG-99 90.78                                116          
+17BCE065 Aum Naik                       21-SEP-00 96.33 RCNI , ISTE                    140          
+17BCE012 Rohit Bhandara                 09-JUN-99 92.66                                120          
+17BCE090 Virat Kohli                    09-SEP-99 78.99 RCNI                           200          
+17BCE001 Aaryan Gupta                   02-FEB-99 89.60 ISTE                           160          
+17BCE060 Ajay Pandya                    09-OCT-00 93.33                                167          
+17BCE035 Kosam Ganjoo                   09-AUG-99 90.88 ISTE , AUGEN                   140          
+
+10 rows selected.
+
+SQL> alter student
+  2  .
+SQL> pull
+SP2-0042: unknown command "pull" - rest of line ignored.
+SQL> pool
+SP2-0042: unknown command "pool" - rest of line ignored.
+SQL> spool off
