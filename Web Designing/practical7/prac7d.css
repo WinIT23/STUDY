@@ -1,0 +1,16 @@
+#hover{
+	width: 400px;
+	height: 150px;
+	outline: 5px solid red;
+	background-color: black;
+	margin: 200px;
+	transition: all 2s;
+}
+
+#hover:hover{
+	outline: 5px dotted blue;
+	outline-offset: 10px;
+	border-top-right-radius: 80% 30px;
+	border-bottom-left-radius: 80% 30px;
+	background-color: green;
+}

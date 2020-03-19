@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var num = prompt("enter any number","123");
+		for (var i = 0; i < num.length-1; i++)
+		{
+			if(num[i]%2==0 && num[i+1]%2==0)
+			{
+				var a = num.slice(0,i+1);
+				var b = num.slice(i+1);
+				num = a + '-' + b;
+				i=i+1;
+			}
+		}
+		document.write(num);
+	</script>
+</body>
+</html>

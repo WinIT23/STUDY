@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JS</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+
+		function ALPHA_POS(mySTR)
+		{
+			var array = mySTR.toLowerCase();
+			for (var i = 0; i < array.length; i++)
+			{
+				if(array.charCodeAt(i) >= 97 && array.charCodeAt(i) <= 123)
+					document.write(array.charCodeAt(i)-96+" ");
+			}
+		}
+
+		var mySTR = prompt("Enter a string..","hello world");
+		ALPHA_POS(mySTR);
+
+	</script>
+
+</body>
+</html>

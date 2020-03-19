@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JS</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var a = prompt("Enter a number","123");
+		var b = humanized(a);
+		document.write(b);
+
+		function humanized(number)
+		{
+			switch(number%10)
+			{
+				case 1: return number + "st";
+						break;
+				case 2: return number + "nd";
+						break;
+				case 3: return number + "rd";
+						break;
+				default: return number + "th";
+						break;
+			}
+		}
+	</script>
+</body>
+</html>

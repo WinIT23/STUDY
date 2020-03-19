@@ -1,0 +1,15 @@
+#anim{
+	width: 200px;
+	height: 200px;
+	border: 5px solid black;
+	margin-top: 15%;
+	background-color: blue;
+	animation-name: CtoS;
+	animation-iteration-count: infinite;
+	animation-duration: 1s;
+}
+
+@keyframes CtoS{
+	from { background-color: blue; border-radius: 50%; margin-left: 10%; }
+	to { background-color: yellow; border-radius: 0%; margin-left: 70%; }
+}

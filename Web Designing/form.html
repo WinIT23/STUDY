@@ -1,0 +1,96 @@
+<html>
+<body>
+
+	<form method="post">
+		<label for="VRN">Vehicle Registration Number: </lable>
+		<input type="text" id="VRN" required="">
+
+		<br><br>
+
+		<label>
+			Name Of Owner: 
+			<input type="text" size="30" required="">
+		</label>
+
+		<br><br>
+
+		<label>
+			Date:
+			<input type="Date" required="">
+		</label>
+
+		<br><br>
+
+		<label>
+			Address:
+			<textarea rows="10" cols="80" placeholder="Enter Your Address..." required=""></textarea>
+		</label>
+
+		<br><br>
+
+		<label>
+			Select State: 
+			<select>
+				<optgroup label="Northern States">
+					<option value="UP" selected="select">UP</option>
+					<option value="DELHI">DELHI</option>
+				</optgroup>
+				<optgroup label="Southern States">
+					<option value="TAMILNADU">TAMILNADU</option>
+					<option value="TELANGANA">TELANGANA</option>
+				</optgroup>
+			</select>
+		</label>
+
+		<br><br>
+
+		<label>
+			Mobile Number:
+			<input type="text" pattern="[0-9]{10}" required="">
+		</label>
+
+		<br><br>
+
+		<label>
+			Vehicle Service Components: 
+			Basic Service <input type="checkbox" name="VSC" checked="">
+			Oil <input type="checkbox" name="VSC">
+			Oil Filters <input type="checkbox" name="VSC">
+			Wheel Rotating <input type="checkbox" name="VSC">
+			Wheel Balancing <input type="checkbox" name="VSC">
+		</label>
+
+		<br><br>
+
+		<label>
+			Approximate Bill Amount: 
+			<input type="text" pattern="[0-9]{1,5}" required="">
+		</label>
+
+		<br><br>
+
+		<label>
+			Email:
+			<input type="Email" required="">
+		</label>
+
+		<br><br>
+
+		<label>
+			Any Complains?
+			<textarea cols="80" rows="5" required=""></textarea>
+		</label>
+
+		<br><br>
+
+		<label>
+			<button type="reset">Reset</button>
+		</label>
+
+		<label>
+			<button type="submit"><img src="submit.jpg" width="100px" height="12px"> Submit</button>
+		</label>
+	</form>
+
+</body>
+</html>

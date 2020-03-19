@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		var d = new Date();
+		var h = d.getHours();
+		var zone = "AM";
+		var greeting = "Good ";
+		if(h >= 12)
+		{
+			zone = "PM";
+			if(h != 12)
+			{
+				h = h - 12;
+			}
+		}
+
+
+		if(h < 6 && zone == "AM")
+			greeting += "Night";
+		else if(h < 10 && zone == "AM")
+			greeting += "Morning";
+		else if((h<=12 && zone == "AM") || (h<3 && zone == "PM"))
+			greeting += "Noon";
+		else if(h < 5 && zone == "PM")
+			greeting += "Afternoon";
+		else if(h < 8 && zone == "PM")
+			greeting += "Evening";
+		else
+			greeting += "Night";
+
+		var time = d.toLocaleTimeString().split(":");
+		var hours = time[0];
+		if(hours > 12)
+		{
+			hours -= 12;
+			if(hours < 10)
+			{
+				hours = "0" + hours;
+			}
+		}
+		var min = time[1];
+		var sec = time[2];
+		document.write(greeting + ", " + d.toLocaleDateString() + " " + hours + ":" + min + ":" + sec + " " + zone);
+	</script>
+</body>
+</html>

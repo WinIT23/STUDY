@@ -1,0 +1,32 @@
+body
+{
+	counter-reset: i;
+	font-weight: bold;
+}
+h3
+{
+	text-transform: uppercase;
+}
+.T::first-letter
+{
+	font-size: 40px;
+}
+.P::first-letter
+{
+	font-size: 25px;
+}
+h3::after
+{
+	counter-increment: i;
+	content: counter(i)'.';
+}
+
+a
+{
+	text-decoration: none;
+	color: black;
+}
+.I
+{
+	display: inline;
+}

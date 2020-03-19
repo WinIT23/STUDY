@@ -1,0 +1,57 @@
+body{
+	margin: 150px;
+	border: 2px solid grey;
+	padding-bottom: 20px;
+}
+.upperBorder{
+	border-top: 5px solid black;
+	text-align: center;
+	font-weight: bold;
+	background-color: grey;
+}
+.bottomBorder{
+	border-bottom: 5px dashed black;
+	font-weight: bold;
+	text-align: center;
+	background-color: grey;
+}
+.apple{
+	color: white;
+	background-color: black;
+	text-align: center;
+	font-size: 1.5em;
+	margin: 5px;
+	padding: 5px;
+}
+.texttype{
+	font-style: bold;
+	font-family: fantasy;
+	padding: 5px;
+}
+caption{
+	text-align: center;
+	font-weight: bold;
+	padding: 10px;
+}
+.col{
+	background-color: black;
+	-moz-column-width: 100px;
+	-moz-column-count: 4;
+	columns: 100px 4;
+	column-rule: 5px dotted white;
+	color: white;
+	padding: 5px;
+}
+.right{
+	text-align: right;
+	border-right: 2px solid black;
+	padding: 5px;
+}
+.below{
+	border-bottom: 4px dotted black;
+}
+.center{
+	text-align: center;
+	font-weight: bold;
+	border-bottom: 4px solid black;
+}

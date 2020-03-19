@@ -1,0 +1,18 @@
+body
+{
+	counter-reset: outer;
+}
+h1
+{
+	counter-reset: inner;
+}
+h1::before
+{
+	counter-increment: outer;
+	content: 'Section 'counter(outer)'.';
+}
+h2::before
+{
+	counter-increment: inner;
+	content: counter(outer)'.'counter(inner)' ';
+}

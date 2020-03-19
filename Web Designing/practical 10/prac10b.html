@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Validation</title>
+</head>
+<body>
+	<form name="form">
+		IP Address:<input type="text" name="ip"><br><br>
+		Alpha Numeric Input Only:<input type="text" name="alphanum"><br><br>
+		Date:<input type="text" name="date"><br><br>
+		No Special Symbol:<input type="text" name="symbol"><br><br>
+		Email:<input type="text" name="email"><br><br>
+		Phone Number:<input type="text" name="num"><br><br>
+		Required Field:<input type="text" name="req"><br><br>
+		Password:<input type="text" name="pass1"><br><br>
+		Enter Password Again:<input type="text" name="pass2"><br><br>
+		<input type="button" onclick="validateIP()" name="button" value="Submit">
+	</form>
+
+	<script type="text/javascript">
+		function validateIP()
+		{
+			var IP = document.forms["form"]["ip"];
+			var arrayIP = IP.value.split(".");
+			var flag = true;
+			if(arrayIP.length != 4)
+				flag = false;
+			
+			for(var i = 0; i < 4 && flag; i++)
+			{
+				if(isNaN(parseInt(arrayIP[i])) || parseInt(arrayIP[i]) > 255 || parseInt(arrayIP[i]) < 0)
+				{
+					flag = false;
+					break;
+				}
+			}
+
+
+			if(!flag)
+			{
+				alert("Incorrect IP Address Entered, Please Correct your IP Address!");
+				document.forms["form"]["ip"].value = "";
+				IP.focus();
+			}
+			else
+			{
+				alert("correct IP");
+			}
+
+			validateAlphaNum();
+		}
+
+		function validateAlphaNum()
+		{
+			var AlphaNum = document.forms["form"]["alphanum"];
+			var mySTR = AlphaNum.value;
+			var flag = true;
+			for(var i = 0; i < mySTR.length; i++)
+			{
+				var a = mySTR.charCodeAt(i);
+				if(!((a <= 90 && a >= 65) || (a <= 122 && a >= 97) || (a <= 57 && a >= 48)))
+				{
+					flag = false;
+					break;
+				}
+			}
+
+			if(!flag)
+			{
+				alert("Incorrect Alpha Numeric string Entered, Please Correct your string!");
+				document.forms["form"]["alphanum"].value = "";
+				AlphaNum.focus();
+			}
+			else
+			{
+				alert("correct Alpha Numeric string");
+			}
+
+			validateDate();
+		}
+
+		function validateDate()
+		{
+			var myDate = document.forms["form"]["date"];
+			var mySTR = myDate.value.split("/");
+			var flag = true;
+
+			if(mySTR.length != 3)
+			{
+				flag = false;
+			}
+			for (var i = 0; i < 3 && flag; i++) 
+			{
+				var num = parseInt(mySTR[i]);
+				if(isNaN(num))
+				{
+					flag = false;
+					break;
+				}
+			}
+
+			if(flag)
+			{		
+				var dd = parseInt(mySTR[0]);
+				var mm = parseInt(mySTR[1]);
+				var yyyy = parseInt(mySTR[2]);
+
+				if(dd > 31 || mm > 12 || yyyy.toString().length != 4)
+				{
+					flag = false;
+				}
+			}
+
+			if(!flag)
+			{
+				alert("Incorrect date Entered, Please Correct your date!");
+				document.forms["form"]["date"].value = "";
+				myDate.focus();
+			}
+			else
+			{
+				alert("correct date");
+			}
+
+			validateSp();
+		}
+
+
+		function validateSp()
+		{
+			var spesym = document.forms["form"]["symbol"];
+			var mySTR = spesym.value;
+			var flag = true;
+			for(var i = 0; i < mySTR.length; i++)
+			{
+				var a = mySTR.charCodeAt(i);
+				if((a <= 47 && a >= 32) || (a <= 64 && a >= 58) || (a <= 96 && a >= 91) || (a <= 126 && a >= 123))
+				{
+					flag = false;
+					break;
+				}
+			}
+
+			if(!flag)
+			{
+				alert("Incorrect string Entered, it contains special symbols. Please Correct your string!");
+				document.forms["form"]["symbol"].value = "";
+				spesym.focus();
+			}
+			else
+			{
+				alert("correct non-symbolic string");
+			}	
+
+			validateEmail();
+		}
+
+		function validateEmail()
+		{
+			var EMAIL = document.forms["form"]["email"];
+			var flag = true;
+
+			var mySTR = EMAIL.value.split("@");
+			if(mySTR.length!=2)
+				flag = false;
+
+			if(flag)
+			{
+				var arr = mySTR[1].split(".");
+				if(arr.length!=2)
+					flag=false;
+			}
+
+			var myArr = [];
+			if(flag)
+			{
+				myArr.push(mySTR[0]);
+				myArr.push(arr[0]);
+				myArr.push(arr[1]);
+			}
+			
+			for (var i = 0; i < 3 && flag; i++) 
+			{
+				if(myArr[i].length < 3)
+				{
+					flag = false
+					break;
+				}
+				for(var  j = 0; j < myArr[i].length && flag; j++)
+				{
+					var a = myArr[i].charCodeAt(j);
+					if(!((a>=65 && a<=91) || (a>=97 && a<=122) || (a<=57 && a>=48)))
+						flag = false;
+				}
+				
+			}
+
+			if(!flag)
+			{
+				alert("Incorrect email Entered, Please Correct your email!");
+				document.forms["form"]["email"].value = "";
+				EMAIL.focus();
+			}
+			else
+			{
+				alert("correct email");
+			}	
+
+			validateNum();
+		}
+
+
+		function validateNum()
+		{
+			var NUMBER = document.forms["form"]["num"];
+			var num = NUMBER.value;
+			var mySTR = num.toString();
+			var flag = true;
+
+			if(mySTR.length < 10)
+				flag = false;
+
+			if(flag)
+			{
+				for(var i=0; i<mySTR.length ;i++)
+				{
+					var a = mySTR.charCodeAt(i);
+					if(!(a<=57 && a>=48))
+					{
+						flag = false;
+						break;
+					}
+				}
+			}
+
+			if(!flag)
+			{
+				alert("Incorrect Number Entered, Please Correct your number!");
+				document.forms["form"]["num"].value = "";
+				NUMBER.focus();
+			}
+			else
+			{
+				alert("correct Number");
+			}	
+
+			validateNull();
+		}
+
+		function validateNull()
+		{
+			var REQ = document.forms["form"]["req"];
+			var mySTR = REQ.value;
+			var flag = false;
+			if(mySTR == "")
+				flag = true;
+
+			if(flag)
+			{
+				alert("Incorrect Data Entered, this field can't be empty!");
+				document.forms["form"]["req"].value = "";
+				REQ.focus();				
+			}
+			else
+			{
+				alert("correct input!");
+			}
+			validatePass();
+		}
+
+		function validatePass()
+		{
+			var PASS1 = document.forms["form"]["pass1"];
+			var PASS2 = document.forms["form"]["pass2"];
+
+			var pass1 = PASS1.value;
+			var pass2 = PASS2.value;
+
+			var flag = false;
+			var len = false;
+
+			if(pass1 == pass2)
+			{
+				flag = true;
+				if(pass1.length <= 6)
+				{
+					len = true;
+					flag = false;
+				}
+			}
+
+
+
+			if(flag)
+			{
+				alert("BOTH PASSWORD MATCHES!");
+			}
+			else
+			{
+				if(!len)
+				{
+					alert("Incorrect password Entered!! Passwords must match!");
+					document.forms["form"]["pass2"].value = "";
+					PASS2.focus();		
+				}
+				else
+				{
+					alert("Incorrect password Entered!! Passwords length must be more than 6!");
+					document.forms["form"]["pass1"].value = "";
+					document.forms["form"]["pass2"].value = "";
+					PASS1.focus();		
+				}
+			}
+		}
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+h1{
+	border-style: dashed double dotted solid;
+	border-width: 5px;
+	margin-right: 1050px;
+	padding: 20px;
+}
+
+h2{
+  border: 15px solid black;
+  border-image: url(border.png) 30 round;
+  margin-right: 1050px;
+  padding-bottom: 200px;
+}
+
+.h3{
+	margin: 20px 0 400px 400px;
+	width: 500px;
+	height: 500px;
+	border: 10px dashed black;
+	position: absolute;
+}
+.h3::after{
+	position: absolute;
+	border: 10px dotted yellow;
+	content: "";
+	top: -10px;
+	right: -10px;
+	width: inherit;
+	height: inherit;
+}
